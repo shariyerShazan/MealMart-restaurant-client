@@ -8,18 +8,16 @@ import { Button } from '../components/ui/button';
 import { Link } from 'react-router';
 import { Loader2 } from 'lucide-react';
 
-function Login() {
+function Register() {
 
     const [isVisible , setIsVisible] = useState<boolean>(false)
     const [isLoading , setIsLoading] = useState<boolean>(false)
-
-    
 
   return (
    <div className='w-[90%] mx-auto flex justify-center min-h-[70vh] items-center'>
      <div className='w-96 border-myColor border-1 p-5 rounded-md '>
       <form action="">
-            <h2 className='text-xl font-bold text-center'>Meal<span className='text-myColor'>Mart</span> Login</h2>
+            <h2 className='text-xl font-bold text-center'>Meal<span className='text-myColor'>Mart</span> Register</h2>
            <div className=' relative my-3'>
                 <div className='flex items-center gap-2'>
                  <MdOutlineEmail size={20} /><Label >Email </Label>
@@ -48,11 +46,11 @@ function Login() {
                 isLoading? <Button className='bg-myColor/80 hover:bg-myColor w-full mt-3' >
                <Loader2 className=' animate-spin'/> Please wait
               </Button> : <Button className='bg-myColor/80 hover:bg-myColor w-full mt-3' >
-                Login
+                Register
               </Button>
              }  
               <p className='mt-3 pt-2 border-t-2 border-gray-300'>
-                Don't have account? <Link className='text-green-600' to={"/register"}>Register</Link>
+                Already have account <Link className='text-green-600' to={"/login"}>Login</Link>
               </p>
            </div>
       </form>
@@ -61,4 +59,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Register

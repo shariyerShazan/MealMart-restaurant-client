@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, type ChangeEvent, type FormEvent } from 'react'
 import { MdOutlineEmail } from "react-icons/md";
 import { Input } from '../components/ui/input'
 import { Label } from '@radix-ui/react-label'
@@ -13,19 +13,43 @@ function Login() {
     const [isVisible , setIsVisible] = useState<boolean>(false)
     const [isLoading , setIsLoading] = useState<boolean>(false)
 
-    
+    const [input , setInput] = useState({
+        email: "" ,
+        password: ""
+    })
+   
+    const changeEventHandler = (e: ChangeEvent<HTMLInputElement>)=>{
+       const {name , value} = e.target
+       setInput({...input , [name]: value})
+    }
+
+    const loginSubmitHandler = async (e: FormEvent)=>{
+        e.preventDefault()
+        setIsLoading(true)
+        try {
+            const res = ""
+        } catch (error) {
+            console.log(error)
+        }finally{
+            setIsLoading(false)
+        }
+       
+    }
 
   return (
    <div className='w-[90%] mx-auto flex justify-center min-h-[70vh] items-center'>
      <div className='w-96 border-myColor border-1 p-5 rounded-md '>
-      <form action="">
+      <form onSubmit={loginSubmitHandler} action="">
             <h2 className='text-xl font-bold text-center'>Meal<span className='text-myColor'>Mart</span> Login</h2>
            <div className=' relative my-3'>
                 <div className='flex items-center gap-2'>
                  <MdOutlineEmail size={20} /><Label >Email </Label>
                 </div>
                 <Input 
-                    className=''
+                    className=' focus-visible:ring-1'
+                    value={input.email}
+                    name='email'
+                    onChange={changeEventHandler}
                     type='email'
                     placeholder='Enter your email'
                 />
@@ -35,7 +59,10 @@ function Login() {
                 <div className='flex items-center gap-2'><MdOutlinePassword size={20}  /><Label >Password </Label>
                 </div>
                 <Input 
-                    className=' '
+                    className=' focus-visible:ring-1'
+                    value={input.password}
+                    name='password'
+                    onChange={changeEventHandler}
                     type={isVisible? "text" : "password"}
                     placeholder='Enter your password'
                 />
@@ -47,7 +74,7 @@ function Login() {
              {
                 isLoading? <Button className='bg-myColor/80 hover:bg-myColor w-full mt-3' >
                <Loader2 className=' animate-spin'/> Please wait
-              </Button> : <Button className='bg-myColor/80 hover:bg-myColor w-full mt-3' >
+              </Button> : <Button type='submit' className='bg-myColor/80 hover:bg-myColor w-full mt-3' >
                 Login
               </Button>
              }  
@@ -56,6 +83,7 @@ function Login() {
               </p>
            </div>
       </form>
+       <Link to={"/"}><Button className='bg-green-500 hover:bg-green-500 cursor-pointer mt-5'>Back Home</Button></Link>
     </div>
    </div>
   )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, type ChangeEvent, type FormEvent } from 'react'
 import { MdOutlineEmail } from "react-icons/md";
 import { Input } from '../components/ui/input'
 import { Label } from '@radix-ui/react-label'
@@ -7,23 +7,85 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Button } from '../components/ui/button';
 import { Link } from 'react-router';
 import { Loader2 } from 'lucide-react';
+import { FiUser } from "react-icons/fi";
+import { MdAddIcCall } from "react-icons/md";
+
 
 function Register() {
 
     const [isVisible , setIsVisible] = useState<boolean>(false)
     const [isLoading , setIsLoading] = useState<boolean>(false)
 
+    const [input , setInput] = useState({
+        fullNmae: "",
+        email: "" ,
+        password: "" ,
+        contact: ""
+    })
+   
+    const changeEventHandler = (e: ChangeEvent<HTMLInputElement>)=>{
+       const {name , value} = e.target
+       setInput({...input , [name]: value})
+    }
+
+    const registerSubmitHandler = async (e: FormEvent)=>{
+        e.preventDefault()
+        setIsLoading(true)
+        try {
+            const res = ""
+        } catch (error) {
+            console.log(error)
+        }finally{
+            setIsLoading(false)
+        }
+       
+    }
+
   return (
    <div className='w-[90%] mx-auto flex justify-center min-h-[70vh] items-center'>
      <div className='w-96 border-myColor border-1 p-5 rounded-md '>
-      <form action="">
+      <form onSubmit={registerSubmitHandler} action="">
             <h2 className='text-xl font-bold text-center'>Meal<span className='text-myColor'>Mart</span> Register</h2>
+           
+            <div className=' relative my-3'>
+                <div className='flex items-center gap-2'>
+                 <FiUser size={20} /><Label >Full Name </Label>
+                </div>
+                <Input 
+                    className=' focus-visible:ring-1'
+                    value={input.fullNmae}
+                    name='fullName'
+                    onChange={changeEventHandler}
+                    type='text'
+                    placeholder='Enter your name '
+                />
+                
+           </div>
+
+           <div className=' relative my-3'>
+                <div className='flex items-center gap-2'>
+                 <MdAddIcCall size={20} /><Label >Full Name </Label>
+                </div>
+                <Input 
+                    className=' focus-visible:ring-1'
+                    value={input.contact}
+                    name='contact'
+                    onChange={changeEventHandler}
+                    type='text'
+                    placeholder='Enter your contact no'
+                />
+                
+           </div>
+ 
            <div className=' relative my-3'>
                 <div className='flex items-center gap-2'>
                  <MdOutlineEmail size={20} /><Label >Email </Label>
                 </div>
                 <Input 
-                    className=''
+                    className=' focus-visible:ring-1'
+                    value={input.email}
+                    name='email'
+                    onChange={changeEventHandler}
                     type='email'
                     placeholder='Enter your email'
                 />
@@ -33,7 +95,10 @@ function Register() {
                 <div className='flex items-center gap-2'><MdOutlinePassword size={20}  /><Label >Password </Label>
                 </div>
                 <Input 
-                    className=' '
+                    className=' focus-visible:ring-1'
+                    value={input.password}
+                    name='password'
+                    onChange={changeEventHandler}
                     type={isVisible? "text" : "password"}
                     placeholder='Enter your password'
                 />
@@ -45,15 +110,16 @@ function Register() {
              {
                 isLoading? <Button className='bg-myColor/80 hover:bg-myColor w-full mt-3' >
                <Loader2 className=' animate-spin'/> Please wait
-              </Button> : <Button className='bg-myColor/80 hover:bg-myColor w-full mt-3' >
-                Register
+              </Button> : <Button type='submit' className='bg-myColor/80 hover:bg-myColor w-full mt-3' >
+              Register
               </Button>
              }  
               <p className='mt-3 pt-2 border-t-2 border-gray-300'>
-                Already have account <Link className='text-green-600' to={"/login"}>Login</Link>
+                Already have account? <Link className='text-green-600' to={"/login"}>Login</Link>
               </p>
            </div>
       </form>
+      <Link to={"/"}><Button className='bg-green-500 hover:bg-green-500 cursor-pointer mt-5'>Back Home</Button></Link>
     </div>
    </div>
   )

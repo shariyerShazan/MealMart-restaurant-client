@@ -1,13 +1,14 @@
 import React, { useState, type ChangeEvent, type FormEvent } from 'react'
-import { MdOutlineEmail } from "react-icons/md";
+import { MdLockOutline, MdOutlineEmail } from "react-icons/md";
 import { Input } from '../components/ui/input'
 import { Label } from '@radix-ui/react-label'
-import { MdOutlinePassword } from "react-icons/md";
+// import { MdOutlinePassword } from "react-icons/md";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Button } from '../components/ui/button';
 import { Link } from 'react-router';
 import { Loader2 } from 'lucide-react';
-import type { loginInputState } from '../schemaZOD/userSchem';
+import { userLoginSchema, type loginInputState } from '../schemaZOD/userSchem';
+// import { CiLock } from "react-icons/ci";
 
 function Login() {
 
@@ -23,12 +24,18 @@ function Login() {
        const {name , value} = e.target
        setInput({...input , [name]: value})
     }
+     const [error , setError] = useState<Partial<loginInputState>>({})
 
     const loginSubmitHandler = async (e: FormEvent)=>{
         e.preventDefault()
         setIsLoading(true)
+        const result = userLoginSchema.safeParse(input)
+                if(!result.success){
+                    setError(result.error.flatten().fieldErrors as Partial<loginInputState>)
+                    return;
+                }
         try {
-            const res = ""
+            // api
         } catch (error) {
             console.log(error)
         }finally{
@@ -38,39 +45,43 @@ function Login() {
     }
 
   return (
-   <div className='w-[90%] mx-auto flex justify-center min-h-[70vh] items-center'>
+   <div className='w-[90%] mx-auto flex justify-center min-h-[70vh] items-center mt-12'>
      <div className='w-96 border-myColor border-1 p-5 rounded-md '>
       <form onSubmit={loginSubmitHandler} action="">
             <h2 className='text-xl font-bold text-center'>Meal<span className='text-myColor'>Mart</span> Login</h2>
            <div className=' relative my-3'>
                 <div className='flex items-center gap-2'>
-                 <MdOutlineEmail size={20} /><Label >Email </Label>
+                 <MdOutlineEmail size={20} /><Label >Email: </Label>
                 </div>
                 <Input 
-                    className=' focus-visible:ring-1'
+                    className=' focus-visible:ring-1 mt-1'
                     value={input.email}
                     name='email'
                     onChange={changeEventHandler}
                     type='email'
-                    placeholder='Enter your email'
+                    // placeholder='Enter your email'
                 />
                 
            </div>
+           {error && <span className='text-sm text-red-500'>{error.email}</span>}
+
            <div className=' relative my-3'>
-                <div className='flex items-center gap-2'><MdOutlinePassword size={20}  /><Label >Password </Label>
+                <div className='flex items-center gap-2'><MdLockOutline size={20}  /><Label >Password: </Label>
                 </div>
                 <Input 
-                    className=' focus-visible:ring-1'
+                    className=' focus-visible:ring-1 mt-1'
                     value={input.password}
                     name='password'
                     onChange={changeEventHandler}
                     type={isVisible? "text" : "password"}
-                    placeholder='Enter your password'
+                    // placeholder='Enter your password'
                 />
                 
                {isVisible?<IoMdEyeOff onClick={()=>setIsVisible(!isVisible)} size={20}  className=' absolute right-0 inset-y-8 mr-2' />:<IoMdEye onClick={()=>setIsVisible(!isVisible)} size={20}  className=' absolute right-0 inset-y-8 mr-2' /> }  
                 
            </div>
+           {error && <span className='text-sm text-red-500'>{error.password}</span>}
+
            <div className=''>
              {
                 isLoading? <Button className='bg-myColor/80 hover:bg-myColor w-full mt-3' >

@@ -2,14 +2,15 @@ import React, { useState, type ChangeEvent, type FormEvent } from 'react'
 import { MdOutlineEmail } from "react-icons/md";
 import { Input } from '../components/ui/input'
 import { Label } from '@radix-ui/react-label'
-import { MdOutlinePassword } from "react-icons/md";
+// import { MdOutlinePassword } from "react-icons/md";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Button } from '../components/ui/button';
 import { Link } from 'react-router';
 import { Loader2 } from 'lucide-react';
 import { FiUser } from "react-icons/fi";
 import { MdAddIcCall } from "react-icons/md";
-import type { registerInputState } from '../schemaZOD/userSchem';
+import { userRegisterSchema, type registerInputState } from '../schemaZOD/userSchem';
+import { MdLockOutline } from "react-icons/md";
 
 
 
@@ -17,13 +18,13 @@ function Register() {
 
     const [isVisible , setIsVisible] = useState<boolean>(false)
     const [isLoading , setIsLoading] = useState<boolean>(false)
-
     const [input , setInput] = useState<registerInputState >({
         fullName: "",
         email: "" ,
         password: "" ,
         contact: ""
     })
+    const [error , setError] = useState<Partial<registerInputState>>({})
    
     const changeEventHandler = (e: ChangeEvent<HTMLInputElement>)=>{
        const {name , value} = e.target
@@ -33,8 +34,13 @@ function Register() {
     const registerSubmitHandler = async (e: FormEvent)=>{
         e.preventDefault()
         setIsLoading(true)
+        const result = userRegisterSchema.safeParse(input)
+        if(!result.success){
+            setError(result.error.flatten().fieldErrors as Partial<registerInputState>)
+            return;
+        }
         try {
-            const res = ""
+            // api
         } catch (error) {
             console.log(error)
         }finally{
@@ -44,70 +50,76 @@ function Register() {
     }
 
   return (
-   <div className='w-[90%] mx-auto flex justify-center min-h-[70vh] items-center'>
+   <div className='w-[90%] mx-auto flex justify-center min-h-[70vh] items-center mt-12'>
      <div className='w-96 border-myColor border-1 p-5 rounded-md '>
       <form onSubmit={registerSubmitHandler} action="">
             <h2 className='text-xl font-bold text-center'>Meal<span className='text-myColor'>Mart</span> Register</h2>
            
             <div className=' relative my-3'>
                 <div className='flex items-center gap-2'>
-                 <FiUser size={20} /><Label >Full Name </Label>
+                 <FiUser size={20} /><Label >Full Name: </Label>
                 </div>
                 <Input 
-                    className=' focus-visible:ring-1'
+                    className=' focus-visible:ring-1 mt-1'
                     value={input.fullName}
                     name='fullName'
                     onChange={changeEventHandler}
                     type='text'
-                    placeholder='Enter your name '
+                    // placeholder='Enter your name '
                 />
                 
            </div>
+        {error && <span className='text-sm text-red-500'>{error.fullName}</span>}
 
            <div className=' relative my-3'>
                 <div className='flex items-center gap-2'>
-                 <MdAddIcCall size={20} /><Label >Full Name </Label>
+                 <MdAddIcCall size={20} /><Label >Contact no: </Label>
                 </div>
                 <Input 
-                    className=' focus-visible:ring-1'
+                    className=' focus-visible:ring-1 mt-1'
                     value={input.contact}
                     name='contact'
                     onChange={changeEventHandler}
-                    type='text'
-                    placeholder='Enter your contact no'
+                    type='number'
+                    // placeholder='Enter your contact no'
                 />
                 
            </div>
- 
+           {error && <span className='text-sm text-red-500'>{error.contact}</span>}
+
            <div className=' relative my-3'>
                 <div className='flex items-center gap-2'>
-                 <MdOutlineEmail size={20} /><Label >Email </Label>
+                 <MdOutlineEmail size={20} /><Label >Email: </Label>
                 </div>
                 <Input 
-                    className=' focus-visible:ring-1'
+                    className=' focus-visible:ring-1 mt-1'
                     value={input.email}
                     name='email'
                     onChange={changeEventHandler}
                     type='email'
-                    placeholder='Enter your email'
+                    // placeholder='Enter your email'
                 />
                 
            </div>
+           {error && <span className='text-sm text-red-500'>{error.email}</span>}
+
            <div className=' relative my-3'>
-                <div className='flex items-center gap-2'><MdOutlinePassword size={20}  /><Label >Password </Label>
+                <div className='flex items-center gap-2'><MdLockOutline size={20}  /><Label >Password: </Label>
                 </div>
                 <Input 
-                    className=' focus-visible:ring-1'
+                    className=' focus-visible:ring-1 mt-1'
                     value={input.password}
                     name='password'
                     onChange={changeEventHandler}
                     type={isVisible? "text" : "password"}
-                    placeholder='Enter your password'
+                    // placeholder='Enter your password'
                 />
                 
                {isVisible?<IoMdEyeOff onClick={()=>setIsVisible(!isVisible)} size={20}  className=' absolute right-0 inset-y-8 mr-2' />:<IoMdEye onClick={()=>setIsVisible(!isVisible)} size={20}  className=' absolute right-0 inset-y-8 mr-2' /> }  
                 
            </div>
+           {error && <span className='text-sm text-red-500'>{error.password}</span>}
+
            <div className=''>
              {
                 isLoading? <Button className='bg-myColor/80 hover:bg-myColor w-full mt-3' >

@@ -8,3 +8,11 @@ export const userRegisterSchema = z.object({
 })
 
 export type registerInputState = z.infer<typeof userRegisterSchema>
+
+
+export const userLoginSchema = z.object({
+    email : z.string().email("Invalid email adress") ,
+    password : z.string().min(6 , "Password must be 6 characters") ,
+})
+
+export type loginInputState = z.infer<typeof userLoginSchema>

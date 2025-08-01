@@ -7,13 +7,14 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Button } from '../components/ui/button';
 import { Link } from 'react-router';
 import { Loader2 } from 'lucide-react';
+import type { loginInputState } from '../schemaZOD/userSchem';
 
 function Login() {
 
     const [isVisible , setIsVisible] = useState<boolean>(false)
     const [isLoading , setIsLoading] = useState<boolean>(false)
 
-    const [input , setInput] = useState({
+    const [input , setInput] = useState<loginInputState >({
         email: "" ,
         password: ""
     })

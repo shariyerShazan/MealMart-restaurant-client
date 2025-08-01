@@ -9,6 +9,8 @@ import { Link } from 'react-router';
 import { Loader2 } from 'lucide-react';
 import { FiUser } from "react-icons/fi";
 import { MdAddIcCall } from "react-icons/md";
+import type { registerInputState } from '../schemaZOD/userSchem';
+
 
 
 function Register() {
@@ -16,8 +18,8 @@ function Register() {
     const [isVisible , setIsVisible] = useState<boolean>(false)
     const [isLoading , setIsLoading] = useState<boolean>(false)
 
-    const [input , setInput] = useState({
-        fullNmae: "",
+    const [input , setInput] = useState<registerInputState >({
+        fullName: "",
         email: "" ,
         password: "" ,
         contact: ""
@@ -53,7 +55,7 @@ function Register() {
                 </div>
                 <Input 
                     className=' focus-visible:ring-1'
-                    value={input.fullNmae}
+                    value={input.fullName}
                     name='fullName'
                     onChange={changeEventHandler}
                     type='text'

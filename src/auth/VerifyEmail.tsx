@@ -24,13 +24,23 @@ function VerifyEmail() {
         }
     }
 
+    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+        e.preventDefault()
+        const pasteData = e.clipboardData.getData('text').slice(0, 6) 
+        if (/^[A-Za-z0-9]+$/.test(pasteData)) {
+            const newOtp = pasteData.split("")
+            setOtp([...newOtp, ...Array(6 - newOtp.length).fill("")].slice(0, 6))
+            inputRef.current[Math.min(pasteData.length - 1, 5)]?.focus()
+        }
+    }
+
     return (
         <div className='w-[90%] flex justify-center items-center min-h-[70vh]'>
             <div className='w-96 mx-auto'>
                 <form action="" className='text-center border-1 border-myColor p-5 rounded-md'>
                     <h2 className='font-extrabold text-3xl '>Verify your email</h2>
                     <p className='text-sm text-gray-500 my-2'>Enter the 6 digit code sent to your email address</p>
-                    <div className='flex justify-between'>
+                    <div className='flex justify-between my-5'>
                         {
                             otp.map((letter: string, index: number) => (
                                 <Input
@@ -42,6 +52,7 @@ function VerifyEmail() {
                                     maxLength={1}
                                     onChange={(e) => handleChange(index, e.target.value)}
                                     onKeyDown={(e) => handleKeyDown(e, index)}
+                                    onPaste={handlePaste} 
                                 />
                             ))
                         }

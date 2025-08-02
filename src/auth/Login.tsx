@@ -1,17 +1,23 @@
-import React, { useState, type ChangeEvent, type FormEvent } from 'react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { MdLockOutline, MdOutlineEmail } from "react-icons/md";
 import { Input } from '../components/ui/input'
 import { Label } from '@radix-ui/react-label'
 // import { MdOutlinePassword } from "react-icons/md";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Button } from '../components/ui/button';
-import { Link } from 'react-router';
+import { Link, useNavigate, type NavigateFunction } from 'react-router';
 import { Loader2 } from 'lucide-react';
 import { userLoginSchema, type loginInputState } from '../schemaZOD/userSchem';
-// import { CiLock } from "react-icons/ci";
+import axios from 'axios';
+import { USER_API_END_POINT } from '../utils/apiEndPoint';
+import { toast } from 'react-toastify';
+import { useAppDispatch } from '../hooks/useReduxTypeHooks';
+import { setUser } from '../redux/userSlice';
+
 
 function Login() {
-
+     const navigate : NavigateFunction = useNavigate()
+     const dispatch = useAppDispatch()
     const [isVisible , setIsVisible] = useState<boolean>(false)
     const [isLoading , setIsLoading] = useState<boolean>(false)
 
@@ -35,9 +41,17 @@ function Login() {
                     return;
                 }
         try {
-            // api
-        } catch (error) {
+            const res = await axios.post(`${USER_API_END_POINT}/login` , input , {withCredentials: true})
+            if(res.data.success){
+              toast.success(res.data.message)
+              dispatch(setUser(res.data.user))
+              setIsLoading(false)
+              navigate("/")
+            }
+        } catch (error: any) {
+           setIsLoading(false)
             console.log(error)
+            toast.error(error?.response?.data?.message)
         }finally{
             setIsLoading(false)
         }

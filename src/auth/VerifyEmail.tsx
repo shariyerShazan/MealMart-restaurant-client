@@ -1,10 +1,16 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, type FormEvent } from 'react'
 import { Input } from '../components/ui/input'
 // import { useNavigate } from 'react-router'
 import { Button } from '../components/ui/button'
 import { Loader2 } from 'lucide-react'
+import axios from 'axios'
+import { USER_API_END_POINT } from '../utils/apiEndPoint'
+import { useNavigate, type NavigateFunction } from 'react-router'
+import { toast } from 'react-toastify'
 
 function VerifyEmail() {
+
+    const navigate :  NavigateFunction = useNavigate()
     const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""])
     const inputRef = useRef<HTMLInputElement[]>([])
     // const navigate = useNavigate()
@@ -36,11 +42,28 @@ function VerifyEmail() {
             inputRef.current[Math.min(pasteData.length - 1, 5)]?.focus()
         }
     }
+    const handleVerify = async (e:FormEvent)=>{
+        e.preventDefault()
+        setIsLoading(true)
+           try {
+            const verificationCode = otp.join("")
+            const res = await axios.post(`${USER_API_END_POINT}/verify-email` , {verificationCode} , {withCredentials: true})
+            if(res.data.success){
+                navigate("/login")
+                setIsLoading(false)
+                toast.success(res.data.message)
+            }
+           } catch (error: any) {
+            toast.error(error?.response?.data?.message)
+            console.log(error)
+            setIsLoading(false)
+           }
+    }
 
     return (
         <div className='w-[90%] flex justify-center items-center min-h-[70vh]'>
             <div className='w-96 mx-auto'>
-                <form action="" className='text-center border-1 border-myColor p-5 rounded-md'>
+                <form onSubmit={handleVerify} action="" className='text-center border-1 border-myColor p-5 rounded-md'>
                     <h2 className='font-extrabold text-3xl '>Verify your email</h2>
                     <p className='text-sm text-gray-500 my-2'>Enter the 6 digit code sent to your email address</p>
                     <div className='flex justify-between my-5'>

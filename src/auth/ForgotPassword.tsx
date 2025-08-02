@@ -12,7 +12,7 @@ function ForgotPassword() {
 
   return (
     <div className='w-[90%]  min-h-[70vh] flex items-center '>
-      <form action="" className='w-96 mx-auto border-1 border-myColor p-4 rounded-md'>
+      <form action="" className='w-96 mx-auto border-1 border-myColor p-5 rounded-md'>
         <div className='text-center'> 
             <h2 className='font-extrabold text-3xl '>Forgot Password</h2>
             <p className='text-sm text-gray-500 my-2'>Enter your email adress to reset your password</p>
@@ -25,7 +25,7 @@ function ForgotPassword() {
                     className=' focus-visible:ring-1 mt-1'
                     value={email}
                     name='email'
-                    onChange={(e)=>{setEmail(e.target.value)}}
+                    onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{setEmail(e.target.value)}}
                     type='email'
                     placeholder='Enter your email'
                 />

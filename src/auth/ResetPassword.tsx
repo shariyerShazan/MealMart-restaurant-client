@@ -14,7 +14,7 @@ function ResetPassword() {
 
   return (
     <div className='w-[90%]  min-h-[70vh] flex items-center '>
-      <form action="" className='w-96 mx-auto border-1 border-myColor p-4 rounded-md'>
+      <form action="" className='w-96 mx-auto border-1 border-myColor p-5 rounded-md'>
         <div className='text-center'> 
             <h2 className='font-extrabold text-3xl '>Reset Password</h2>
             <p className='text-sm text-gray-500 my-2'>Enter your new password to reset your old password</p>
@@ -26,7 +26,7 @@ function ResetPassword() {
                             className=' focus-visible:ring-1 mt-1'
                             value={newPassword}
                             name='password'
-                            onChange={(e)=>{setNewPassword(e.target.value)}}
+                            onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{setNewPassword(e.target.value)}}
                             type={isVisible? "text" : "password"}
                             placeholder='Enter your new password'
                         />

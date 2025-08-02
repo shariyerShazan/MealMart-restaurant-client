@@ -1,11 +1,14 @@
 import React, { useRef, useState } from 'react'
 import { Input } from '../components/ui/input'
-import { useNavigate } from 'react-router'
+// import { useNavigate } from 'react-router'
+import { Button } from '../components/ui/button'
+import { Loader2 } from 'lucide-react'
 
 function VerifyEmail() {
     const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""])
     const inputRef = useRef<HTMLInputElement[]>([])
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
+    const [isLoading , setIsLoading] = useState<boolean>(false)
 
     const handleChange = (index: number, value: string) => {
         if (/^[A-Za-z0-9]$/.test(value) || value === "") {
@@ -57,6 +60,13 @@ function VerifyEmail() {
                             ))
                         }
                     </div>
+                    {
+            isLoading ? <Button disabled className='bg-myColor/90 hover:bg-myColor w-full cursor-pointer my-2'>
+             <Loader2 className='animate-spin' /> Please Wait
+           </Button> : <Button type='submit' className='bg-myColor/90 hover:bg-myColor w-full cursor-pointer my-2'>
+            Submit
+           </Button>
+           }
                 </form>
             </div>
         </div>

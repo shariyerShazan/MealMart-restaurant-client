@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
+import ForgotPassword from "../auth/ForgotPassword";
 
 
 const Router = createBrowserRouter([
@@ -23,6 +24,10 @@ const Router = createBrowserRouter([
     {
         path: "/register" ,
         element: <Register />
+    },
+    {
+        path: "/forgot-password" ,
+        element: <ForgotPassword />
     }
 ])
 

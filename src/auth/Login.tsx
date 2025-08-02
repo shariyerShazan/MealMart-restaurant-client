@@ -77,19 +77,24 @@ function Login() {
                     // placeholder='Enter your password'
                 />
                 
-               {isVisible?<IoMdEyeOff onClick={()=>setIsVisible(!isVisible)} size={20}  className=' absolute right-0 inset-y-8 mr-2' />:<IoMdEye onClick={()=>setIsVisible(!isVisible)} size={20}  className=' absolute right-0 inset-y-8 mr-2' /> }  
+               {isVisible?<IoMdEyeOff onClick={()=>setIsVisible(!isVisible)} size={20}  className=' absolute right-0 inset-y-9 mr-2 cursor-pointer' />:<IoMdEye onClick={()=>setIsVisible(!isVisible)} size={20}  className=' absolute right-0 inset-y-9 mr-2 cursor-pointer' /> }  
                 
            </div>
            {error && <span className='text-sm text-red-500'>{error.password}</span>}
 
            <div className=''>
              {
-                isLoading? <Button className='bg-myColor/80 hover:bg-myColor w-full mt-3' >
+                isLoading? <Button disabled className='bg-myColor/80 hover:bg-myColor w-full mt-3' >
                <Loader2 className=' animate-spin'/> Please wait
-              </Button> : <Button type='submit' className='bg-myColor/80 hover:bg-myColor w-full mt-3' >
+              </Button> : <Button type='submit' className='bg-myColor/90 hover:bg-myColor w-full mt-3 cursor-pointer' >
                 Login
               </Button>
              }  
+            <div className='text-center my-2 underline hover:text-green-500'>
+            <Link  to={"/forgot-password"}>
+             Forgot password
+             </Link>
+            </div>
               <p className='mt-3 pt-2 border-t-2 border-gray-300'>
                 Don't have account? <Link className='text-green-600' to={"/register"}>Register</Link>
               </p>

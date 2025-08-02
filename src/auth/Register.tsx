@@ -1,20 +1,23 @@
-import React, { useState, type ChangeEvent, type FormEvent } from 'react'
+import  { useState, type ChangeEvent, type FormEvent } from 'react'
 import { MdOutlineEmail } from "react-icons/md";
 import { Input } from '../components/ui/input'
 import { Label } from '@radix-ui/react-label'
-// import { MdOutlinePassword } from "react-icons/md";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Button } from '../components/ui/button';
-import { Link } from 'react-router';
+import { Link, useNavigate, type NavigateFunction } from 'react-router';
 import { Loader2 } from 'lucide-react';
 import { FiUser } from "react-icons/fi";
 import { MdAddIcCall } from "react-icons/md";
 import { userRegisterSchema, type registerInputState } from '../schemaZOD/userSchem';
 import { MdLockOutline } from "react-icons/md";
-
-
+import axios from "axios"
+import { USER_API_END_POINT } from '../utils/apiEndPoint';
+import { toast } from 'react-toastify';
 
 function Register() {
+
+
+    const navigate : NavigateFunction = useNavigate()
 
     const [isVisible , setIsVisible] = useState<boolean>(false)
     const [isLoading , setIsLoading] = useState<boolean>(false)
@@ -37,12 +40,20 @@ function Register() {
         const result = userRegisterSchema.safeParse(input)
         if(!result.success){
             setError(result.error.flatten().fieldErrors as Partial<registerInputState>)
+            setIsLoading(false)
             return;
         }
         try {
-            // api
-        } catch (error) {
+            const res = await axios.post(`${USER_API_END_POINT}/register` , input , {withCredentials: true})
+            if(res.data.success){
+                toast.success(res.data.message)
+                navigate("/verify-email")
+                setIsLoading(false)
+            }
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message)
             console.log(error)
+            setIsLoading(false)
         }finally{
             setIsLoading(false)
         }

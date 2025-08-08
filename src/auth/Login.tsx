@@ -37,6 +37,7 @@ function Login() {
         setIsLoading(true)
         const result = userLoginSchema.safeParse(input)
                 if(!result.success){
+                  setIsLoading(false)
                     setError(result.error.flatten().fieldErrors as Partial<loginInputState>)
                     return;
                 }
@@ -53,8 +54,8 @@ function Login() {
             console.log(error)
             toast.error(error?.response?.data?.message)
         }finally{
-            setIsLoading(false)
-        }
+          setIsLoading(false)
+      }
        
     }
 

@@ -11,7 +11,7 @@ function ForgotPassword() {
     const [isLoading , setIsLoading] = useState<boolean>(false)
 
   return (
-    <div className='w-[90%]  min-h-[70vh] flex items-center '>
+    <div className='w-[90%] mx-auto  min-h-[70vh] flex items-center '>
       <form action="" className='w-96 mx-auto border-1 border-myColor p-5 rounded-md'>
         <div className='text-center'> 
             <h2 className='font-extrabold text-3xl '>Forgot Password</h2>

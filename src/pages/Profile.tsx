@@ -9,6 +9,7 @@ import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/apiEndPoint';
 import { toast } from 'react-toastify';
 import { setUser } from '../redux/userSlice';
+import { Loader2 } from 'lucide-react';
 
 type ProfileDataState = {
   fullName: string;
@@ -17,12 +18,13 @@ type ProfileDataState = {
   address: string;
   city: string;
   country: string;
-  profilePicture: string;
 };
 
 const Profile = () => {
   const {user} = useAppSelector((state)=>state.user)
   const dispatch = useAppDispatch()
+
+  const [btnLoading , setBtnLoading] = useState<boolean>(false)
   
   const [profileData, setProfileData] = useState<ProfileDataState>({
     fullName: user?.fullName || "" ,
@@ -31,24 +33,17 @@ const Profile = () => {
     address: user?.address || "",
     city: user?.city || "",
     country: user?.country || "",
-    profilePicture:  "",
   });
 
   const imageRef = useRef<HTMLInputElement | null>(null);
-  const [preview, setPreview] = useState<string>('');
+  const [preview, setPreview] = useState<string>(user?.profilePicture || 'https://github.com/shadcn.png');
 
-  useEffect(() => {
-    const dbImage = user?.profilePicture || 'https://github.com/shadcn.png';
-    setPreview(dbImage);
-    setProfileData((prev) => ({ ...prev, profilePicture: dbImage }));
-  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const imageURL = URL.createObjectURL(file);
       setPreview(imageURL);
-      setProfileData((prev) => ({ ...prev, profilePicture: imageURL }));
     }
   };
 
@@ -59,44 +54,49 @@ const Profile = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
     try {
-      const formData = new FormData();
-      formData.append("fullName", profileData.fullName);
-      formData.append("email", profileData.email);
-      formData.append("contact", profileData.contact);
-      formData.append("address", profileData.address);
-      formData.append("city", profileData.city);
-      formData.append("country", profileData.country);
-  
-      // profile picture file
-      const fileInput = imageRef.current?.files?.[0];
-      if (fileInput) {
-        formData.append("profilePicture", fileInput);
-      }
-  
-      const res = await axios.patch(`${USER_API_END_POINT}/update-profile`, formData, {
-        withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
+      setBtnLoading(true)
+        const formData = new FormData();
+        formData.append("fullName", profileData.fullName);
+        formData.append("email", profileData.email);
+        formData.append("contact", profileData.contact);
+        formData.append("address", profileData.address);
+        formData.append("city", profileData.city);
+        formData.append("country", profileData.country);
+
+        const fileInput = imageRef.current?.files?.[0];
+        if (fileInput && fileInput.size > 5*1024*1024) {
+          toast.error("File size should be less than 5MB");
+          return;
+        }
+        if (fileInput) {
+            formData.append("profilePicture", fileInput);
+        }
+
+        const res = await axios.patch(`${USER_API_END_POINT}/update-profile`, formData, {
+          withCredentials: true,
       });
-  
-      if (res.data.success) {
-        dispatch(setUser(res.data.user));
-        toast.success(res.data.message);
-      }
+      
+
+        if (res.data.success) {
+            dispatch(setUser(res.data.user));
+            toast.success(res.data.message);
+            setBtnLoading(false)
+        }
     } catch (error: any) {
-      console.log(error);
-      toast.error(error?.response?.data?.message || "Something went wrong");
+      setBtnLoading(false)
+        console.log(error);
+        toast.error(error?.response?.data?.message || "Something went wrong");
     }
-  };
-  
+};
+
   return (
     <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-sm">
   <div className="flex flex-col sm:flex-row items-center gap-8">
     {/* Avatar */}
     <div className="relative">
       <Avatar className="cursor-pointer w-32 h-32 group">
-        <AvatarImage src={preview} />
+        <AvatarImage className='object-cover' src={preview} />
         <AvatarFallback>CN</AvatarFallback>
         <input
         ref={imageRef}
@@ -215,9 +215,13 @@ const Profile = () => {
 
   {/* Submit */}
   <div className="mt-6 flex justify-end">
-    <Button type="submit" className="bg-myColor hover:bg-myColor">
-      Save Changes
-    </Button>
+    {
+     <Button type="submit" className="bg-myColor hover:bg-myColor" disabled={btnLoading}>
+     {btnLoading ? <><Loader2 className='animate-spin' /> Please wait</> : "Save Changes"}
+   </Button>
+   
+    }
+   
   </div>
 </form>
 

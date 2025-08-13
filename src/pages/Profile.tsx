@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
 import { FiFlag, FiGlobe, FiMail, FiMapPin, FiPhone, FiPlus, FiUser } from 'react-icons/fi';
 import { Input } from '../components/ui/input';
@@ -91,139 +91,134 @@ const Profile = () => {
 };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-sm">
-  <div className="flex flex-col sm:flex-row items-center gap-8">
-    {/* Avatar */}
-    <div className="relative">
-      <Avatar className="cursor-pointer w-32 h-32 group">
-        <AvatarImage className='object-cover' src={preview} />
-        <AvatarFallback>CN</AvatarFallback>
-        <input
-        ref={imageRef}
-        type="file"
-        className="hidden"
-        accept="image/*"
-        onChange={handleImageChange}
-      />
-
-      {/* Overlay */}
-      <div
-        onClick={() => imageRef?.current?.click()}
-        className="absolute inset-0 bg-gray-500 opacity-0 group-hover:opacity-50 flex items-center justify-center transition-opacity rounded-full"
-      >
-        <FiPlus className="text-white" size={35} />
+    <form 
+    onSubmit={handleSubmit} 
+    className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6"
+  >
+    {/* Avatar + Name */}
+    <div className="flex flex-col sm:flex-row items-center gap-6  ">
+      <div className="relative w-32 h-32">
+        <Avatar className="w-full h-full cursor-pointer group">
+          <AvatarImage className="object-cover w-full h-full rounded-full" src={preview} />
+          <AvatarFallback>CN</AvatarFallback>
+          <input
+            ref={imageRef}
+            type="file"
+            className="hidden"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+          {/* Overlay */}
+          <div
+            onClick={() => imageRef?.current?.click()}
+            className="absolute inset-0 bg-gray-500 opacity-0 group-hover:opacity-50 flex items-center justify-center transition-opacity rounded-full"
+          >
+            <FiPlus className="text-white" size={28} />
+          </div>
+        </Avatar>
       </div>
-      </Avatar>
-
-      
+  
+      {/* Full Name */}
+      <div className="flex-1 w-full">
+        <Label htmlFor="fullName" className="text-sm font-medium flex items-center gap-2">
+          <FiUser /> Full Name
+        </Label>
+        <Input
+          id="fullName"
+          name="fullName"
+          type="text"
+          value={profileData.fullName}
+          onChange={changeHandler}
+          className="mt-1 w-full focus-visible:ring-0"
+        />
+      </div>
     </div>
-
-    {/* Full Name */}
-    <div className="flex-1">
-      <Label htmlFor="fullName" className="text-sm font-medium flex items-center gap-2">
-        <FiUser /> Full Name
-      </Label>
-      <Input
-        id="fullName"
-        name="fullName"
-        type="text"
-        // placeholder="Enter your full name"
-        value={profileData.fullName}
-        onChange={changeHandler}
-        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0 !text-xl"
-      />
+  
+    {/* Other Fields */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium">
+          <FiMail /> Email
+        </Label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          value={profileData.email}
+          onChange={changeHandler}
+          className="mt-1 w-full focus-visible:ring-0"
+        />
+      </div>
+  
+      <div>
+        <Label htmlFor="contact" className="flex items-center gap-2 text-sm font-medium">
+          <FiPhone /> Contact
+        </Label>
+        <Input
+          id="contact"
+          name="contact"
+          type="text"
+          value={profileData.contact}
+          onChange={changeHandler}
+          className="mt-1 w-full focus-visible:ring-0"
+        />
+      </div>
+  
+      <div>
+        <Label htmlFor="address" className="flex items-center gap-2 text-sm font-medium">
+          <FiMapPin /> Address
+        </Label>
+        <Input
+          id="address"
+          name="address"
+          type="text"
+          value={profileData.address}
+          onChange={changeHandler}
+          className="mt-1 w-full focus-visible:ring-0"
+        />
+      </div>
+  
+      <div>
+        <Label htmlFor="city" className="flex items-center gap-2 text-sm font-medium">
+          <FiGlobe /> City
+        </Label>
+        <Input
+          id="city"
+          name="city"
+          type="text"
+          value={profileData.city}
+          onChange={changeHandler}
+          className="mt-1 w-full focus-visible:ring-0"
+        />
+      </div>
+  
+      <div>
+        <Label htmlFor="country" className="flex items-center gap-2 text-sm font-medium">
+          <FiFlag /> Country
+        </Label>
+        <Input
+          id="country"
+          name="country"
+          type="text"
+          value={profileData.country}
+          onChange={changeHandler}
+          className="mt-1 w-full focus-visible:ring-0 "
+        />
+      </div>
     </div>
-  </div>
-
-  {/* More Fields */}
-  <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <div>
-      <Label htmlFor="email" className="flex items-center gap-2">
-        <FiMail /> Email
-      </Label>
-      <Input
-        id="email"
-        name="email"
-        type="email"
-        // placeholder="Enter your email"
-        value={profileData.email}
-        onChange={changeHandler}
-        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0"
-      />
+  
+    {/* Submit Button */}
+    <div className="flex justify-end">
+      <Button 
+        type="submit" 
+        className="bg-myColor cursor-pointer hover:bg-myColor/90 text-white flex items-center gap-2 px-6 py-2 rounded-md"
+        disabled={btnLoading}
+      >
+        {btnLoading ? <><Loader2 className='animate-spin' /> Please wait</> : "Save Changes"}
+      </Button>
     </div>
-
-    <div>
-      <Label htmlFor="contact" className="flex items-center gap-2">
-        <FiPhone /> Contact
-      </Label>
-      <Input
-        id="contact"
-        name="contact"
-        type="text"
-        // placeholder="Enter contact number"
-        value={profileData.contact}
-        onChange={changeHandler}
-        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0"
-      />
-    </div>
-
-    <div>
-      <Label htmlFor="address" className="flex items-center gap-2">
-        <FiMapPin /> Address
-      </Label>
-      <Input
-        id="address"
-        name="address"
-        type="text"
-        // placeholder="Enter your address"
-        value={profileData.address}
-        onChange={changeHandler}
-        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0"
-      />
-    </div>
-
-    <div>
-      <Label htmlFor="city" className="flex items-center gap-2">
-        <FiGlobe /> City
-      </Label>
-      <Input
-        id="city"
-        name="city"
-        type="text"
-        // placeholder="Enter your city"
-        value={profileData.city}
-        onChange={changeHandler}
-        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0"
-      />
-    </div>
-
-    <div>
-      <Label htmlFor="country" className="flex items-center gap-2">
-        <FiFlag /> Country
-      </Label>
-      <Input
-        id="country"
-        name="country"
-        type="text"
-        // placeholder="Enter your country"
-        value={profileData.country}
-        onChange={changeHandler}
-        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0"
-      />
-    </div>
-  </div>
-
-  {/* Submit */}
-  <div className="mt-6 flex justify-end">
-    {
-     <Button type="submit" className="bg-myColor hover:bg-myColor" disabled={btnLoading}>
-     {btnLoading ? <><Loader2 className='animate-spin' /> Please wait</> : "Save Changes"}
-   </Button>
-   
-    }
-   
-  </div>
-</form>
+  </form>
+  
 
   );
 };

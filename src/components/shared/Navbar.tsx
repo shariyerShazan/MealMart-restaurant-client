@@ -20,15 +20,19 @@ import {
 
 import { Button } from "../ui/button";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { useAppSelector } from "../../hooks/useReduxTypeHooks";
 
 
 // ================== DESKTOP NAVBAR ==================
 const Navbar = () => {
+
+    const {user} = useAppSelector((state)=>state.user)
+
   return (
     <div className="w-[90%] mx-auto">
       {/* Mobile */}
       <div className="block sm:hidden">
-        <NavbarForMobile />
+        <NavbarForMobile  user={user}/>
       </div>
 
       {/* Desktop */}
@@ -61,7 +65,7 @@ const Navbar = () => {
             <DropdownMenu >
               <DropdownMenuTrigger className="" asChild>
                 <Avatar className="cursor-pointer">
-                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarImage className="object-cover" src={`${user?.profilePicture || "https://github.com/shadcn.png"} `} />
                   
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
@@ -71,7 +75,7 @@ const Navbar = () => {
               <DropdownMenuContent className="w-56">
                 <DropdownMenuRadioGroup>
                   <DropdownMenuLabel className="text-md text-center">
-                    Shariyer Shazan
+                  {user?.fullName}
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioItem value="profile">
@@ -103,7 +107,7 @@ export default Navbar;
 
 
 // ================== MOBILE NAVBAR ==================
-const NavbarForMobile = () => {
+const NavbarForMobile = ({user}) => {
   return (
    <div className=" flex items-center justify-between">
           <h2 className="text-3xl font-bold">
@@ -138,10 +142,10 @@ const NavbarForMobile = () => {
         <SheetFooter className="flex  flex-col items-start gap-4 mt-6">
           <div className="flex gap-3 items-center">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage className="object-cover" src={`${user?.profilePicture || "https://github.com/shadcn.png"} `} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <h2 className="text-lg font-bold">Shariyer Shazan</h2>
+            <h2 className="text-lg font-bold">{user?.fullName}</h2>
           </div>
           <Button className="bg-myColor hover:bg-myColor/90 w-full cursor-pointer">Logout</Button>
           <SheetClose asChild>

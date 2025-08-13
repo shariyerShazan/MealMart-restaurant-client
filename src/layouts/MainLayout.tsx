@@ -6,7 +6,9 @@ function MainLayout() {
   return (
     <div className="">
          <Navbar />
-         <Outlet />
+        <div className="w-[90%] mx-auto">
+        <Outlet />
+        </div>
     </div>
   )
 }

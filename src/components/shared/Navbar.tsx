@@ -58,12 +58,14 @@ const Navbar = () => {
             </NavLink>
 
             {/* Avatar Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+            <DropdownMenu >
+              <DropdownMenuTrigger className="" asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage src="https://github.com/shadcn.png" />
+                  
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
+                
               </DropdownMenuTrigger>
 
               <DropdownMenuContent className="w-56">
@@ -103,9 +105,13 @@ export default Navbar;
 // ================== MOBILE NAVBAR ==================
 const NavbarForMobile = () => {
   return (
+   <div className=" flex items-center justify-between">
+          <h2 className="text-3xl font-bold">
+              Meal<span className="text-myColor">Mart</span>
+            </h2>
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="mt-2" variant="outline" size="icon">
+        <Button className="mt-2 cursor-pointer" variant="outline" size="icon">
           <FiMenu size={20} />
         </Button>
       </SheetTrigger>
@@ -146,6 +152,7 @@ const NavbarForMobile = () => {
         </SheetFooter>
       </SheetContent>
     </Sheet>
+   </div>
   );
 };
 

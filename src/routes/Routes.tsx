@@ -6,6 +6,7 @@ import Register from "../auth/Register";
 import ForgotPassword from "../auth/ForgotPassword";
 import ResetPassword from "../auth/ResetPassword";
 import VerifyEmail from "../auth/VerifyEmail";
+import Profile from "../pages/Profile";
 
 
 const Router = createBrowserRouter([
@@ -16,6 +17,10 @@ const Router = createBrowserRouter([
             {
                 index: true ,
                 element: <Home />
+            } ,
+            {
+                path: "/profile" ,
+                element: <Profile />
             }
         ]
     },

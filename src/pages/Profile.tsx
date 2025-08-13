@@ -1,37 +1,44 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FiPlus, FiUser, FiMail, FiPhone, FiMapPin, FiGlobe, FiFlag } from "react-icons/fi";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import React, { useRef, useState, useEffect } from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
+import { FiFlag, FiGlobe, FiMail, FiMapPin, FiPhone, FiPlus, FiUser } from 'react-icons/fi';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Button } from '../components/ui/button';
+import { useAppDispatch, useAppSelector } from '../hooks/useReduxTypeHooks';
+import axios from 'axios';
+import { USER_API_END_POINT } from '../utils/apiEndPoint';
+import { toast } from 'react-toastify';
+import { setUser } from '../redux/userSlice';
 
 type ProfileDataState = {
   fullName: string;
   email: string;
   contact: string;
-  adress: string;
+  address: string;
   city: string;
   country: string;
   profilePicture: string;
 };
 
 const Profile = () => {
+  const {user} = useAppSelector((state)=>state.user)
+  const dispatch = useAppDispatch()
+  
   const [profileData, setProfileData] = useState<ProfileDataState>({
-    fullName: "",
-    email: "",
-    contact: "",
-    adress: "",
-    city: "",
-    country: "",
-    profilePicture: "",
+    fullName: user?.fullName || "" ,
+    email: user?.email || "" ,
+    contact: user?.contact || "",
+    address: user?.address || "",
+    city: user?.city || "",
+    country: user?.country || "",
+    profilePicture:  "",
   });
 
   const imageRef = useRef<HTMLInputElement | null>(null);
-  const [preview, setPreview] = useState<string>("");
+  const [preview, setPreview] = useState<string>('');
 
   useEffect(() => {
-    // ধর ডাটাবেস থেকে আসছে
-    const dbImage = "https://github.com/shadcn.png";
+    const dbImage = user?.profilePicture || 'https://github.com/shadcn.png';
     setPreview(dbImage);
     setProfileData((prev) => ({ ...prev, profilePicture: dbImage }));
   }, []);
@@ -50,148 +57,170 @@ const Profile = () => {
     setProfileData({ ...profileData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(profileData);
+  
+    try {
+      const formData = new FormData();
+      formData.append("fullName", profileData.fullName);
+      formData.append("email", profileData.email);
+      formData.append("contact", profileData.contact);
+      formData.append("address", profileData.address);
+      formData.append("city", profileData.city);
+      formData.append("country", profileData.country);
+  
+      // profile picture file
+      const fileInput = imageRef.current?.files?.[0];
+      if (fileInput) {
+        formData.append("profilePicture", fileInput);
+      }
+  
+      const res = await axios.patch(`${USER_API_END_POINT}/update-profile`, formData, {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+  
+      if (res.data.success) {
+        dispatch(setUser(res.data.user));
+        toast.success(res.data.message);
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Something went wrong");
+    }
   };
+  
+  return (
+    <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-sm">
+  <div className="flex flex-col sm:flex-row items-center gap-8">
+    {/* Avatar */}
+    <div className="relative">
+      <Avatar className="cursor-pointer w-32 h-32 group">
+        <AvatarImage src={preview} />
+        <AvatarFallback>CN</AvatarFallback>
+        <input
+        ref={imageRef}
+        type="file"
+        className="hidden"
+        accept="image/*"
+        onChange={handleImageChange}
+      />
 
-  // Reusable form field with icon
-  const FormField = ({
-    id,
-    label,
-    icon: Icon,
-    ...props
-  }: {
-    id: string;
-    label: string;
-    icon: React.ElementType;
-    name: string;
-    type: string;
-    placeholder: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  }) => (
-    <div className="space-y-1">
-      <Label htmlFor={id} className="flex items-center gap-2 text-sm font-medium">
-        <Icon className="text-gray-500" size={16} />
-        {label}
+      {/* Overlay */}
+      <div
+        onClick={() => imageRef?.current?.click()}
+        className="absolute inset-0 bg-gray-500 opacity-0 group-hover:opacity-50 flex items-center justify-center transition-opacity rounded-full"
+      >
+        <FiPlus className="text-white" size={35} />
+      </div>
+      </Avatar>
+
+      
+    </div>
+
+    {/* Full Name */}
+    <div className="flex-1">
+      <Label htmlFor="fullName" className="text-sm font-medium flex items-center gap-2">
+        <FiUser /> Full Name
       </Label>
       <Input
-        id={id}
-        className="focus-visible:ring-0"
-        {...props}
+        id="fullName"
+        name="fullName"
+        type="text"
+        // placeholder="Enter your full name"
+        value={profileData.fullName}
+        onChange={changeHandler}
+        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0 !text-xl"
       />
     </div>
-  );
+  </div>
 
-  return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-sm space-y-6"
-    >
-      {/* Avatar + Name */}
-      <div className="flex flex-col sm:flex-row items-center gap-8">
-        <div className="relative group">
-          <Avatar className="w-32 h-32 rounded-full overflow-hidden">
-            <AvatarImage src={preview} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+  {/* More Fields */}
+  <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+      <Label htmlFor="email" className="flex items-center gap-2">
+        <FiMail /> Email
+      </Label>
+      <Input
+        id="email"
+        name="email"
+        type="email"
+        // placeholder="Enter your email"
+        value={profileData.email}
+        onChange={changeHandler}
+        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0"
+      />
+    </div>
 
-          <input
-            ref={imageRef}
-            type="file"
-            className="hidden"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
+    <div>
+      <Label htmlFor="contact" className="flex items-center gap-2">
+        <FiPhone /> Contact
+      </Label>
+      <Input
+        id="contact"
+        name="contact"
+        type="text"
+        // placeholder="Enter contact number"
+        value={profileData.contact}
+        onChange={changeHandler}
+        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0"
+      />
+    </div>
 
-          <div
-            onClick={() => imageRef?.current?.click()}
-            className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-full cursor-pointer"
-          >
-            <FiPlus className="text-white" size={30} />
-          </div>
-        </div>
+    <div>
+      <Label htmlFor="address" className="flex items-center gap-2">
+        <FiMapPin /> Address
+      </Label>
+      <Input
+        id="address"
+        name="address"
+        type="text"
+        // placeholder="Enter your address"
+        value={profileData.address}
+        onChange={changeHandler}
+        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0"
+      />
+    </div>
 
-        <div className="flex-1 w-full">
-          <FormField
-            id="fullName"
-            name="fullName"
-            type="text"
-            label="Full Name"
-            icon={FiUser}
-            placeholder="Enter your full name"
-            value={profileData.fullName}
-            onChange={changeHandler}
-          />
-        </div>
-      </div>
+    <div>
+      <Label htmlFor="city" className="flex items-center gap-2">
+        <FiGlobe /> City
+      </Label>
+      <Input
+        id="city"
+        name="city"
+        type="text"
+        // placeholder="Enter your city"
+        value={profileData.city}
+        onChange={changeHandler}
+        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0"
+      />
+    </div>
 
-      {/* Other Fields */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <FormField
-          id="email"
-          name="email"
-          type="email"
-          label="Email"
-          icon={FiMail}
-          placeholder="Enter your email"
-          value={profileData.email}
-          onChange={changeHandler}
-        />
+    <div>
+      <Label htmlFor="country" className="flex items-center gap-2">
+        <FiFlag /> Country
+      </Label>
+      <Input
+        id="country"
+        name="country"
+        type="text"
+        // placeholder="Enter your country"
+        value={profileData.country}
+        onChange={changeHandler}
+        className="mt-1 focus-visible:ring-0 focus-visible:ring-offset-0"
+      />
+    </div>
+  </div>
 
-        <FormField
-          id="contact"
-          name="contact"
-          type="text"
-          label="Contact"
-          icon={FiPhone}
-          placeholder="Enter contact number"
-          value={profileData.contact}
-          onChange={changeHandler}
-        />
+  {/* Submit */}
+  <div className="mt-6 flex justify-end">
+    <Button type="submit" className="bg-myColor hover:bg-myColor">
+      Save Changes
+    </Button>
+  </div>
+</form>
 
-        <FormField
-          id="adress"
-          name="adress"
-          type="text"
-          label="Address"
-          icon={FiMapPin}
-          placeholder="Enter your address"
-          value={profileData.adress}
-          onChange={changeHandler}
-        />
-
-        <FormField
-          id="city"
-          name="city"
-          type="text"
-          label="City"
-          icon={FiGlobe}
-          placeholder="Enter your city"
-          value={profileData.city}
-          onChange={changeHandler}
-        />
-
-        <FormField
-          id="country"
-          name="country"
-          type="text"
-          label="Country"
-          icon={FiFlag}
-          placeholder="Enter your country"
-          value={profileData.country}
-          onChange={changeHandler}
-        />
-      </div>
-
-      {/* Submit Button */}
-      <div className="flex justify-end">
-        <Button type="submit" className="bg-myColor hover:bg-myColor">
-          Save Changes
-        </Button>
-      </div>
-    </form>
   );
 };
 

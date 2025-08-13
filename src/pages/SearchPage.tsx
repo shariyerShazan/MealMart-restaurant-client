@@ -1,5 +1,6 @@
 import React, { useState, type ChangeEvent } from "react";
-import { FiFlag, FiMapPin, FiSearch, FiX } from "react-icons/fi";
+import { FiSearch, FiX } from "react-icons/fi";
+import RestaurantCard from "../components/shared/RestaurantCard";
 
 
 type Restaurant = {
@@ -12,7 +13,6 @@ type Restaurant = {
 };
 
 const SearchPage: React.FC = () => {
-
 
   const [searchText, setSearchText] = useState<string>("");
   const [filters, setFilters] = useState<string[]>(["Italian", "Dhaka"]);
@@ -115,56 +115,8 @@ const SearchPage: React.FC = () => {
 
         {/* Restaurant cards */}
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-  {restaurants.map((rest) => (
-    <div
-      key={rest.id}
-      className="bg-white shadow rounded-lg overflow-hidden flex flex-col"
-    >
-      {/* Image */}
-      <img
-        src={rest.image}
-        alt={rest.name}
-        className="w-full h-40 object-cover"
-      />
-
-      {/* Content */}
-      <div className="p-4 flex-1 flex flex-col">
-        <h3 className="text-lg font-semibold">{rest.name}</h3>
-
-        {/* City */}
-        <div className="flex items-center gap-2 text-gray-600 text-sm mt-1">
-          <FiMapPin className="text-orange-500" />
-          <span className="font-medium">City:</span>
-          <span>{rest.city}</span>
-        </div>
-
-        {/* Country */}
-        <div className="flex items-center gap-2 text-gray-600 text-sm">
-          <FiFlag className="text-green-500" />
-          <span className="font-medium">Country:</span>
-          <span>{rest.country}</span>
-        </div>
-
-        {/* Cuisines */}
-        <div className="flex flex-wrap gap-2 mt-3">
-          {rest.cuisines.map((cuisine, index) => (
-            <span
-              key={index}
-              className="bg-orange-100 text-orange-700 px-3 py-1 rounded-xl text-xs font-medium"
-            >
-              {cuisine}
-            </span>
-          ))}
-        </div>
-
-        {/* Button */}
-        <div className="mt-auto flex justify-end">
-          <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm cursor-pointer">
-            View Menu
-          </button>
-        </div>
-      </div>
-    </div>
+  {restaurants.map((rest , index) => (
+          <RestaurantCard key={index} rest={rest} />
   ))}
 </div>
 

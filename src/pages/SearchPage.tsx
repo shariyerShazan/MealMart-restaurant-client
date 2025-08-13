@@ -1,6 +1,7 @@
 import React, { useState, type ChangeEvent } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 import RestaurantCard from "../components/shared/RestaurantCard";
+import FilterOptions from "../components/shared/FilterOptions";
 
 
 type Restaurant = {
@@ -50,12 +51,12 @@ const SearchPage: React.FC = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col sm:flex-row">
       {/* Left - Filters */}
-      <aside className="w-[20%] min-h-screen border-r p-4 hidden md:block">
+      <aside className="sm:w-[20%] sm:min-h-screen sm:border-r p-4 ">
         <h2 className="font-semibold text-gray-700 mb-4">Filters</h2>
         {/* Filter UI Later */}
-        <p className="text-gray-500 text-sm">Filter options go here...</p>
+        <FilterOptions />
       </aside>
 
       {/* Right - Content */}

@@ -7,6 +7,7 @@ import ForgotPassword from "../auth/ForgotPassword";
 import ResetPassword from "../auth/ResetPassword";
 import VerifyEmail from "../auth/VerifyEmail";
 import Profile from "../pages/Profile";
+import SearchPage from "../pages/SearchPage";
 
 
 const Router = createBrowserRouter([
@@ -21,6 +22,10 @@ const Router = createBrowserRouter([
             {
                 path: "/profile" ,
                 element: <Profile />
+            } ,
+            {
+                path: "/search/:text",
+                element: <SearchPage />
             }
         ]
     },

@@ -18,8 +18,8 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="bg-gradient-to-r from-orange-50 to-yellow-50 py-16">
-      <div className="container mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-10">
+    <section className=" py-16">
+      <div className="container mx-auto px-6 flex flex-col-reverse  md:flex-row items-center gap-10">
         
         {/* Left Text + Search */}
         <div className="flex-1 text-center md:text-left">
@@ -38,13 +38,13 @@ const HeroSection: React.FC = () => {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               onKeyDown={handleKeyPress}
-              className="flex-1 px-4 py-3 outline-none text-gray-700"
+              className="flex-1 px-4 py-3 outline-none text-gray-700 "
             />
             <button
               onClick={handleSearch}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 flex items-center justify-center"
+              className="bg-orange-500 cursor-pointer hover:bg-orange-600 text-white px-5 py-4 flex items-center justify-center"
             >
-              <FiSearch size={20} />
+              <FiSearch className="" size={20} />
             </button>
           </div>
         </div>
@@ -54,7 +54,7 @@ const HeroSection: React.FC = () => {
           <img
             src={`https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg`}
             alt="Delicious Burger"
-            className="w-72 h-auto drop-shadow-lg"
+            className="w-96 h-96 object-cover rounded-lg drop-shadow-lg"
           />
         </div>
       </div>

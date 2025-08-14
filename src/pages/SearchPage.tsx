@@ -20,7 +20,7 @@ const SearchPage: React.FC = () => {
   const [restaurants] = useState<Restaurant[]>([
     {
       id: 1,
-      name: "Burger King",
+      name: "Burger King border",
       city: "Dhaka",
       country: "Bangladesh",
       cuisines: ["Fast Food", "American"],
@@ -28,6 +28,14 @@ const SearchPage: React.FC = () => {
     },
     {
       id: 2,
+      name: "Pizza Hut",
+      city: "Chittagong",
+      country: "Bangladesh",
+      cuisines: ["Pizza", "Italian"],
+      image: "/images/pizza.jpg",
+    },
+    {
+      id: 3,
       name: "Pizza Hut",
       city: "Chittagong",
       country: "Bangladesh",

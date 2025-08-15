@@ -93,7 +93,7 @@ const Profile = () => {
   return (
     <form 
     onSubmit={handleSubmit} 
-    className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6"
+    className="max-w-3xl mt-22 mx-auto p-6 bg-white rounded-xl shadow-md space-y-6"
   >
     {/* Avatar + Name */}
     <div className="flex flex-col sm:flex-row items-center gap-6  ">

@@ -132,7 +132,7 @@ const NavbarForMobile = ({user}) => {
             <div className="flex  flex-col gap-4 mt-4">
             <CustomNavLink to="/">Home</CustomNavLink>
             <CustomNavLink to="/order">Order</CustomNavLink>
-            <CustomNavLink to="/cart">Cart (1)</CustomNavLink>
+            <CustomNavLink to="/cart">Cart <span className="text-myColor">(1)</span></CustomNavLink>
             <CustomNavLink to="/profile">Profile</CustomNavLink>
             <CustomNavLink to="/dashboard">Dashboard</CustomNavLink>
             </div>

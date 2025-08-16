@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { FiPlus } from "react-icons/fi";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
+
 
 type RestaurantProps = {
   restaurant?: boolean;
@@ -22,7 +23,6 @@ const Restaurant: React.FC<RestaurantProps> = ({ restaurant, defaultImage }) => 
 
   const imageRef = useRef<HTMLInputElement | null>(null);
 
-  // Handle image change + preview
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -51,20 +51,20 @@ const Restaurant: React.FC<RestaurantProps> = ({ restaurant, defaultImage }) => 
   };
 
   return (
-    <div className="p-6 mt-32 sm:mt-12 max-w-3xl mx-auto bg-white rounded shadow">
+    <div className="p-6 mt-22  max-w-3xl mx-auto bg-white rounded shadow-xl">
       <h2 className="text-2xl font-bold mb-6 text-center">
         {restaurant ? "Update Restaurant" : "Add Restaurant"}
       </h2>
 
       {/* Profile Image */}
       <div className="flex justify-center mb-6">
-        <div className="relative w-32 h-32">
-          <Avatar className="w-full h-full cursor-pointer group">
+        <div className="relative w-full h-42 ">
+          <Avatar className="w-full rounded-md h-full cursor-pointer group">
             <AvatarImage
-              className="object-cover w-full h-full rounded-full"
+              className="object-cover w-full h-full "
               src={preview}
             />
-            <AvatarFallback>R</AvatarFallback>
+            <AvatarFallback >R</AvatarFallback>
             <input
               ref={imageRef}
               type="file"
@@ -75,7 +75,7 @@ const Restaurant: React.FC<RestaurantProps> = ({ restaurant, defaultImage }) => 
             {/* Overlay */}
             <div
               onClick={() => imageRef.current?.click()}
-              className="absolute inset-0 bg-gray-500 opacity-0 group-hover:opacity-50 flex items-center justify-center transition-opacity rounded-full"
+              className="absolute rounded-md inset-0 bg-gray-500 opacity-0 group-hover:opacity-50 flex items-center justify-center transition-opacity "
             >
               <FiPlus className="text-white" size={28} />
             </div>
@@ -131,11 +131,11 @@ const Restaurant: React.FC<RestaurantProps> = ({ restaurant, defaultImage }) => 
         </div>
 
         <div className="lg:col-span-2">
-          <label>Cuisines (comma separated)</label>
+          <label>Cuisines (e.g. Italian, Chinese, Japanese,)</label>
           <input
             type="text"
             value={cuisines}
-            onChange={(e) => setCuisines(e.target.value)}
+            onChange={(e) => setCuisines(e.target.value.split(","))}
             className="border p-2 w-full rounded"
           />
         </div>
@@ -143,7 +143,7 @@ const Restaurant: React.FC<RestaurantProps> = ({ restaurant, defaultImage }) => 
         <div className="lg:col-span-2 flex justify-center">
           <button
             type="submit"
-            className="bg-blue-500 text-white px-6 py-2 rounded"
+            className="bg-myColor hover:scale-105 text-white px-6 py-2 rounded cursor-pointer"
           >
             {restaurant ? "Update Restaurant" : "Add Restaurant"}
           </button>

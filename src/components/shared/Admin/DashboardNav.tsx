@@ -1,36 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router";
-import { FaHome, FaPlusCircle, FaStore, FaClipboardList } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import { MdOutlineRestaurant } from "react-icons/md";
+import { FiMenu, FiX } from "react-icons/fi";
 
 const DashboardNav = () => {
-  const location = useLocation(); // active link detect করার জন্য
+  const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
     { name: "Home", path: "/", icon: <FaHome /> },
     { name: "Dashboard", path: "/dashboard", icon: <RxDashboard /> },
-    { name: "Restaurant", path: "/dashboard/restaurant", icon: <MdOutlineRestaurant /> },
-    // { name: "Manage Orders", path: "/manage-order", icon: <FaClipboardList /> },
+    { name: "Restaurant", path: "/restaurant", icon: <MdOutlineRestaurant /> },
   ];
 
   return (
-    <div className="fixed top-0 sm:top-1/3 right-4 z-50 bg-white shadow-lg rounded-md  overflow-hidden">
-      <ul className="flex flex-col">
-        {navItems.map((item) => (
-          <li key={item.name}>
-            <Link
-              to={item.path}
-              className={`flex items-center gap-2 px-4 py-3 w-48 hover:bg-myColor hover:text-white transition ${
-                location.pathname === item.path ? "bg-myColor text-white" : "text-gray-700"
-              }`}
-            >
-              {item.icon} {item.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16 items-center">
+          {/* Logo */}
+          <Link to="/" className="text-xl font-bold">
+          <h2 className="text-3xl font-bold">
+            Meal<span className="text-myColor">Mart</span>
+          </h2>
+          </Link>
+
+          {/* Desktop Menu */}
+          <ul className="hidden md:flex space-x-6">
+            {navItems.map((item) => (
+              <li key={item.name}>
+                <Link
+                  to={item.path}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition ${
+                    location.pathname === item.path
+                      ? "bg-myColor text-white"
+                      : "text-gray-700 hover:bg-myColor hover:text-white"
+                  }`}
+                >
+                  {item.icon} {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-2xl text-gray-700"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <FiX /> : <FiMenu />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Dropdown */}
+      {isOpen && (
+        <div className="md:hidden bg-white shadow-md">
+          <ul className="flex flex-col px-4 py-2 space-y-2">
+            {navItems.map((item) => (
+              <li key={item.name}>
+                <Link
+                  to={item.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition ${
+                    location.pathname === item.path
+                      ? "bg-myColor text-white"
+                      : "text-gray-700 hover:bg-myColor hover:text-white"
+                  }`}
+                >
+                  {item.icon} {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </nav>
   );
 };
 

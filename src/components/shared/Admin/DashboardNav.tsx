@@ -12,7 +12,7 @@ const DashboardNav = () => {
   const navItems = [
     { name: "Home", path: "/", icon: <FaHome /> },
     { name: "Dashboard", path: "/dashboard", icon: <RxDashboard /> },
-    { name: "Restaurant", path: "/restaurant", icon: <MdOutlineRestaurant /> },
+    { name: "Restaurant", path: "/dashboard/restaurant", icon: <MdOutlineRestaurant /> },
   ];
 
   return (

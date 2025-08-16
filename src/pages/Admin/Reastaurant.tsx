@@ -1,22 +1,25 @@
 import React, { useState, useRef } from "react";
 import { FiPlus } from "react-icons/fi";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
+import { restaurantFormSchema, RestaurantFormSchema } from "../../schemaZOD/restaurantSchema";
 
 
-type RestaurantProps = {
-  restaurant?: boolean;
-  defaultImage?: string; 
-};
 
-const Restaurant: React.FC<RestaurantProps> = ({ restaurant, defaultImage }) => {
-  const [restaurantName, setRestaurantName] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [deliveryTime, setDeliveryTime] = useState<number | "">("");
-  const [cuisines, setCuisines] = useState("");
 
+const Restaurant = () => {
+  const [input , setInput] = useState<RestaurantFormSchema>({
+    restaurantName: "" ,
+    city : "" ,
+    country: "" ,
+    deliveryTime: 0 ,
+    cuisines: [] ,
+    // coverImage: undefined 
+  })
+  const [error, setError] = useState<Partial<RestaurantFormSchema>>({});
+  const [loading , setIsLoading] = useState<boolean>(false)
+   
+   const restaurant = true
   const [preview, setPreview] = useState<string>(
-    defaultImage ||
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhDZF9NXQ8SIL95juc21Rw7N5jb7hVkx_kjwlGtrwLs0la1hLrthJ9SokvlCadKuPBLPY&usqp=CAU" 
   );
   const [coverImage, setCoverImage] = useState<File | null>(null);
@@ -30,19 +33,19 @@ const Restaurant: React.FC<RestaurantProps> = ({ restaurant, defaultImage }) => 
       setPreview(URL.createObjectURL(file));
     }
   };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
+           const {name , value} = e.target
+           setInput({...input , [name] : value})
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const data = {
-      restaurantName,
-      city,
-      country,
-      deliveryTime,
-      cuisines: cuisines.split(",").map((c) => c.trim()),
-      coverImage,
-    };
-
+    const result = restaurantFormSchema.safeParse(input);
+    if(!result.success){
+                setError(result.error.flatten().fieldErrors as Partial<RestaurantFormSchema>)
+                setIsLoading(false)
+                return;
+            }
     if (restaurant) {
       console.log("Updating restaurant:", data);
     } else {
@@ -92,50 +95,73 @@ const Restaurant: React.FC<RestaurantProps> = ({ restaurant, defaultImage }) => 
           <label>Restaurant Name</label>
           <input
             type="text"
-            value={restaurantName}
-            onChange={(e) => setRestaurantName(e.target.value)}
+            name="restaurantName"
+            value={input.restaurantName}
+            onChange={handleChange}
             className="border p-2 w-full rounded"
           />
+           {error && (
+                  <span className="text-xs text-red-600 font-medium">
+                    {error.restaurantName}
+                  </span>
+                )}
         </div>
 
         <div>
           <label>City</label>
           <input
             type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            name="city"
+            value={input.city}
+            onChange={handleChange}
             className="border p-2 w-full rounded"
           />
+           {error && (
+                  <span className="text-xs text-red-600 font-medium">
+                    {error.city}
+                  </span>
+                )}
         </div>
 
         <div>
           <label>Country</label>
           <input
             type="text"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
+            name="country"
+            value={input.country}
+            onChange={handleChange}
             className="border p-2 w-full rounded"
           />
+           {error && (
+                  <span className="text-xs text-red-600 font-medium">
+                    {error.country}
+                  </span>
+                )}
         </div>
 
         <div>
           <label>Delivery Time (minutes)</label>
           <input
             type="number"
-            value={deliveryTime}
-            onChange={(e) =>
-              setDeliveryTime(e.target.value ? Number(e.target.value) : "")
-            }
+            name="deliveryTime"
+            value={input.deliveryTime}
+            onChange={handleChange}
             className="border p-2 w-full rounded"
           />
+           {error && (
+                  <span className="text-xs text-red-600 font-medium">
+                    {error.deliveryTime}
+                  </span>
+                )}
         </div>
 
         <div className="lg:col-span-2">
           <label>Cuisines (e.g. Italian, Chinese, Japanese,)</label>
           <input
             type="text"
-            value={cuisines}
-            onChange={(e) => setCuisines(e.target.value.split(","))}
+            name="cuisines"
+            value={input.cuisines}
+            onChange={}
             className="border p-2 w-full rounded"
           />
         </div>

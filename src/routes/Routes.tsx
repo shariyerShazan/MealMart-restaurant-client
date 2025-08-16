@@ -10,6 +10,9 @@ import Profile from "../pages/Profile";
 import SearchPage from "../pages/SearchPage";
 import RestaurantDetails from "../pages/RestaurantDetails";
 import Cart from "../pages/Cart";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Dashboard from "../pages/Admin/Dashboard";
+import Reastaurant from "../pages/Admin/Reastaurant";
 
 
 const Router = createBrowserRouter([
@@ -22,20 +25,34 @@ const Router = createBrowserRouter([
                 element: <Home />
             } ,
             {
-                path: "/profile" ,
+                path: "profile" ,
                 element: <Profile />
             } ,
             {
-                path: "/search/:text",
+                path: "search/:text",
                 element: <SearchPage />
             } ,
             {
-                path: "/restaurant/:id" ,
+                path: "restaurant/:id" ,
                 element: <RestaurantDetails />
             } ,
             {
-                path: "/cart" ,
+                path: "cart" ,
                 element : <Cart />
+            }
+        ]
+    },
+    {
+        path: "/dashboard" ,
+        element: <DashboardLayout />,
+        children: [
+            {
+                index: true ,
+                element: <Dashboard />
+            } ,
+            {
+                path : "restaurant" ,
+                element: <Reastaurant />
             }
         ]
     },

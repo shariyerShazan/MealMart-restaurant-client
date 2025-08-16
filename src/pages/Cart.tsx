@@ -61,7 +61,7 @@ const Cart = () => {
             <th className="p-2">Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="items-center">
           {cart.map((item) => (
             <tr key={item.id} className="border-b">
               <td className="p-2">
@@ -69,12 +69,12 @@ const Cart = () => {
               </td>
               <td className="p-2">{item.title}</td>
               <td className="p-2">${item.price}</td>
-              <td className="p-2 flex items-center gap-2">
+              <td className="p-2 flex items-center  gap-2">
                 {/* Decrease or Remove */}
                 {(
                   <button disabled={item.quantity > 1 }
                     onClick={() => handleDecrease(item.id)}
-                    className="flex items-center justify-center w-8 rounded-full h-8 bg-gray-300 cursor-pointer"
+                    className="flex items-center justify-center w-8 rounded-full h-8 bg-myColor text-white cursor-pointer"
                   >
                     <FaMinus />
                   </button>
@@ -85,7 +85,7 @@ const Cart = () => {
                 {/* Increase */}
                 <button
                   onClick={() => handleIncrease(item.id)}
-                  className="flex items-center justify-center w-8 rounded-full h-8 bg-gray-300 cursor-pointer"
+                  className="flex items-center justify-center w-8 rounded-full h-8 bg-myColor text-white cursor-pointer"
                 >
                   <FaPlus />
                 </button>
@@ -94,9 +94,9 @@ const Cart = () => {
               <td className="p-2">
                 <button
                   onClick={() => handleRemove(item.id)}
-                  className="text-red-500"
+                  className="px-4 py-2 rounded-lg bg-myColor hover:scale-105 cursor-pointer text-white "
                 >
-                  <FaTrash />
+                  Remove
                 </button>
               </td>
             </tr>
@@ -104,7 +104,7 @@ const Cart = () => {
 
           {cart.length === 0 && (
             <tr>
-              <td colSpan="6" className="text-center p-4 text-gray-500">
+              <td colSpan={6} className="text-center p-4 text-gray-500">
                 Cart is empty
               </td>
             </tr>

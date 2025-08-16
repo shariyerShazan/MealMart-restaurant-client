@@ -13,6 +13,7 @@ import Cart from "../pages/Cart";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../pages/Admin/Dashboard";
 import Reastaurant from "../pages/Admin/Reastaurant";
+import Menus from "../pages/Admin/Menus";
 
 
 const Router = createBrowserRouter([
@@ -53,6 +54,10 @@ const Router = createBrowserRouter([
             {
                 path : "restaurant" ,
                 element: <Reastaurant />
+            } ,
+            {
+                path: "add-menu" ,
+                element: <Menus />
             }
         ]
     },

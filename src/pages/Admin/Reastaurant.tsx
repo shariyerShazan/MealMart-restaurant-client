@@ -14,7 +14,7 @@ const Restaurant = () => {
     restaurantName: "" ,
     city : "" ,
     country: "" ,
-    deliveryTime: 0 ,
+    deliveryTime: "" ,
     cuisines: [] ,
   })
   const [error, setError] = useState<Partial<RestaurantFormSchema>>({});
@@ -54,12 +54,12 @@ const Restaurant = () => {
                }
 
                try {
-                 const formData = new FormData();
+                        const formData = new FormData();
                         formData.append("restaurantName", input.restaurantName);
                         formData.append("city", input.city);
                         formData.append("country", input.country);
-                        formData.append("deliveryTime",input.deliveryTime);
-                        formData.append("cuisines", input.cuisines);
+                        formData.append("deliveryTime",String(input.deliveryTime));
+                        formData.append("cuisines", input.cuisines.join(","));
                 
                         const fileInput = imageRef.current?.files?.[0];
                         if (fileInput && fileInput.size > 5*1024*1024) {
@@ -86,7 +86,7 @@ const Restaurant = () => {
         <div className="relative w-full h-42 ">
           <Avatar className="w-full rounded-md h-full cursor-pointer group">
             <AvatarImage
-              className="object-cover w-full h-full "
+              className="object-cover rounded-md w-full h-full "
               src={preview}
             />
             <AvatarFallback >R</AvatarFallback>

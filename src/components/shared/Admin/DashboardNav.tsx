@@ -4,6 +4,7 @@ import { FaHome } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import { MdOutlineRestaurant } from "react-icons/md";
 import { FiMenu, FiX } from "react-icons/fi";
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 const DashboardNav = () => {
   const location = useLocation();
@@ -13,6 +14,7 @@ const DashboardNav = () => {
     { name: "Home", path: "/", icon: <FaHome /> },
     { name: "Dashboard", path: "/dashboard", icon: <RxDashboard /> },
     { name: "Restaurant", path: "/dashboard/restaurant", icon: <MdOutlineRestaurant /> },
+    { name: "Menu", path: "/dashboard/add-menu", icon: <IoIosAddCircleOutline  size={20}/> },
   ];
 
   return (

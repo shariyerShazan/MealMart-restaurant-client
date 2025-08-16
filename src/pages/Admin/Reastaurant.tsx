@@ -16,9 +16,9 @@ import { useAppSelector } from "../../hooks/useReduxTypeHooks";
 
 const Restaurant = () => {
   const {restaurant} = useAppSelector((state)=>state.restaurant)
-
+  const [reFetch , setReFetch] = useState<boolean>(false)
   // console.log(restaurant)
-  useGetRestaurant()
+  useGetRestaurant(reFetch)
   const [input , setInput] = useState<RestaurantFormSchema>({
     restaurantName: restaurant?.restaurantName || "" ,
     city : restaurant?.city || "" ,
@@ -95,6 +95,7 @@ const Restaurant = () => {
                           );
                         }
                         if(res?.data?.success){
+                          setReFetch(true)
                           setIsLoading(false)
                           toast.success(res.data.message)
                         }

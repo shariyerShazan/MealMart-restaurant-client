@@ -1,7 +1,10 @@
 import React, { useState, useRef } from "react";
 import { FiPlus } from "react-icons/fi";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
-import { restaurantFormSchema, RestaurantFormSchema } from "../../schemaZOD/restaurantSchema";
+import { restaurantFormSchema, type RestaurantFormSchema,  } from "../../schemaZOD/restaurantSchema";
+import { toast } from "react-toastify";
+import { Button } from "../../components/ui/button";
+import { Loader2 } from "lucide-react";
 
 
 
@@ -13,23 +16,25 @@ const Restaurant = () => {
     country: "" ,
     deliveryTime: 0 ,
     cuisines: [] ,
-    // coverImage: undefined 
   })
   const [error, setError] = useState<Partial<RestaurantFormSchema>>({});
   const [loading , setIsLoading] = useState<boolean>(false)
    
-   const restaurant = true
-  const [preview, setPreview] = useState<string>(
+
+   const restaurant = {
+    coverImage: "https://example.com/old-image.png"
+  };
+
+  const [preview, setPreview] = useState<string>( 
+       restaurant.coverImage ||
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhDZF9NXQ8SIL95juc21Rw7N5jb7hVkx_kjwlGtrwLs0la1hLrthJ9SokvlCadKuPBLPY&usqp=CAU" 
   );
-  const [coverImage, setCoverImage] = useState<File | null>(null);
 
   const imageRef = useRef<HTMLInputElement | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setCoverImage(file);
       setPreview(URL.createObjectURL(file));
     }
   };
@@ -40,17 +45,34 @@ const Restaurant = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = restaurantFormSchema.safeParse(input);
-    if(!result.success){
-                setError(result.error.flatten().fieldErrors as Partial<RestaurantFormSchema>)
+    setIsLoading(true)
+          const result = restaurantFormSchema.safeParse(input);
+          if(!result.success){
+                      setError(result.error.flatten().fieldErrors as Partial<RestaurantFormSchema>)
+                      setIsLoading(false)
+                      return;
+               }
+
+               try {
+                 const formData = new FormData();
+                        formData.append("restaurantName", input.restaurantName);
+                        formData.append("city", input.city);
+                        formData.append("country", input.country);
+                        formData.append("deliveryTime",input.deliveryTime);
+                        formData.append("cuisines", input.cuisines);
+                
+                        const fileInput = imageRef.current?.files?.[0];
+                        if (fileInput && fileInput.size > 5*1024*1024) {
+                          toast.error("File size should be less than 5MB");
+                          return;
+                        }
+                        if (fileInput) {
+                            formData.append("coverImage", fileInput);
+                        }
+               } catch (error) {
                 setIsLoading(false)
-                return;
-            }
-    if (restaurant) {
-      console.log("Updating restaurant:", data);
-    } else {
-      console.log("Adding restaurant:", data);
-    }
+                  console.log(error) 
+               }
   };
 
   return (
@@ -92,10 +114,11 @@ const Restaurant = () => {
         className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
         <div>
-          <label>Restaurant Name</label>
+          <label>Restaurant Name: </label>
           <input
             type="text"
             name="restaurantName"
+             placeholder="e.g. Sultan Dine"
             value={input.restaurantName}
             onChange={handleChange}
             className="border p-2 w-full rounded"
@@ -108,10 +131,11 @@ const Restaurant = () => {
         </div>
 
         <div>
-          <label>City</label>
+          <label>City: </label>
           <input
             type="text"
             name="city"
+             placeholder="e.g. Dhaka"
             value={input.city}
             onChange={handleChange}
             className="border p-2 w-full rounded"
@@ -124,10 +148,11 @@ const Restaurant = () => {
         </div>
 
         <div>
-          <label>Country</label>
+          <label>Country: </label>
           <input
             type="text"
             name="country"
+             placeholder="e.g. Bangladesh"
             value={input.country}
             onChange={handleChange}
             className="border p-2 w-full rounded"
@@ -140,10 +165,11 @@ const Restaurant = () => {
         </div>
 
         <div>
-          <label>Delivery Time (minutes)</label>
+          <label>Delivery Time: </label>
           <input
             type="number"
             name="deliveryTime"
+             placeholder="e.g. 30 minutes"
             value={input.deliveryTime}
             onChange={handleChange}
             className="border p-2 w-full rounded"
@@ -156,23 +182,31 @@ const Restaurant = () => {
         </div>
 
         <div className="lg:col-span-2">
-          <label>Cuisines (e.g. Italian, Chinese, Japanese,)</label>
+          <label>Cuisines:</label>
           <input
             type="text"
             name="cuisines"
+            placeholder="e.g. Italian, Chinese, Japanese"
             value={input.cuisines}
-            onChange={}
-            className="border p-2 w-full rounded"
+            onChange={(e)=>setInput({...input , cuisines: e.target.value.split(",")})}
+            className="border p-2 w-full rounded-md "
           />
         </div>
 
         <div className="lg:col-span-2 flex justify-center">
-          <button
+          {
+            loading ? <Button
+            className="bg-myColor hover:scale-105 text-white px-6 py-2 rounded cursor-pointer"
+          >
+            <Loader2 className="animate-spin" /> Please wait...
+          </Button> : <button
             type="submit"
             className="bg-myColor hover:scale-105 text-white px-6 py-2 rounded cursor-pointer"
           >
             {restaurant ? "Update Restaurant" : "Add Restaurant"}
           </button>
+          }
+          
         </div>
       </form>
     </div>

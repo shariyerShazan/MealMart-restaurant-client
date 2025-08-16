@@ -7,29 +7,33 @@ import { Button } from "../../components/ui/button";
 import { Loader2 } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { RESTAURANT_API_END_POINT } from "../../utils/apiEndPoint";
+import useGetRestaurant from "../../hooks/apiHooks/useGetRestaurant";
+import { useAppSelector } from "../../hooks/useReduxTypeHooks";
 
 
 
 
 
 const Restaurant = () => {
+  const {restaurant} = useAppSelector((state)=>state.restaurant)
+
+  // console.log(restaurant)
+  useGetRestaurant()
   const [input , setInput] = useState<RestaurantFormSchema>({
-    restaurantName: "" ,
-    city : "" ,
-    country: "" ,
-    deliveryTime: "" ,
-    cuisines: [] ,
+    restaurantName: restaurant?.restaurantName || "" ,
+    city : restaurant?.city || "" ,
+    country: restaurant?.country || "" ,
+    deliveryTime: restaurant?.deliveryTime || "" ,
+    cuisines: restaurant?.cuisines || [] ,
   })
   const [error, setError] = useState<Partial<RestaurantFormSchema>>({});
   const [loading , setIsLoading] = useState<boolean>(false)
    
 
-   const restaurant = {
-    coverImage: "https://example.com/old-image.png"
-  };
+
 
   const [preview, setPreview] = useState<string>( 
-       restaurant.coverImage ||
+    restaurant?.coverImage ||
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhDZF9NXQ8SIL95juc21Rw7N5jb7hVkx_kjwlGtrwLs0la1hLrthJ9SokvlCadKuPBLPY&usqp=CAU" 
   );
 
@@ -74,7 +78,22 @@ const Restaurant = () => {
                             formData.append("coverImage", fileInput);
                         }
                         // api fetch
-                        const res = await axios.post(`${RESTAURANT_API_END_POINT}` , formData , {withCredentials: true})
+                        let res;
+                        if (restaurant) {
+                          // update hole patch call hobe
+                          res = await axios.patch(
+                            `${RESTAURANT_API_END_POINT}`,
+                            formData,
+                            { withCredentials: true }
+                          );
+                        } else {
+                          // new restaurant create hole post call hobe
+                          res = await axios.post(
+                            `${RESTAURANT_API_END_POINT}`,
+                            formData,
+                            { withCredentials: true }
+                          );
+                        }
                         if(res?.data?.success){
                           setIsLoading(false)
                           toast.success(res.data.message)

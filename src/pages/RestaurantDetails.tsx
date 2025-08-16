@@ -23,7 +23,7 @@ const RestaurantDetails = () => {
                      </div>
                     }
                     <p className='text-lg font-bold flex items-center mt-2 gap-2 '><FiClock /> Delivery time: <span className='text-md font-medium'>35 mins</span></p>
-                    <p className='mt-3 text-xl font-extrabold'>Available Menus</p>
+                    <p className='mt-12 text-xl font-extrabold text-center sm:text-start '>Available Menus</p>
                   </div>
                   <AvailableMenu />
               </div>

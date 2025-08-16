@@ -9,6 +9,7 @@ import VerifyEmail from "../auth/VerifyEmail";
 import Profile from "../pages/Profile";
 import SearchPage from "../pages/SearchPage";
 import RestaurantDetails from "../pages/RestaurantDetails";
+import Cart from "../pages/Cart";
 
 
 const Router = createBrowserRouter([
@@ -31,6 +32,10 @@ const Router = createBrowserRouter([
             {
                 path: "/restaurant/:id" ,
                 element: <RestaurantDetails />
+            } ,
+            {
+                path: "/cart" ,
+                element : <Cart />
             }
         ]
     },

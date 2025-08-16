@@ -5,6 +5,9 @@ import { restaurantFormSchema, type RestaurantFormSchema,  } from "../../schemaZ
 import { toast } from "react-toastify";
 import { Button } from "../../components/ui/button";
 import { Loader2 } from "lucide-react";
+import axios, { AxiosError } from "axios";
+import { RESTAURANT_API_END_POINT } from "../../utils/apiEndPoint";
+
 
 
 
@@ -43,7 +46,7 @@ const Restaurant = () => {
            setInput({...input , [name] : value})
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true)
           const result = restaurantFormSchema.safeParse(input);
@@ -63,15 +66,25 @@ const Restaurant = () => {
                 
                         const fileInput = imageRef.current?.files?.[0];
                         if (fileInput && fileInput.size > 5*1024*1024) {
+                          setIsLoading(false)
                           toast.error("File size should be less than 5MB");
                           return;
                         }
                         if (fileInput) {
                             formData.append("coverImage", fileInput);
                         }
+                        // api fetch
+                        const res = await axios.post(`${RESTAURANT_API_END_POINT}` , formData , {withCredentials: true})
+                        if(res?.data?.success){
+                          setIsLoading(false)
+                          toast.success(res.data.message)
+                        }
+
                } catch (error) {
                 setIsLoading(false)
-                  console.log(error) 
+                const err = error as AxiosError<{ message: string }>;
+                console.log(err.response?.data?.message);
+                toast.error(err.response?.data?.message)
                }
   };
 

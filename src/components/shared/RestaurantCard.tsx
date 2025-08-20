@@ -51,7 +51,7 @@ className="bg-white shadow rounded-lg overflow-hidden flex flex-col"
 
   {/* Button */}
   <div className="mt-auto flex justify-end">
-    <button onClick={()=> navigate("/restaurant/:id")} className="mt-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm cursor-pointer">
+    <button onClick={()=> navigate(`/restaurant/${rest._id}`)} className="mt-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm cursor-pointer">
       View Menu
     </button>
   </div>

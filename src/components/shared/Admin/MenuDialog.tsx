@@ -49,7 +49,7 @@ const MenuDialog: React.FC<MenuDialogProps> = ({ isOpen, onClose, defaultValues,
     setIsLoading(true);
     const formData = new FormData();
     formData.append("foodName", data.foodName);
-    formData.append("description", data.description);
+    formData.append("description", data.description.slice(0 , 200));
     formData.append("price", data.price);
 
     const fileInput = imageRef.current?.files?.[0];
@@ -105,6 +105,7 @@ const MenuDialog: React.FC<MenuDialogProps> = ({ isOpen, onClose, defaultValues,
             name="description"
             value={data.description}
             onChange={handleChange}
+            rows={6}
             placeholder="Description"
             className="border p-2 w-full rounded"
           />
@@ -117,7 +118,7 @@ const MenuDialog: React.FC<MenuDialogProps> = ({ isOpen, onClose, defaultValues,
             className="border p-2 w-full rounded"
           />
           <div className="flex justify-center mb-6">
-            <div className="relative w-full h-42">
+            <div className="relative w-full h-32">
               <Avatar className="w-full rounded-md h-full cursor-pointer group">
                 <AvatarImage className="object-cover rounded-md w-full h-full" src={preview} />
                 <AvatarFallback className="rounded-md">R</AvatarFallback>
@@ -140,7 +141,7 @@ const MenuDialog: React.FC<MenuDialogProps> = ({ isOpen, onClose, defaultValues,
         </div>
 
         <div className="flex justify-end gap-2 mt-4">
-          <Button variant="outline" onClick={onClose}>Cancel</Button>
+          <Button variant="outline" className="cursor-pointer" onClick={onClose}>Cancel</Button>
           {loading ? (
             <Button className="bg-myColor hover:bg-myColor hover:scale-101 cursor-pointer">
               <Loader2 className="animate-spin" />

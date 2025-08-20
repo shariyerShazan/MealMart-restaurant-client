@@ -28,7 +28,7 @@ const Menus = () => {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Available Menus</h2>
         <Button
-          className="bg-myColor hover:bg-myColor/90"
+          className="bg-myColor hover:bg-myColor/90 cursor-pointer"
           onClick={() => {
             setEditMenu(null);
             setOpenDialog(true);

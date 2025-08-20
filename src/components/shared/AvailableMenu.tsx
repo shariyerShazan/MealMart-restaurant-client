@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button } from '../ui/button'
 
-function AvailableMenu() {
+function AvailableMenu({menus}) {
   return (
    <div className='flex flex-wrap gap-4 justify-center mt-4'>
         {
-            [1,2,3,4].map((_,index)=>{
+            menus.map((menu ,index)=>{
                 return  <div key={index} className=' '>
 
                 <div className='w-82 h-82 shadow-xl'>

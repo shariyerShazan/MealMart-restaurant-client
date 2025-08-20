@@ -6,7 +6,12 @@ const restaurantSlice = createSlice({
         restaurant: null ,
         menu : [] ,
         allRestaurant : [] ,
-        pagination: {}
+        pagination: {
+            total: 0,
+            page: 1,
+            limit: 10,
+            totalPages: 0
+          }
     },
     reducers: {
         setRestaurant : (state , action)=>{

@@ -43,9 +43,9 @@ const Navbar = () => {
       try {
              const res = await axios.post(`${USER_API_END_POINT}/logout` , {} , {withCredentials: true})
              if(res.data.success){
-              setLogoutLoading(false)
                   dispatch(setUser(null))
-                  toast(res.data.meesage)
+                  toast(res.data.message)
+                  setLogoutLoading(false)
              }else{
               setLogoutLoading(false)
              }
@@ -119,7 +119,7 @@ const Navbar = () => {
                   </DropdownMenuRadioItem>
                   <DropdownMenuRadioItem value="logout">
                     {
-                      logoutLoading ? <Button className="bg-myColor hover:bg-myColor">
+                      logoutLoading ? <Button className="bg-myColor hover:bg-myColor w-full">
                            <Loader2 className="animate-spin"/> please wait
                       </Button>: <Button onClick={handleLogout} className="w-full cursor-pointer bg-myColor hover:bg-myColor/90">
                       Logout
@@ -191,16 +191,16 @@ const NavbarForMobile = ({user , logoutLoading , handleLogout , navigate}) => {
             <h2 className="text-lg font-bold">{user?.fullName}</h2>
           </div>
           {
-                    logoutLoading? <Button className="bg-myColor hover:bg-myColor">
+                    logoutLoading? <Button className="bg-myColor hover:bg-myColor cursor-pointer">
                            <Loader2 className="animate-spin"/> please wait
-                      </Button>: <Button onClick={handleLogout} className="w-full bg-myColor hover:bg-myColor/90">
+                      </Button>: <Button onClick={handleLogout} className="w-full cursor-pointer bg-myColor hover:bg-myColor/90">
                       Logout
                     </Button>
                     }
                     
           </div> :
-              <div>
-                   <Button onClick={()=>navigate("/login")} className="bg-myColor hover:bg-myColor cursor-pointer">
+              <div className="flex w-full">
+                   <Button onClick={()=>navigate("/login")} className="w-full bg-myColor hover:bg-myColor cursor-pointer">
                   Login
               </Button>
             </div>}

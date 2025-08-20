@@ -14,27 +14,27 @@ className="bg-white shadow rounded-lg overflow-hidden flex flex-col"
 >
 {/* Image */}
 <img
-  src={rest.image}
-  alt={rest.name}
+  src={rest?.coverImage}
+  alt={rest.restaurantName}
   className="w-full h-40 object-cover"
 />
 
 {/* Content */}
 <div className="p-4 flex-1 flex flex-col">
-  <h3 className="text-lg font-semibold">{rest.name}</h3>
+  <h3 className="text-lg font-semibold">{rest?.restaurantName}</h3>
 
   {/* City */}
   <div className="flex items-center gap-2 text-gray-600 text-sm mt-1">
     <FiMapPin className="text-orange-500" />
     <span className="font-medium">City:</span>
-    <span>{rest.city}</span>
+    <span>{rest?.city}</span>
   </div>
 
   {/* Country */}
   <div className="flex items-center gap-2 text-gray-600 text-sm">
     <FiFlag className="text-green-500" />
     <span className="font-medium">Country:</span>
-    <span>{rest.country}</span>
+    <span>{rest?.country}</span>
   </div>
 
   {/* Cuisines */}

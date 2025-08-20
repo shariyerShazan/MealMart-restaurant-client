@@ -15,7 +15,7 @@ const useGetAllRestaurant = ({ searchText = "", cuisines = "", dependency = "" }
     const fetchAllRestaurant = async () => {
       try {
         const res = await axios.get(
-          `${RESTAURANT_API_END_POINT}/search?searchText=${searchText}&limit=${limit}&page=${page}`,
+          `${RESTAURANT_API_END_POINT}/search?searchText=${searchText}&cuisines=${cuisines}&limit=${limit}&page=${page}`,
           { withCredentials: true }
         )
         if (res.data.success) {

@@ -221,7 +221,7 @@ const Restaurant = () => {
             name="cuisines"
             placeholder="e.g. Italian, Chinese, Japanese"
             value={input.cuisines}
-            onChange={(e)=>setInput({...input , cuisines: e.target.value.split(",")})}
+            onChange={(e)=>setInput({...input , cuisines: e.target.value.toLocaleLowerCase().split(",")})}
             className="border p-2 w-full rounded-md "
           />
         </div>

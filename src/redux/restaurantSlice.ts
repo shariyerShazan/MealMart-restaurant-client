@@ -11,7 +11,8 @@ const restaurantSlice = createSlice({
             page: 1,
             limit: 10,
             totalPages: 0
-          }
+          } ,
+         adminMenu : []
     },
     reducers: {
         setRestaurant : (state , action)=>{
@@ -25,9 +26,12 @@ const restaurantSlice = createSlice({
         } ,
         setPagination : (state , action)=>{
             state.pagination = action.payload
+        } ,
+        setAdminMenu: (state , action)=>{
+            state.adminMenu = action.payload
         }
     }
 })
 
-export const {setRestaurant , setMenu ,setAllRestaurant , setPagination} = restaurantSlice.actions
+export const {setRestaurant , setMenu ,setAllRestaurant , setPagination , setAdminMenu} = restaurantSlice.actions
 export default restaurantSlice.reducer

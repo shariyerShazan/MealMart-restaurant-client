@@ -79,7 +79,7 @@ const Menus = () => {
         isOpen={openDialog}
         onClose={() => setOpenDialog(false)}
         onSubmit={editMenu ? handleEditMenu : handleAddMenu}
-        defaultValues={editMenu || undefined}
+        // defaultValues={editMenu || undefined}
       />
     </div>
   );

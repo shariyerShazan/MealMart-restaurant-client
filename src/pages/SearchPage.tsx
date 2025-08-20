@@ -62,7 +62,7 @@ const SearchPage: React.FC = () => {
         {/* Results info */}
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <span className="font-medium text-gray-700">
-            ({allRestaurant?.length || 0}) restaurants found
+            ({allRestaurant?.length || 0}) restaurants found {allRestaurant && `in ${searchText}`}
           </span>
 
           {/* Active filters */}

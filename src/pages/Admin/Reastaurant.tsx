@@ -122,7 +122,7 @@ const Restaurant = () => {
               className="object-cover rounded-md w-full h-full "
               src={preview}
             />
-            <AvatarFallback >R</AvatarFallback>
+            <AvatarFallback className="rounded-md">R</AvatarFallback>
             <input
               ref={imageRef}
               type="file"

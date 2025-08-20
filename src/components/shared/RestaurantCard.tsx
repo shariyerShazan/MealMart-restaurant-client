@@ -31,7 +31,7 @@ className="bg-white shadow rounded-lg overflow-hidden flex flex-col"
   </div>
 
   {/* Country */}
-  <div className="flex items-center gap-2 text-gray-600 text-sm">
+  <div className="flex items-center gap-2 text-gray-600 text-sm mt-1">
     <FiFlag className="text-green-500" />
     <span className="font-medium">Country:</span>
     <span>{rest?.country}</span>

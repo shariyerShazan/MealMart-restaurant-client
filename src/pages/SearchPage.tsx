@@ -46,7 +46,7 @@ const SearchPage: React.FC = () => {
         <div className="flex items-center bg-white shadow rounded-full overflow-hidden max-w-xl">
           <input
             type="text"
-            placeholder="Search by restaurant and cuisines"
+            placeholder="Search by cuisines"
             value={searchCusines}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchCuisines(e.target.value)}
             className="flex-1 px-4 py-2 outline-none w-full"

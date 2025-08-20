@@ -10,7 +10,7 @@ const RestaurantDetails = () => {
   const {restaurant} = useAppSelector((state)=>state.restaurant)
   useGetSingleRestaurant({restaurantId})
   return (
-    <div className='mt-12'>
+    <div className='mt-12 mb-6'>
          <div>
               <div>
                   <img className='w-full h-42 md:h-64 object-cover rounded-xl ' src={restaurant?.coverImage} alt="" />
@@ -29,7 +29,7 @@ const RestaurantDetails = () => {
                      </div>
                     }
                     <p className='text-lg font-bold flex items-center mt-2 gap-2 '><FiClock /> Delivery time: <span className='text-md font-medium'>{restaurant?.deliveryTime}</span></p>
-                    <p className='mt-12 text-xl font-extrabold text-center sm:text-start '>Available Menus</p>
+                    <p className='mt-12 text-xl font-extrabold text-center sm:text-start '>Available Menus - {restaurant?.menus?.length}</p>
                   </div>
                   <AvailableMenu  menus={restaurant?.menus}/>
               </div>

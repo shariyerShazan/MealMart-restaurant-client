@@ -44,7 +44,7 @@ const Navbar = () => {
              const res = await axios.post(`${USER_API_END_POINT}/logout` , {} , {withCredentials: true})
              if(res.data.success){
                   dispatch(setUser(null))
-                  toast(res.data.message)
+                  toast.success(res.data.message)
                   setLogoutLoading(false)
              }else{
               setLogoutLoading(false)
@@ -108,7 +108,7 @@ const Navbar = () => {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioItem value="profile">
-                    <Link className="text-lg font-bold" to="/profile">
+                    <Link className="text-lg font-bold w-full " to="/profile">
                       Profile
                     </Link>
                   </DropdownMenuRadioItem>

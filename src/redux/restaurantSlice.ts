@@ -4,7 +4,9 @@ const restaurantSlice = createSlice({
     name: "restaurant" ,
     initialState: {
         restaurant: null ,
-        menu : []
+        menu : [] ,
+        allRestaurant : [] ,
+        pagination: {}
     },
     reducers: {
         setRestaurant : (state , action)=>{
@@ -12,9 +14,15 @@ const restaurantSlice = createSlice({
         } ,
         setMenu : (state , action)=>{
             state.menu = action.payload
+        },
+        setAllRestaurant : (state , action)=>{
+            state.allRestaurant = action.payload
+        } ,
+        setPagination : (state , action)=>{
+            state.pagination = action.payload
         }
     }
 })
 
-export const {setRestaurant , setMenu} = restaurantSlice.actions
+export const {setRestaurant , setMenu ,setAllRestaurant , setPagination} = restaurantSlice.actions
 export default restaurantSlice.reducer

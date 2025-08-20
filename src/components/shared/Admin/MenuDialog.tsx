@@ -10,14 +10,7 @@ import { MENU_API_END_POINT } from "../../../utils/apiEndPoint";
 
 
 
-// interface MenuDialogProps {
-//   isOpen: boolean;
-//   onClose: () => void;
-//   onSubmit: (data: { foodName: string; description: string; price: number; foodImage: string }) => void;
-//   defaultValues?: { foodName: string; description: string; price: number; foodImage: string };
-// }
-
-const MenuDialog = ({ isOpen, onClose,  defaultValues }) => {
+const MenuDialog = ({ isOpen, onClose,  defaultValues , setAddOne }) => {
   const  imageRef = useRef<HTMLInputElement | null>(null)
   const [loading , setIsLoading] = useState<boolean>(false)
   
@@ -49,6 +42,7 @@ const MenuDialog = ({ isOpen, onClose,  defaultValues }) => {
 
   }
   const handleSubmit = async () => {
+    setIsLoading(true)
           const formData = new FormData()
           formData.append("foodName" , data.foodName)
           formData.append("description" , data.description)
@@ -67,20 +61,25 @@ const MenuDialog = ({ isOpen, onClose,  defaultValues }) => {
                 try {
                   const res = await axios.post(`${MENU_API_END_POINT}${"menuId"}` , {formData} , {withCredentials: true})
                   if(res.data.success){
+                    setIsLoading(false)
                     toast.success(res.data.meesage)
                   }
                  } catch (error: any) {
                   console.log(error)
+                  setIsLoading(false)
                   toast.error(error?.response?.data?.meesage)
                  }
               }else{
                try {
                 const res = await axios.post(`${MENU_API_END_POINT}` , {formData} , {withCredentials: true})
                 if(res.data.success){
+                  setAddOne(true)
+                  setIsLoading(false)
                   toast.success(res.data.meesage)
                 }
                } catch (error: any) {
                 console.log(error)
+                setIsLoading(false)
                 toast.error(error?.response?.data?.meesage)
                }
               }
@@ -148,10 +147,10 @@ const MenuDialog = ({ isOpen, onClose,  defaultValues }) => {
         <div className="flex justify-end gap-2 mt-4">
           <Button variant="outline" onClick={onClose}>Cancel</Button>
           {
-            loading? <Button className="bg-myColor hover:bg-myColor hover:scale-101">
+            loading? <Button className="bg-myColor hover:bg-myColor hover:scale-101 cursor-pointer">
                      <Loader2 className="animate-spin"/>
             </Button>:
-                <Button className="bg-myColor hover:bg-myColor hover:scale-101" onClick={handleSubmit}>
+                <Button className="bg-myColor hover:bg-myColor hover:scale-101 cursor-pointer" onClick={handleSubmit}>
                 {defaultValues ? "Update" : "Add"}
               </Button>
           }

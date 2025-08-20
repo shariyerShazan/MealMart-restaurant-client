@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "../../components/ui/button";
 import MenuDialog from "../../components/shared/Admin/MenuDialog";
 import { useAppSelector } from "../../hooks/useReduxTypeHooks";
+import useGetRestaurant from "../../hooks/apiHooks/useGetRestaurant";
 
 
 interface MenuItem {
@@ -12,14 +13,18 @@ interface MenuItem {
 }
 
 const Menus = () => {
-   const { adminMenu} = useAppSelector((state)=> state.restaurant)
+  const [addOne, setAddOne]= useState<boolean>(false)
+
+  useGetRestaurant({dependency:addOne})
+
+   const { restaurant} = useAppSelector((state)=> state.restaurant)
+   const menus = restaurant?.menus
   const [openDialog, setOpenDialog] = useState(false);
   const [editMenu, setEditMenu] = useState<MenuItem | null>(null);
 
-
-
   return (
     <div className="p-6 mt-22">
+     
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Available Menus</h2>
         <Button
@@ -33,8 +38,12 @@ const Menus = () => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {adminMenu && adminMenu.map((menu, index) => (
+      <div className={`${menus.length === 0 ? " ": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
+        {menus.length === 0 ?    
+         <div className="flex justify-center items-center">
+              <p className="text-center text-xl font-bold text-myColor">No Menu Found, Please Add First</p>
+         </div>    
+        :  menus.map((menu, index) => (
           <div key={index} className="shadow-xl rounded-lg overflow-hidden">
             <img
               src={menu?.foodImage}
@@ -50,7 +59,7 @@ const Menus = () => {
               <Button
                 className="bg-myColor w-full hover:bg-myColor/90 mt-3 cursor-pointer"
                 onClick={() => {
-                  setEditMenu(menu._id);
+                  setEditMenu(menu);
                   setOpenDialog(true);
                 }}
               >
@@ -62,6 +71,7 @@ const Menus = () => {
       </div>
 
       <MenuDialog
+        setAddOne={setAddOne}
         isOpen={openDialog}
         onClose={() => setOpenDialog(false)}
         defaultValues={editMenu || undefined}

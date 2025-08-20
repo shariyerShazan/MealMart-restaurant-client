@@ -4,7 +4,7 @@ import { RESTAURANT_API_END_POINT } from "../../utils/apiEndPoint";
 import { useAppDispatch } from "../useReduxTypeHooks";
 import { setRestaurant } from "../../redux/restaurantSlice";
 
-const useGetRestaurant = (dependency = null) => {
+const useGetRestaurant = ({dependency = null}) => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);

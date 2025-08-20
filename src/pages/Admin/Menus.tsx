@@ -59,6 +59,7 @@ const Menus = () => {
               <Button
                 className="bg-myColor w-full hover:bg-myColor/90 mt-3 cursor-pointer"
                 onClick={() => {
+                  
                   setEditMenu(menu);
                   setOpenDialog(true);
                 }}

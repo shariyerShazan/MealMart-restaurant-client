@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { BsCart2 } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 
@@ -27,6 +27,7 @@ import { useAppSelector } from "../../hooks/useReduxTypeHooks";
 const Navbar = () => {
 
     const {user} = useAppSelector((state)=>state.user)
+    const navigate = useNavigate()
 
   return (
     <div className="w-[90%] mx-auto">
@@ -62,7 +63,8 @@ const Navbar = () => {
             </NavLink>
 
             {/* Avatar Dropdown */}
-            <DropdownMenu >
+            {
+              user ?  <DropdownMenu >
               <DropdownMenuTrigger className="" asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage className="object-cover" src={`${user?.profilePicture || "https://github.com/shadcn.png"} `} />
@@ -96,6 +98,14 @@ const Navbar = () => {
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
+            : 
+            <div>
+              <Button onClick={()=>navigate("/login")} className="bg-myColor hover:bg-myColor cursor-pointer">
+                  Login
+              </Button>
+            </div>
+            }
+           
           </div>
         </div>
       </div>
@@ -140,14 +150,21 @@ const NavbarForMobile = ({user}) => {
         </SheetHeader>
 
         <SheetFooter className="flex  flex-col items-start gap-4 mt-6">
-          <div className="flex gap-3 items-center">
+          {user? <div className="flex  flex-col gap-2 w-full">
+            <div className="flex gap-3 items-center">
             <Avatar>
             <AvatarImage className="object-cover" src={`${user?.profilePicture || "https://github.com/shadcn.png"} `} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <h2 className="text-lg font-bold">{user?.fullName}</h2>
           </div>
-          <Button className="bg-myColor hover:bg-myColor/90 w-full cursor-pointer">Logout</Button>
+          <Button className="bg-myColor hover:bg-myColor/90 w-full  cursor-pointer hover:scale-101">Logout</Button>
+          </div> :
+              <div>
+                   <Button onClick={()=>navigate("/login")} className="bg-myColor hover:bg-myColor cursor-pointer">
+                  Login
+              </Button>
+            </div>}
           <SheetClose asChild>
             <Button variant="outline" className="w-full cursor-pointer">
               Close

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "../../components/ui/button";
 import MenuDialog from "../../components/shared/Admin/MenuDialog";
 
+
 interface MenuItem {
   foodName: string;
   description: string;
@@ -32,7 +33,7 @@ const Menus = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 mt-22">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Available Menus</h2>
         <Button
@@ -61,7 +62,7 @@ const Menus = () => {
                 Price: <span className="text-myColor">${menu.price}</span>
               </p>
               <Button
-                className="bg-myColor hover:bg-myColor/90 mt-3"
+                className="bg-myColor w-full hover:bg-myColor/90 mt-3 cursor-pointer"
                 onClick={() => {
                   setEditMenu(menu);
                   setOpenDialog(true);

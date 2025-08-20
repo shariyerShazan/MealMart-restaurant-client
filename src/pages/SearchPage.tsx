@@ -1,53 +1,30 @@
-import React, { useState, type ChangeEvent } from "react";
+import React, { useState, type ChangeEvent, useEffect } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 import RestaurantCard from "../components/shared/RestaurantCard";
 import FilterOptions from "../components/shared/FilterOptions";
-
-
-type Restaurant = {
-  id: number;
-  name: string;
-  city: string;
-  country: string;
-  cuisines: string[];
-  image: string;
-};
+import { useAppSelector } from "../hooks/useReduxTypeHooks";
+import useGetAllRestaurant from "../hooks/apiHooks/useGetAllRestaurant";
+import { useParams } from "react-router";
 
 const SearchPage: React.FC = () => {
-
-  const [searchText, setSearchText] = useState<string>("");
+  const { searchText: paramSearch } = useParams(); // URL থেকে search param
+  const [searchText, setSearchText] = useState<string>(paramSearch || "");
   const [filters, setFilters] = useState<string[]>(["Italian", "Dhaka"]);
-  const [restaurants] = useState<Restaurant[]>([
-    {
-      id: 1,
-      name: "Burger King border",
-      city: "Dhaka",
-      country: "Bangladesh",
-      cuisines: ["Fast Food", "American"],
-      image: "/images/burger.jpg",
-    },
-    {
-      id: 2,
-      name: "Pizza Hut",
-      city: "Chittagong",
-      country: "Bangladesh",
-      cuisines: ["Pizza", "Italian"],
-      image: "/images/pizza.jpg",
-    },
-    {
-      id: 3,
-      name: "Pizza Hut",
-      city: "Chittagong",
-      country: "Bangladesh",
-      cuisines: ["Pizza", "Italian"],
-      image: "/images/pizza.jpg",
-    },
-  ]);
 
+  const { allRestaurant } = useAppSelector((state) => state.restaurant);
+
+  // Fetch restaurants whenever searchText, filters, or pagination changes
+  useGetAllRestaurant({
+    searchText,
+    cuisines: filters.join(","), // filter গুলো comma-separated পাঠানো হবে
+    dependency: searchText + filters.join(","),
+  });
+
+  // Search button click (optional)
   const handleSearch = () => {
-    if (searchText.trim()) {
-// 
-    }
+    // useGetAllRestaurant hook already fetch করে, 
+    // যদি API call শুধু button click এ করতে চাও, তাহলে এখানে logic লিখবে
+    console.log("Search triggered for:", searchText, filters);
   };
 
   const handleRemoveFilter = (filter: string) => {
@@ -63,7 +40,6 @@ const SearchPage: React.FC = () => {
       {/* Left - Filters */}
       <aside className="sm:w-[20%] sm:min-h-screen sm:border-r p-4 ">
         <h2 className="font-semibold text-gray-700 mb-4">Filters</h2>
-        {/* Filter UI Later */}
         <FilterOptions />
       </aside>
 
@@ -79,7 +55,6 @@ const SearchPage: React.FC = () => {
               setSearchText(e.target.value)
             }
             className="flex-1 px-4 py-2 outline-none w-full"
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
           <button
             onClick={handleSearch}
@@ -92,7 +67,7 @@ const SearchPage: React.FC = () => {
         {/* Results info */}
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <span className="font-medium text-gray-700">
-            ({restaurants.length}) restaurants found
+            ({allRestaurant?.length || 0}) restaurants found
           </span>
 
           {/* Active filters */}
@@ -106,13 +81,13 @@ const SearchPage: React.FC = () => {
                 onClick={() => handleRemoveFilter(filter)}
                 className="ml-2 text-gray-600 hover:text-red-500 cursor-pointer"
               >
-                <FiX  size={14} />
+                <FiX size={14} />
               </button>
             </div>
           ))}
 
           {/* Clear all */}
-          {filters.length > 0 && (
+          {filters?.length > 0 && (
             <button
               onClick={handleClearFilters}
               className="ml-auto rounded-md text-sm text-red-500 p-2 hover:bg-myColor/10 cursor-pointer"
@@ -124,11 +99,10 @@ const SearchPage: React.FC = () => {
 
         {/* Restaurant cards */}
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-  {restaurants.map((rest , index) => (
-          <RestaurantCard key={index} rest={rest} />
-  ))}
-</div>
-
+          {allRestaurant && allRestaurant.map((rest, index) => (
+            <RestaurantCard key={index} rest={rest} />
+          ))}
+        </div>
       </main>
     </div>
   );

@@ -30,7 +30,7 @@ const Router = createBrowserRouter([
                 element: <Profile />
             } ,
             {
-                path: "search/:text",
+                path: "search/:searchText",
                 element: <SearchPage />
             } ,
             {

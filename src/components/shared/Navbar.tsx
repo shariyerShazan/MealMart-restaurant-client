@@ -20,20 +20,47 @@ import {
 
 import { Button } from "../ui/button";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
-import { useAppSelector } from "../../hooks/useReduxTypeHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/useReduxTypeHooks";
+import axios from "axios";
+import { USER_API_END_POINT } from "../../utils/apiEndPoint";
+import { setUser } from "../../redux/userSlice";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { Loader2 } from "lucide-react";
 
 
 // ================== DESKTOP NAVBAR ==================
 const Navbar = () => {
+  const [logoutLoading , setLogoutLoading] = useState<boolean>(false)
 
     const {user} = useAppSelector((state)=>state.user)
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+
+    const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>)=>{
+      e.preventDefault()
+      setLogoutLoading(true)
+      try {
+             const res = await axios.post(`${USER_API_END_POINT}/logout` , {} , {withCredentials: true})
+             if(res.data.success){
+              setLogoutLoading(false)
+                  dispatch(setUser(null))
+                  toast(res.data.meesage)
+             }else{
+              setLogoutLoading(false)
+             }
+      } catch (error: any) {
+        console.log(error)
+           toast.error(error?.response?.data?.message)
+        setLogoutLoading(false)
+      }
+    }
 
   return (
     <div className="w-[90%] mx-auto">
       {/* Mobile */}
       <div className="block sm:hidden">
-        <NavbarForMobile  user={user}/>
+        <NavbarForMobile  user={user}   logoutLoading={logoutLoading}  handleLogout={handleLogout}  navigate={navigate}/>
       </div>
 
       {/* Desktop */}
@@ -91,9 +118,14 @@ const Navbar = () => {
                     </Link>
                   </DropdownMenuRadioItem>
                   <DropdownMenuRadioItem value="logout">
-                    <Button className="w-full bg-myColor hover:bg-myColor/90">
+                    {
+                      logoutLoading ? <Button className="bg-myColor hover:bg-myColor">
+                           <Loader2 className="animate-spin"/> please wait
+                      </Button>: <Button onClick={handleLogout} className="w-full cursor-pointer bg-myColor hover:bg-myColor/90">
                       Logout
                     </Button>
+                    }
+                    
                   </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
@@ -117,7 +149,7 @@ export default Navbar;
 
 
 // ================== MOBILE NAVBAR ==================
-const NavbarForMobile = ({user}) => {
+const NavbarForMobile = ({user , logoutLoading , handleLogout , navigate}) => {
   return (
    <div className=" flex items-center justify-between">
           <h2 className="text-3xl font-bold">
@@ -158,7 +190,14 @@ const NavbarForMobile = ({user}) => {
             </Avatar>
             <h2 className="text-lg font-bold">{user?.fullName}</h2>
           </div>
-          <Button className="bg-myColor hover:bg-myColor/90 w-full  cursor-pointer hover:scale-101">Logout</Button>
+          {
+                    logoutLoading? <Button className="bg-myColor hover:bg-myColor">
+                           <Loader2 className="animate-spin"/> please wait
+                      </Button>: <Button onClick={handleLogout} className="w-full bg-myColor hover:bg-myColor/90">
+                      Logout
+                    </Button>
+                    }
+                    
           </div> :
               <div>
                    <Button onClick={()=>navigate("/login")} className="bg-myColor hover:bg-myColor cursor-pointer">

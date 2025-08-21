@@ -1,37 +1,29 @@
 import React, { useState } from "react";
 import { FaMinus,  FaPlus, FaTrash } from "react-icons/fa";
+import { useAppDispatch, useAppSelector } from "../hooks/useReduxTypeHooks";
+import { clearCart, decreaseQuantity, deleteFromCart, increaseQuantity } from "../redux/cartSlice";
 
 const Cart = () => {
   const {foods} = useAppSelector((state)=> state.cart)
-
+   const dispatch = useAppDispatch()
   // increase quantity
-  const handleIncrease = (id) => {
-    setCart(
-      cart.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+  const handleIncrease = (foodId) => {
+    dispatch(increaseQuantity(foodId))
   };
 
-  // decrease quantity or remove
-  const handleDecrease = (id) => {
-    setCart(
-      cart.map((item) =>
-        item.id === id
-          ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 0 }
-          : item
-      ).filter((item) => item.quantity > 0)
-    );
+ 
+  const handleDecrease = (foodId) => {
+    dispatch(decreaseQuantity(foodId))
   };
 
   // remove single item
-  const handleRemove = (id) => {
-    setCart(cart.filter((item) => item.id !== id));
+  const handleRemove = (foodId) => {
+     dispatch(deleteFromCart(foodId))
   };
 
   // clear all
   const handleClearAll = () => {
-    setCart([]);
+     dispatch(clearCart())
   };
 
   return (
@@ -98,7 +90,7 @@ const Cart = () => {
           </tr>
         ))}
 
-        {cart.length === 0 && (
+        {foods?.length === 0 && (
           <tr>
             <td colSpan={6} className="text-center p-4 text-gray-500">
               Cart is empty

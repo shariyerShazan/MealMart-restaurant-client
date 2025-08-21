@@ -31,6 +31,9 @@ import { Loader2 } from "lucide-react";
 
 // ================== DESKTOP NAVBAR ==================
 const Navbar = () => {
+
+  const {foods} = useAppSelector((state)=> state.cart)
+
   const [logoutLoading , setLogoutLoading] = useState<boolean>(false)
 
     const {user} = useAppSelector((state)=>state.user)
@@ -85,7 +88,7 @@ const Navbar = () => {
             >
               <BsCart2 size={25} />
               <span className="absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-myColor rounded-full">
-                1
+                {foods?.length || 0}
               </span>
             </NavLink>
 

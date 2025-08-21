@@ -10,11 +10,11 @@ type CartItem = {
 };
 
 type CartState = {
-  items: CartItem[];
+    foods: CartItem[];
 };
 
 const initialState: CartState = {
-  items: [],
+  foods: [],
 };
 
 const cartSlice = createSlice({
@@ -22,24 +22,24 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
       addToCart: (state, action: PayloadAction<Omit<CartItem, "quantity">>) => {
-      const food = state.items.find((food) => food._id === action.payload._id);
+      const food = state.foods.find((food) => food._id === action.payload._id);
       if (food) {
         food.quantity += 1; 
       } else {
-        state.items.push({ ...action.payload, quantity: 1 });
+        state.foods.push({ ...action.payload, quantity: 1 });
       }
     },
 
 
     increaseQuantity: (state, action: PayloadAction<string>) => {
-      const food = state.items.find((food) => food._id === action.payload);
+      const food = state.foods.find((food) => food._id === action.payload);
       if (food) {
         food.quantity += 1;
       }
     },
 
     decreaseQuantity: (state, action: PayloadAction<string>) => {
-      const food = state.items.find((food) => food._id === action.payload);
+      const food = state.foods.find((food) => food._id === action.payload);
       if (food && food.quantity > 1) {
         food.quantity -= 1;
       }
@@ -47,11 +47,11 @@ const cartSlice = createSlice({
 
     // Remove from cart
     removeFromCart: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter((food) => food._id !== action.payload);
+      state.foods = state.foods.filter((food) => food._id !== action.payload);
     },
 
     clearCart: (state) => {
-      state.items = [];
+      state.foods = [];
     },
   },
 });

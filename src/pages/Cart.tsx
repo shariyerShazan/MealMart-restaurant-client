@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { FaMinus,  FaPlus, FaTrash } from "react-icons/fa";
 
 const Cart = () => {
-  const [cart, setCart] = useState([
-    { id: 1, title: "", price: 100, quantity: 1, image: "https://via.placeholder.com/50" },
-    { id: 2, title: "Product 2", price: 200, quantity: 2, image: "https://via.placeholder.com/50" },
-  ]);
+  const {foods} = useAppSelector((state)=> state.cart)
 
   // increase quantity
   const handleIncrease = (id) => {
@@ -63,27 +60,27 @@ const Cart = () => {
         </tr>
       </thead>
       <tbody>
-        {cart.map((item) => (
+        { foods && foods?.map((item) => (
           <tr key={item.id} className="border-b">
             <td className="p-2">
               <img
-                src={item.image}
-                alt={item.title}
+                src={item?.foodImage}
+                alt={item.foodName}
                 className="w-12 h-12 object-cover rounded-full"
               />
             </td>
-            <td className="p-2">{item.title}</td>
+            <td className="p-2">{item.foodName}</td>
             <td className="p-2 text-myColor font-bold">${item.price}</td>
             <td className="p-2 flex items-center justify-end gap-2">
               <button
-                onClick={() => handleDecrease(item.id)}
+                onClick={() => handleDecrease(item._id)}
                 className="flex items-center justify-center w-8 h-8 rounded-full bg-myColor text-white cursor-pointer"
               >
                 <FaMinus />
               </button>
               <span className="font-bold px-2">{item.quantity}</span>
               <button
-                onClick={() => handleIncrease(item.id)}
+                onClick={() => handleIncrease(item._id)}
                 className="flex items-center justify-center w-8 h-8 rounded-full bg-myColor text-white cursor-pointer"
               >
                 <FaPlus />
@@ -92,7 +89,7 @@ const Cart = () => {
             <td className="p-2 text-right">${item.price * item.quantity}</td>
             <td className="p-2 text-right">
               <button
-                onClick={() => handleRemove(item.id)}
+                onClick={() => handleRemove(item._id)}
                 className="px-4 py-2 rounded-lg bg-myColor hover:scale-105 cursor-pointer text-white"
               >
                 Remove

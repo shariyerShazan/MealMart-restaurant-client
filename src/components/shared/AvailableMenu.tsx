@@ -16,7 +16,7 @@ function AvailableMenu({menus}) {
                     <h3 className='text-xl font-bold text-gray-600 my-1'>{menu?.foodName}</h3>
                     <p className='text-sm text-gray-600 '>{menu?.description}</p>
                     <p className='text-lg font-bold'>Price: <span className='text-myColor font-medium'>${menu?.price}</span></p>
-                    <Button className='bg-myColor hover:bg-myColor cursor-pointer hover:scale-101 my-1'>
+                    <Button  className='bg-myColor hover:bg-myColor cursor-pointer hover:scale-101 my-1'>
                          Add to Cart
                     </Button>
                     </div>

@@ -69,7 +69,7 @@ const SearchPage: React.FC = () => {
           {filters.map((filter) => (
             <div
               key={filter}
-              className="flex items-center bg-gray-200 rounded-full px-3 py-1 text-sm"
+              className="flex items-center bg-myColor/20 rounded-full px-3 py-1 text-sm"
             >
               {filter}
               <button

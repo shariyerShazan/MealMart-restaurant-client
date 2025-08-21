@@ -17,13 +17,15 @@ import { useAppSelector } from "../../hooks/useReduxTypeHooks";
 const Restaurant = () => {
   const {restaurant} = useAppSelector((state)=>state.restaurant)
   const [reFetch , setReFetch] = useState<boolean>(false)
+
+
   // console.log(restaurant)
-  useGetRestaurant(reFetch)
+  useGetRestaurant({dependency: reFetch})
   const [input , setInput] = useState<RestaurantFormSchema>({
     restaurantName: restaurant?.restaurantName || "" ,
     city : restaurant?.city || "" ,
     country: restaurant?.country || "" ,
-    deliveryTime: restaurant?.deliveryTime || "" ,
+    deliveryTime: restaurant?.deliveryTime || 0 ,
     cuisines: restaurant?.cuisines || [] ,
   })
   const [error, setError] = useState<Partial<RestaurantFormSchema>>({});
@@ -229,12 +231,12 @@ const Restaurant = () => {
         <div className="lg:col-span-2 flex justify-center">
           {
             loading ? <Button
-            className="bg-myColor hover:scale-105 text-white px-6 py-2 rounded cursor-pointer"
+            className="bg-myColor hover:scale-101 text-white hover:bg-myColor !px-10 py-2 rounded cursor-pointer"
           >
             <Loader2 className="animate-spin" /> Please wait...
           </Button> : <button
             type="submit"
-            className="bg-myColor hover:scale-105 text-white px-6 py-2 rounded cursor-pointer"
+            className="bg-myColor hover:scale-101 text-white px-6 py-2 rounded cursor-pointer"
           >
             {restaurant ? "Update Restaurant" : "Add Restaurant"}
           </button>

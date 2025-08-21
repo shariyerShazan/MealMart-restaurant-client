@@ -101,20 +101,21 @@ const MenuDialog: React.FC<MenuDialogProps> = ({ isOpen, onClose, defaultValues,
             placeholder="Food Name"
             className="border p-2 w-full rounded"
           />
-          <textarea
-            name="description"
-            value={data.description}
-            onChange={handleChange}
-            rows={6}
-            placeholder="Description"
-            className="border p-2 w-full rounded"
-          />
+         
           <input
             type="text"
             name="price"
             value={data.price}
             onChange={handleChange}
             placeholder="Price"
+            className="border p-2 w-full rounded"
+          />
+           <textarea
+            name="description"
+            value={data.description}
+            onChange={handleChange}
+            rows={5}
+            placeholder="Description"
             className="border p-2 w-full rounded"
           />
           <div className="flex justify-center mb-6">

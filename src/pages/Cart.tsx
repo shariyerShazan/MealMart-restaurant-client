@@ -7,17 +7,17 @@ const Cart = () => {
   const {foods} = useAppSelector((state)=> state.cart)
    const dispatch = useAppDispatch()
   // increase quantity
-  const handleIncrease = (foodId) => {
+  const handleIncrease = (foodId : string) => {
     dispatch(increaseQuantity(foodId))
   };
 
  
-  const handleDecrease = (foodId) => {
+  const handleDecrease = (foodId : string) => {
     dispatch(decreaseQuantity(foodId))
   };
 
   // remove single item
-  const handleRemove = (foodId) => {
+  const handleRemove = (foodId : string) => {
      dispatch(deleteFromCart(foodId))
   };
 
@@ -53,7 +53,7 @@ const Cart = () => {
       </thead>
       <tbody>
         { foods && foods?.map((item) => (
-          <tr key={item.id} className="border-b">
+          <tr key={item._id} className="border-b">
             <td className="p-2">
               <img
                 src={item?.foodImage}

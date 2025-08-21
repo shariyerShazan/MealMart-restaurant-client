@@ -48,9 +48,9 @@ const MenuDialog: React.FC<MenuDialogProps> = ({ isOpen, onClose, defaultValues,
   const handleSubmit = async () => {
     setIsLoading(true);
     const formData = new FormData();
-    formData.append("foodName", data.foodName);
-    formData.append("description", data.description.slice(0 , 200));
-    formData.append("price", data.price);
+    formData.append("foodName", data?.foodName);
+    formData.append("description", data?.description.slice(0 , 200));
+    formData.append("price", data?.price);
 
     const fileInput = imageRef.current?.files?.[0];
     if (fileInput && fileInput.size > 5 * 1024 * 1024) {
@@ -96,7 +96,7 @@ const MenuDialog: React.FC<MenuDialogProps> = ({ isOpen, onClose, defaultValues,
           <input
             type="text"
             name="foodName"
-            value={data.foodName}
+            value={data?.foodName}
             onChange={handleChange}
             placeholder="Food Name"
             className="border p-2 w-full rounded"
@@ -105,14 +105,14 @@ const MenuDialog: React.FC<MenuDialogProps> = ({ isOpen, onClose, defaultValues,
           <input
             type="text"
             name="price"
-            value={data.price}
+            value={data?.price}
             onChange={handleChange}
             placeholder="Price"
             className="border p-2 w-full rounded"
           />
            <textarea
             name="description"
-            value={data.description}
+            value={data?.description}
             onChange={handleChange}
             rows={5}
             placeholder="Description"

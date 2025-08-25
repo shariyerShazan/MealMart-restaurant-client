@@ -3,6 +3,10 @@ import { Button } from "../../components/ui/button";
 import MenuDialog from "../../components/shared/Admin/MenuDialog";
 import { useAppSelector } from "../../hooks/useReduxTypeHooks";
 import useGetRestaurant from "../../hooks/apiHooks/useGetRestaurant";
+import axios from "axios";
+import { MENU_API_END_POINT } from "../../utils/apiEndPoint";
+import { toast } from "react-toastify";
+import { Loader2 } from "lucide-react";
 
 
 interface MenuItem {
@@ -14,6 +18,7 @@ interface MenuItem {
 
 const Menus = () => {
   const [addOne, setAddOne]= useState<boolean>(false)
+  const[deleteLoading , setDeleteLoading] = useState<boolean>(false)
 
 useGetRestaurant({dependency:addOne})
 
@@ -21,6 +26,22 @@ useGetRestaurant({dependency:addOne})
    const menus = restaurant?.menus
   const [openDialog, setOpenDialog] = useState(false);
   const [editMenu, setEditMenu] = useState<MenuItem | null>(null);
+
+  const handleDelete = async (menuId: string)=>{
+    setDeleteLoading(true)
+         try {
+             const res = await axios.delete(`${MENU_API_END_POINT}/${menuId}` , {withCredentials: true})
+             if(res.data.success){
+                 toast.success(res.data.messaage)
+                 setAddOne(true)
+                 setDeleteLoading(false)
+             }
+         } catch (error:any) {
+          toast(error.response.data.messaage)
+          console.log(error)
+          setDeleteLoading(false)
+         }
+  }
 
   return (
     <div className="p-6 mt-22 w-[90%] mx-auto">
@@ -56,8 +77,9 @@ useGetRestaurant({dependency:addOne})
               <p className="text-lg font-bold mt-2">
                 Price: <span className="text-myColor">${menu?.price}</span>
               </p>
-              <Button
-                className="bg-myColor w-full hover:bg-myColor/90 mt-3 cursor-pointer"
+             <div className="flex gap-4">
+             <Button
+                className="bg-myColor flex-1  hover:bg-myColor/90 mt-3 cursor-pointer"
                 onClick={() => {
                   setAddOne(false)
                   setEditMenu(menu);
@@ -65,7 +87,19 @@ useGetRestaurant({dependency:addOne})
                 }}
               >
                 Edit
+                </Button>
+             { 
+             deleteLoading? <Button disabled={true} className="bg-red-500 flex-1 hover:bg-red-500 ">
+                 <Loader2 className=" animate-spin" />deleting...
+             </Button>:
+                <Button
+                className="bg-red-500 flex-1 hover:bg-red-500 mt-3 cursor-pointer"
+                onClick={()=>handleDelete(menu?._id)}
+              >
+                Delete
               </Button>
+             }
+             </div>
             </div>
           </div>
         ))}

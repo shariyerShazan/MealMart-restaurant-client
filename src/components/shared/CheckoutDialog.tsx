@@ -1,34 +1,73 @@
 import React, { useState } from "react";
-
-import { useAppSelector } from "../../hooks/useReduxTypeHooks";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 import { Button } from "../ui/button";
+
+import axios from "axios";
+import { ORDER_API_END_POINT } from "../../utils/apiEndPoint";
+import { toast } from "react-toastify";
+import { useAppSelector } from "../../hooks/useReduxTypeHooks";
 
 interface CheckoutDialogProps {
   total: number;
+  restaurantId: string;
 }
 
-const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total }) => {
+const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) => {
   const { user } = useAppSelector((state) => state.user);
+  const { foods } = useAppSelector((state) => state.cart);
 
   // Local state for editable fields
-  const [contactNumber, setContactNumber] = useState(user?.contact);
-  const [address, setAddress] = useState(user?.address);
-  const [city, setCity] = useState(user?.city);
-  const [country, setCountry] = useState(user?.country);
+  const [contactNumber, setContactNumber] = useState(user?.contact || "");
+  const [address, setAddress] = useState(user?.address || "");
+  const [city, setCity] = useState(user?.city || "");
+  const [country, setCountry] = useState(user?.country || "");
 
-  const handleConfirm = () => {
-    const orderData = {
-      fullName: user?.fullName,
-      email: user?.email,
-      contactNumber,
-      address,
-      city,
-      country,
-      total,
-    };
-    console.log("Order Data: ", orderData);
+  const handleConfirm = async () => {
+    try {
+      const payload = {
+        cartItems: foods.map((item) => ({
+          menuId: item._id,
+          foodName: item.foodName,
+          price: item.price,
+          foodImage: item.foodImage,
+          quantity: item.quantity,
+        })),
+         deliveryInfo: {
+          email: user?.email,
+          contact: contactNumber,
+          fullName: user?.fullName,
+          address: address,
+          city,
+          country,
+        },
+        restaurantId: foods[0].restaurantId.restaurantId,
+      };
 
+      const res = await axios.post(
+        `${ORDER_API_END_POINT}/create-checkout-session`,
+        payload,
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.message);
+        if (res.data.session?.url) {
+          window.location.href = res.data.session.url; 
+        }
+      } else {
+        toast.error(res.data.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    //   toast.error("Checkout failed");
+    }
   };
 
   return (
@@ -77,14 +116,14 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total }) => {
                 className="px-2 py-1 border-gray-200 border rounded-md"
                 type="text"
                 value={contactNumber}
-                onChange={(e) => setContactNumber(e.target.value)}
+                onChange={(e) => setContactNumber(e.target.value.toString())}
                 placeholder="Enter your contact number"
               />
             </div>
 
             {/* Address */}
             <div className="flex flex-col">
-              <label className="text-sm font-semibold">Address:</label>
+              <label className="text-sm font-semibold">Adress:</label>
               <input
                 className="px-2 py-1 border-gray-200 border rounded-md"
                 type="text"
@@ -119,14 +158,16 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total }) => {
             </div>
           </form>
 
-          <p className="text-lg font-bold mt-4">Total Price: <span className="text-myColor">${total}</span></p>
+          <p className="text-lg font-bold mt-4">
+            Total Price: <span className="text-myColor">${total}</span>
+          </p>
         </div>
 
         <div className="flex justify-end gap-2 mt-4">
-          <Button  variant="outline">Cancel</Button>
+          <Button variant="outline">Cancel</Button>
           <Button
             onClick={handleConfirm}
-            className="bg-myColor text-white hover:bg-myColor/90 cursor-pointer" 
+            className="bg-myColor text-white hover:bg-myColor/90 cursor-pointer"
           >
             Confirm
           </Button>

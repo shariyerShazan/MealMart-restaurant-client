@@ -31,7 +31,7 @@ const RestaurantDetails = () => {
                     <p className='text-lg font-bold flex items-center mt-2 gap-2 '><FiClock /> Delivery time: <span className='text-md font-medium'>{restaurant?.deliveryTime}</span></p>
                     <p className='mt-8 text-xl font-extrabold text-center sm:text-start '>Available Menus: {restaurant?.menus?.length}</p>
                   </div>
-                  <AvailableMenu  menus={restaurant?.menus}/>
+                  <AvailableMenu restaurantId={restaurantId}  menus={restaurant?.menus}/>
               </div>
          </div>
     </div>

@@ -48,9 +48,10 @@ const UserOrder = () => {
                   <img className='w-10 h-10 rounded-full object-cover my-3' src={item?.foodImage} alt="" />
                   <p className='font-semibold'>{item?.foodName}</p>
                 </div>
-                <p className='font-bold text-myColor text-right'>{item?.price}</p>
+                <p className='font-bold text-myColor text-right'>${item?.price}*{item?.quantity} = ${item?.quantity*item?.price}</p>
               </div>
             ))}
+            <p className='text-sm font-bold flex justify-between mt-3'><span>Total Amount</span><span className='text-lg text-green-500'>${order.totalAmount}</span></p>
             <p className='text-2xl my-4'>Order Status: <span className='text-myColor font-extrabold'>{order?.status}</span></p>
           </div>
         ))}

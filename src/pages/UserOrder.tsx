@@ -16,13 +16,19 @@ const UserOrder = () => {
         <div className='flex flex-wrap gap-5 mt-8 justify-center'>
                 {
                     orders && orders.map((order , index: number)=>{
-                        return <div key={index} className='p-4 h-88 w-72 shadow-xl rounded-xl border-t-6 border-myColor'>
+                        return <div key={index} className='p-4  w-92 shadow-xl rounded-xl border-t-6 border-myColor'>
                         <h2 className='text-2xl font-bold'>Shariyer Shazan</h2>
-                        <p className='text-md font-bold my-2'>Food: <span className='text-sm font-medium'>Biriyani</span></p>
-                        <p className='text-md font-bold my-2'>Address: <span className='text-sm font-medium'>Tejgaon Dhaka</span></p>
-                        <p className='text-md font-bold my-2'>Total Amount: <span className='text-sm font-medium'>$120</span></p>
-                        <img className='w-full h-32 rounded-lg my-3' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhDZF9NXQ8SIL95juc21Rw7N5jb7hVkx_kjwlGtrwLs0la1hLrthJ9SokvlCadKuPBLPY&usqp=CAU" alt="" />
-                         <p className='text-2xl'>Order Status: <span className='text-myColor font-extrabold'>Confirm</span> </p>
+                        <p className='text-sm font-bold my-2'>Order summary:</p>
+                          { [1,2,3].map((item , index: number)=>(
+                            <div className='flex justify-between items-center gap-2 border-b-1 border-b-gray-400' key={index}>
+                              <div className='flex  items-center gap-3'>
+                              <img className='w-10 h-10 rounded-full object-cover  my-3' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhDZF9NXQ8SIL95juc21Rw7N5jb7hVkx_kjwlGtrwLs0la1hLrthJ9SokvlCadKuPBLPY&usqp=CAU" alt="" />
+                              <p className='font-semibold '>pizza</p>
+                              </div>
+                               <p className='font-bold text-myColor text-right'>$100</p>
+                            </div>
+                           ))}
+                         <p className='text-2xl my-4'>Order Status: <span className='text-myColor font-extrabold'>Confirm</span> </p>
                     </div>
                     })
                 }

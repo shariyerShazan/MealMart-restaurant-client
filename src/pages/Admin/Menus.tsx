@@ -15,7 +15,7 @@ interface MenuItem {
 const Menus = () => {
   const [addOne, setAddOne]= useState<boolean>(false)
 
-  useGetRestaurant({dependency:addOne})
+useGetRestaurant({dependency:addOne})
 
    const { restaurant} = useAppSelector((state)=> state.restaurant)
    const menus = restaurant?.menus
@@ -23,7 +23,7 @@ const Menus = () => {
   const [editMenu, setEditMenu] = useState<MenuItem | null>(null);
 
   return (
-    <div className="p-6 mt-22">
+    <div className="p-6 mt-22 w-[90%] mx-auto">
      
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Available Menus</h2>
@@ -43,7 +43,7 @@ const Menus = () => {
          <div className="flex justify-center items-center">
               <p className="text-center text-xl font-bold text-myColor">No Menu Found, Please Add First</p>
          </div>    
-        :  menus.map((menu, index) => (
+        :  menus.map((menu : MenuItem, index:number) => (
           <div key={index} className="shadow-xl rounded-lg overflow-hidden">
             <img
               src={menu?.foodImage}

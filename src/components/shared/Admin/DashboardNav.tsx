@@ -19,11 +19,11 @@ const DashboardNav = () => {
 
   return (
     <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-[90%] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <Link to="/" className="text-xl font-bold">
-          <h2 className="text-3xl font-bold">
+          <h2 className="text-3xl font-bold text-shadow-[-2px_2px_2px_#000]">
             Meal<span className="text-myColor">Mart</span>
           </h2>
           </Link>

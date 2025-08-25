@@ -24,7 +24,7 @@ const HeroSection: React.FC = () => {
         {/* Left Text + Search */}
         <div className="flex-1 text-center md:text-left">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
-            Discover Delicious Meals at <span className="text-orange-500">MealMart</span>
+            Discover Delicious Meals at <span className=" text-shadow-[-2px_2px_2px_#000]">Meal<span className="text-orange-500">Mart</span></span>
           </h1>
           <p className="mt-4 text-gray-600 max-w-md">
             Search restaurants by name, city, or country and explore your next favorite meal.

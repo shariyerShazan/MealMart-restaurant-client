@@ -70,7 +70,7 @@ const Navbar = () => {
       <div className="hidden sm:block">
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
-          <h2 className="text-3xl font-bold">
+          <h2 className="text-3xl font-bold text-shadow-[-2px_2px_2px_#000]">
             Meal<span className="text-myColor">Mart</span>
           </h2>
 

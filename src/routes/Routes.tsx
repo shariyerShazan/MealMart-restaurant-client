@@ -14,6 +14,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../pages/Admin/Dashboard";
 import Reastaurant from "../pages/Admin/Reastaurant";
 import Menus from "../pages/Admin/Menus";
+import UserOrder from "../pages/UserOrder";
 
 
 const Router = createBrowserRouter([
@@ -40,6 +41,10 @@ const Router = createBrowserRouter([
             {
                 path: "cart" ,
                 element : <Cart />
+            },
+            {
+                path: "order" ,
+                element : <UserOrder />
             }
         ]
     },

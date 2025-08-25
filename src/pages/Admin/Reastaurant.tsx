@@ -111,20 +111,20 @@ const Restaurant = () => {
   };
 
   return (
-    <div className="p-6 mt-22  max-w-3xl mx-auto bg-white rounded shadow-xl">
+    <div className="p-6 mt-22  max-w-3xl mx-auto bg-white  shadow-xl border-t-6 rounded-xl border-myColor">
       <h2 className="text-2xl font-bold mb-6 text-center">
         {restaurant ? "Update Restaurant" : "Add Restaurant"}
       </h2>
 
       {/* Profile Image */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-6 ">
         <div className="relative w-full h-42 ">
           <Avatar className="w-full rounded-md h-full cursor-pointer group">
             <AvatarImage
               className="object-cover rounded-md w-full h-full "
               src={preview}
             />
-            <AvatarFallback className="rounded-md">R</AvatarFallback>
+            <AvatarFallback className="rounded-md">Restaurant cover image</AvatarFallback>
             <input
               ref={imageRef}
               type="file"

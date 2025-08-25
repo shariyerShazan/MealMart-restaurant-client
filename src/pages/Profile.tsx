@@ -100,7 +100,7 @@ const Profile = () => {
       <div className="relative w-32 h-32">
         <Avatar className="w-full h-full cursor-pointer group">
           <AvatarImage className="object-cover w-full h-full rounded-full" src={preview} />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback>DP</AvatarFallback>
           <input
             ref={imageRef}
             type="file"

@@ -33,7 +33,7 @@ useGetRestaurant({dependency:addOne})
              const res = await axios.delete(`${MENU_API_END_POINT}/${menuId}` , {withCredentials: true})
              if(res.data.success){
                  toast.success(res.data.messaage)
-                 setAddOne(true)
+                  setAddOne(true)
                  setDeleteLoading(false)
              }
          } catch (error:any) {

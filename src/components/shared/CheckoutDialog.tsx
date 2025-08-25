@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+
 import { useAppSelector } from "../../hooks/useReduxTypeHooks";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { Button } from "../ui/button";
 
 interface CheckoutDialogProps {
   total: number;
@@ -25,8 +19,8 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total }) => {
 
   const handleConfirm = () => {
     const orderData = {
-      fullName: user.fullName,
-      email: user.email,
+      fullName: user?.fullName,
+      email: user?.email,
       contactNumber,
       address,
       city,
@@ -34,7 +28,7 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total }) => {
       total,
     };
     console.log("Order Data: ", orderData);
-    // এখানে তুমি চাইলে dispatch বা API call করে order submit করতে পারো
+
   };
 
   return (
@@ -125,14 +119,14 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total }) => {
             </div>
           </form>
 
-          <p className="text-lg font-bold mt-4">Total Price: ${total}</p>
+          <p className="text-lg font-bold mt-4">Total Price: <span className="text-myColor">${total}</span></p>
         </div>
 
         <div className="flex justify-end gap-2 mt-4">
-          <Button variant="outline">Cancel</Button>
+          <Button  variant="outline">Cancel</Button>
           <Button
             onClick={handleConfirm}
-            className="bg-myColor text-white hover:bg-myColor/90"
+            className="bg-myColor text-white hover:bg-myColor/90 cursor-pointer" 
           >
             Confirm
           </Button>

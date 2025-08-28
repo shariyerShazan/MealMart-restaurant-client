@@ -5,12 +5,15 @@ import RestaurantCard from "../components/shared/RestaurantCard";
 import FilterOptions from "../components/shared/FilterOptions";
 import { useAppSelector } from "../hooks/useReduxTypeHooks";
 import useGetAllRestaurant from "../hooks/apiHooks/useGetAllRestaurant";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 const SearchPage: React.FC = () => {
+  const navigate = useNavigate()
   const { searchText } = useParams();
   const [searchCusines, setSearchCuisines] = useState<string>("");
   const [filters, setFilters] = useState<string[]>([]);
+
+  const [noTwo , setNoTwo] = useState<string>("")
 
   const { allRestaurant } = useAppSelector((state) => state.restaurant);
 
@@ -31,7 +34,9 @@ const SearchPage: React.FC = () => {
   const handleClearFilters = () => {
     setFilters([]);
   };
-
+const handleSearchTwo = ()=>{
+  navigate(`/search/${noTwo}`)
+}
   return (
     <div className="flex flex-col sm:flex-row min-h-[70vh]">
       {/* Left - Filters */}
@@ -43,7 +48,8 @@ const SearchPage: React.FC = () => {
       {/* Right - Content */}
       <main className="w-full md:w-[90%] p-4">
         {/* Search bar */}
-        <div className="flex items-center bg-white shadow rounded-full overflow-hidden max-w-xl">
+       <div className="flex gap-3">
+       <div className="flex flex-1 items-center bg-white shadow rounded-full overflow-hidden max-w-xl">
           <input
             type="text"
             placeholder="Search by cuisines"
@@ -53,12 +59,30 @@ const SearchPage: React.FC = () => {
           />
           <button
             onClick={handleSearch}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-3"
+            className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 cursor-pointer"
           >
             <FiSearch size={20} />
           </button>
+          
+        </div>
+        <div className="flex flex-1  items-center bg-white shadow rounded-full overflow-hidden max-w-xl">
+          <input
+            type="text"
+            placeholder="Search restaurants by name, city, or country"
+            value={noTwo}
+            onChange={(e: ChangeEvent<HTMLInputElement>)=>setNoTwo(e.target.value)}
+            className="flex-1 px-4 py-2 outline-none w-full"
+          />
+          <button
+            onClick={handleSearchTwo}
+            className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-3 cursor-pointer"
+          >
+            <FiSearch size={20} />
+          </button>
+          
         </div>
 
+       </div>
         {/* Results info */}
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <span className="font-medium text-gray-700">

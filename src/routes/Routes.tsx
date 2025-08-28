@@ -15,6 +15,7 @@ import Dashboard from "../pages/Admin/Dashboard";
 import Reastaurant from "../pages/Admin/Reastaurant";
 import Menus from "../pages/Admin/Menus";
 import UserOrder from "../pages/UserOrder";
+import PrivateRoute from "./PrivateRoute";
 
 
 const Router = createBrowserRouter([
@@ -50,15 +51,26 @@ const Router = createBrowserRouter([
     },
     {
         path: "/dashboard" ,
-        element: <DashboardLayout />,
+        element:
+      ( 
+              <DashboardLayout />    
+      ),
+         
         children: [
             {
                 index: true ,
-                element: <Dashboard />
+                element:
+                <PrivateRoute>
+    <Dashboard />
+                </PrivateRoute>
+                 
             } ,
             {
                 path : "restaurant" ,
-                element: <Reastaurant />
+                element:
+                <PrivateRoute>
+                <Reastaurant />
+                            </PrivateRoute> 
             } ,
             {
                 path: "add-menu" ,

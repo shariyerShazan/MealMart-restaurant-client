@@ -13,6 +13,7 @@ import axios from "axios";
 import { ORDER_API_END_POINT } from "../../utils/apiEndPoint";
 import { toast } from "react-toastify";
 import { useAppSelector } from "../../hooks/useReduxTypeHooks";
+import { useNavigate } from "react-router";
 
 interface CheckoutDialogProps {
   total: number;
@@ -20,6 +21,7 @@ interface CheckoutDialogProps {
 }
 
 const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) => {
+  const navigate = useNavigate()
   const { user } = useAppSelector((state) => state.user);
   const { foods } = useAppSelector((state) => state.cart);
 
@@ -30,6 +32,10 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) 
   const [country, setCountry] = useState(user?.country || "");
 
   const handleConfirm = async () => {
+    if(!user){
+      toast("Login first!")
+      navigate("/login") 
+    }
     try {
       const payload = {
         cartItems: foods.map((item) => ({
@@ -96,7 +102,7 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) 
                 <input
                   className="px-2 py-1 border-gray-200 border rounded-md bg-gray-100 cursor-not-allowed"
                   type="text"
-                  value={user.fullName}
+                  value={user?.fullName || "Login Please"}
                   readOnly
                 />
               </div>
@@ -105,7 +111,7 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) 
                 <input
                   className="px-2 py-1 border-gray-200 border rounded-md bg-gray-100 cursor-not-allowed"
                   type="text"
-                  value={user.email}
+                  value={user?.email || "Login Please"}
                   readOnly
                 />
               </div>

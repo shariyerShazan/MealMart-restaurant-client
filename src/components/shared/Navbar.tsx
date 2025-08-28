@@ -27,6 +27,7 @@ import { setUser } from "../../redux/userSlice";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
+import { clearCart } from "../../redux/cartSlice";
 
 
 // ================== DESKTOP NAVBAR ==================
@@ -47,6 +48,7 @@ const Navbar = () => {
              const res = await axios.post(`${USER_API_END_POINT}/logout` , {} , {withCredentials: true})
              if(res.data.success){
                   dispatch(setUser(null))
+                  dispatch(clearCart())
                   toast.success(res.data.message)
                   setLogoutLoading(false)
              }else{
@@ -115,11 +117,13 @@ const Navbar = () => {
                       Profile
                     </Link>
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="dashboard">
-                    <Link className="text-lg font-bold" to="/dashboard">
-                      Dashboard
-                    </Link>
-                  </DropdownMenuRadioItem>
+                    {
+                      user?.admin &&  <DropdownMenuRadioItem value="dashboard">
+                      <Link className="text-lg font-bold" to="/dashboard">
+                        Dashboard
+                      </Link>
+                    </DropdownMenuRadioItem>
+                    }
                   <DropdownMenuRadioItem value="logout">
                     {
                       logoutLoading ? <Button className="bg-myColor hover:bg-myColor w-full">

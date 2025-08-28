@@ -32,7 +32,9 @@ const DashboardNav: React.FC<Props> = ({ isMobileOpen, setIsMobileOpen }) => {
       >
         <div className="flex flex-col items-start mt-6 px-4">
           <Link to="/" className="text-2xl md:text-3xl font-bold text-orange-500 mb-10">
-            Meal<span className="text-white">Mart</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+             <span className=" text-shadow-[-2px_2px_2px_#000]">Meal<span className="text-orange-500">Mart</span></span>
+          </h2>
           </Link>
 
           <ul className="flex flex-col gap-4 w-full">

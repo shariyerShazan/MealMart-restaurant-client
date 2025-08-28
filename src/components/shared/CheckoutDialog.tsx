@@ -48,6 +48,7 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) 
           country,
         },
         restaurantId: foods[0].restaurantId.restaurantId,
+
         totalAmount:total
       };
 
@@ -67,7 +68,7 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) 
       }
     } catch (error) {
       console.log(error);
-    //   toast.error("Checkout failed");
+      // toast.error("Checkout failed");
     }
   };
 

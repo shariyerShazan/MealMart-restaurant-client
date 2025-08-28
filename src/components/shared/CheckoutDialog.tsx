@@ -65,7 +65,7 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) 
       );
 
       if (res.data.success) {
-        toast.success(res.data.message);
+        // toast.success(res.data.message);
         if (res.data.session?.url) {
           window.location.href = res.data.session.url; 
         }

@@ -47,7 +47,7 @@ function Register() {
             const res = await axios.post(`${USER_API_END_POINT}/register` , input , {withCredentials: true})
             if(res.data.success){
                 toast.success(res.data.message)
-                navigate("/verify-email")
+                navigate("/login")
                 setIsLoading(false)
             }
         } catch (error: any) {

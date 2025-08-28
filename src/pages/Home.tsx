@@ -1,6 +1,7 @@
 import FeatureSection from "../components/shared/FeatureSection"
 import HeroSection from "../components/shared/HeroSection"
 import PopularDishes from "../components/shared/PopularDishes"
+import UserFeedback from "../components/shared/UserFeedback"
 
 function Home() {
   return (
@@ -8,6 +9,7 @@ function Home() {
        <HeroSection />
        <FeatureSection />
        <PopularDishes />
+       <UserFeedback />
     </div>
   )
 }

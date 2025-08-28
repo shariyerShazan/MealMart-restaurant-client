@@ -66,7 +66,7 @@ const Dashboard = () => {
               <label className='text-md font-bold mt-3' htmlFor="">Order Status:</label>
               <br />
               <select
-                className='border-2 rounded-xl px-4 py-1 w-full border-myColor'
+                className='border-2 rounded-xl px-4 py-1 my-2 w-full border-myColor'
                 value={order.status} 
                 onChange={(e) => handleStatusChange(order._id, e.target.value)} 
               >

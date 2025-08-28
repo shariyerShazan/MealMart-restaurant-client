@@ -38,7 +38,7 @@ const handleSearchTwo = ()=>{
   navigate(`/search/${noTwo}`)
 }
   return (
-    <div className="flex flex-col sm:flex-row min-h-[70vh]">
+    <div className="flex pt-22 flex-col sm:flex-row min-h-[70vh]">
       {/* Left - Filters */}
       <aside className="sm:w-[20%] sm:min-h-screen sm:border-r mt-10 p-4">
         <h2 className="font-semibold text-gray-700 mb-4">Filters</h2>

@@ -11,7 +11,7 @@ const PopularDishes: React.FC = () => {
   return (
     <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-6 text-center">
-        <h2 className="text-4xl font-bold mb-12 text-gray-900 tracking-wide">Our Bestsellers</h2>
+        <h2 className="text-4xl font-bold mb-12 text-gray-900 tracking-wide">Our Bestsellings</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {dishes.map((dish, idx) => (
             <motion.div

@@ -91,9 +91,10 @@ const Profile = () => {
 };
 
   return (
-    <form 
+   <div className='pt-22 min-h-[70vh]'>
+         <form 
     onSubmit={handleSubmit} 
-    className="max-w-3xl mt-22 mx-auto p-6 bg-white rounded-xl shadow-md space-y-6 min-h-[70vh]"
+    className="max-w-3xl mt-6 border-t  mx-auto p-6 bg-white rounded-xl shadow-md space-y-6 "
   >
     {/* Avatar + Name */}
     <div className="flex flex-col sm:flex-row items-center gap-6  ">
@@ -218,6 +219,7 @@ const Profile = () => {
       </Button>
     </div>
   </form>
+   </div>
   
 
   );

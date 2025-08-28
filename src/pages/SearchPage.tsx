@@ -49,13 +49,13 @@ const handleSearchTwo = ()=>{
       <main className="w-full md:w-[90%] p-4">
         {/* Search bar */}
        <div className="flex gap-3">
-       <div className="flex flex-1 items-center bg-white shadow rounded-full overflow-hidden max-w-xl">
+       <div className="flex flex-1 items-center border border-myColor bg-white shadow rounded-full overflow-hidden max-w-xl">
           <input
             type="text"
             placeholder="Search by cuisines"
             value={searchCusines}
             onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchCuisines(e.target.value)}
-            className="flex-1 px-4 py-2 outline-none w-full"
+            className="flex-1 px-4 py-2 outline-none w-full "
           />
           <button
             onClick={handleSearch}
@@ -65,7 +65,7 @@ const handleSearchTwo = ()=>{
           </button>
           
         </div>
-        <div className="flex flex-1  items-center bg-white shadow rounded-full overflow-hidden max-w-xl">
+        <div className="flex flex-1  items-center bg-white shadow rounded-full overflow-hidden max-w-xl border border-myColor">
           <input
             type="text"
             placeholder="Search restaurants by name, city, or country"

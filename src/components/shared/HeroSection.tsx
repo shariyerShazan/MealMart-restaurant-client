@@ -18,7 +18,7 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className=" py-16">
+    <section className="pt-22 py-16">
       <div className="container mx-auto px-6 flex flex-col-reverse  md:flex-row items-center gap-10">
         
         {/* Left Text + Search */}

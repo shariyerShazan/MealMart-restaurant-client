@@ -36,7 +36,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="mt-12 min-h-[70vh]">
+    <div className=" min-h-[70vh] pt-22">
       {/* Clear All */}
       <div className="flex justify-end">
         <button

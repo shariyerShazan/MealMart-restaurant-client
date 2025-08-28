@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router';
 import DashboardNav from '../components/shared/Admin/DashboardNav';
 import Footer from '../components/shared/Footer';
-import { FaCross } from 'react-icons/fa';
 import { IoMdClose, IoMdMenu } from 'react-icons/io';
 
 const DashboardLayout = () => {
@@ -27,11 +26,11 @@ const DashboardLayout = () => {
       <DashboardNav isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
 
       {/* Main Content */}
-      <div className="flex-1 min-h-screen bg-gray-100 md:ml-64">
+      <div className="flex-1 min-h-screen  md:ml-64">
         {/* Mobile toggle button */}
         <button
           id="mobile-menu-btn"
-          className="md:hidden fixed top-5 left-5 z-50 bg-orange-500 p-3 rounded-full text-white shadow-lg"
+          className="md:hidden fixed top-5 left-5 z-50 bg-myColor p-3 rounded-full text-white shadow-lg"
           onClick={() => setIsMobileOpen(!isMobileOpen)}
         >
           {isMobileOpen ? <IoMdClose /> : <IoMdMenu />}

@@ -62,7 +62,7 @@ const Navbar = () => {
     }
 
   return (
-    <div className="w-[90%] mx-auto">
+    <div className="w-[90%] mx-auto  ">
       {/* Mobile */}
       <div className="block sm:hidden">
         <NavbarForMobile  user={user}   logoutLoading={logoutLoading}  handleLogout={handleLogout}  navigate={navigate}/>

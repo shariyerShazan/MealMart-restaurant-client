@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     setDependency(true)
-  }, [])
+  }, [dependency])
 
   // Status update handler
   const handleStatusChange = async (orderId: string, newStatus: string) => {
@@ -70,10 +70,10 @@ const Dashboard = () => {
                 value={order.status} 
                 onChange={(e) => handleStatusChange(order._id, e.target.value)} 
               >
-                <option value="Pending">Pending</option>
+                {/* <option value="Pending">Pending</option> */}
                 <option value="Confirmed">Confirmed</option>
                 <option value="Preparing">Preparing</option>
-                <option value="OutForDelivery">OutForDelivery</option>
+                <option value="Out For Delivery">Out For Delivery</option>
                 <option value="Delivered">Delivered</option>
               </select>
             </form>

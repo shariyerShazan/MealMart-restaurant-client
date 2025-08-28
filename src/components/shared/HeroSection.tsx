@@ -54,7 +54,7 @@ const HeroSection: React.FC = () => {
           <img
             src={`https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg`}
             alt="Delicious Burger"
-            className="w-96 h-96 object-cover rounded-lg drop-shadow-lg"
+            className="w-full h-96 object-cover rounded-lg drop-shadow-lg"
           />
         </div>
       </div>

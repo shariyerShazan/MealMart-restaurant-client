@@ -35,15 +35,15 @@ const Dashboard = () => {
 
   if (orders?.length === 0) {
     return (
-      <div className="flex justify-center items-center h-[70vh]">
+      <div className="flex justify-center items-center min-h-[70vh]">
         <p className="text-center text-xl font-bold text-myColor">No order Found</p>
       </div>
     )
   }
 
   return (
-    <div className='w-[90%] mx-auto'>
-      <h2 className='text-5xl mt-18 text-center font-bold text-myColor opacity-50 pb-6 border-b-myColor border-b-2 rounded-3xl'>Orders Overview</h2>
+    <div className='w-[90%] mx-auto h-[70vh]'>
+      <h2 className='text-5xl mt-4 text-center font-bold text-myColor opacity-50 pb-6 border-b-myColor border-b-2 rounded-3xl'>Orders Overview</h2>
       <div className='flex flex-wrap justify-center gap-5 mt-6'>
         {orders?.map((order: any, index: number) => (
           <div key={index} className='p-4 w-92 shadow-xl rounded-xl border-t-6 border-myColor'>

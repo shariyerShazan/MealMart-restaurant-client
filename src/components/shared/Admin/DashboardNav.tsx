@@ -1,84 +1,66 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router";
+// DashboardNav.tsx
+import React from 'react';
+import { Link, useLocation } from 'react-router';
 import { FaHome } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import { MdOutlineRestaurant } from "react-icons/md";
-import { FiMenu, FiX } from "react-icons/fi";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
-const DashboardNav = () => {
+interface Props {
+  isMobileOpen: boolean;
+  setIsMobileOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const DashboardNav: React.FC<Props> = ({ isMobileOpen, setIsMobileOpen }) => {
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
     { name: "Home", path: "/", icon: <FaHome /> },
     { name: "Orders", path: "/dashboard", icon: <RxDashboard /> },
     { name: "Restaurant", path: "/dashboard/restaurant", icon: <MdOutlineRestaurant /> },
-    { name: "Menu", path: "/dashboard/add-menu", icon: <IoIosAddCircleOutline  size={20}/> },
+    { name: "Menu", path: "/dashboard/add-menu", icon: <IoIosAddCircleOutline size={20} /> },
   ];
 
   return (
-    <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
-      <div className="w-[90%] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          {/* Logo */}
-          <Link to="/" className="text-xl font-bold">
-          <h2 className="text-3xl font-bold text-shadow-[-2px_2px_2px_#000]">
-            Meal<span className="text-myColor">Mart</span>
-          </h2>
+    <>
+      {/* Desktop Sidebar */}
+      <div
+        id="sidebar"
+        className={`fixed top-0 left-0 h-full w-64 bg-gray-900 text-gray-200 shadow-lg flex flex-col justify-between z-40 transform transition-transform ${
+          isMobileOpen ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0`}
+      >
+        <div className="flex flex-col items-start mt-6 px-4">
+          <Link to="/" className="text-2xl md:text-3xl font-bold text-orange-500 mb-10">
+            Meal<span className="text-white">Mart</span>
           </Link>
 
-          {/* Desktop Menu */}
-          <ul className="hidden md:flex space-x-6">
+          <ul className="flex flex-col gap-4 w-full">
             {navItems.map((item) => (
               <li key={item.name}>
                 <Link
                   to={item.path}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition ${
+                  onClick={() => setIsMobileOpen(false)}
+                  className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-all ${
                     location.pathname === item.path
-                      ? "bg-myColor text-white"
-                      : "text-gray-700 hover:bg-myColor hover:text-white"
+                      ? "bg-orange-500 text-white"
+                      : "hover:bg-gray-700 hover:text-white"
                   }`}
                 >
-                  {item.icon} {item.name}
+                  {item.icon}
+                  <span className="">{item.name}</span>
                 </Link>
               </li>
             ))}
           </ul>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-2xl text-gray-700"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <FiX /> : <FiMenu />}
-          </button>
         </div>
       </div>
 
-      {/* Mobile Dropdown */}
-      {isOpen && (
-        <div className="md:hidden bg-white shadow-md">
-          <ul className="flex flex-col px-4 py-2 space-y-2">
-            {navItems.map((item) => (
-              <li key={item.name}>
-                <Link
-                  to={item.path}
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition ${
-                    location.pathname === item.path
-                      ? "bg-myColor text-white"
-                      : "text-gray-700 hover:bg-myColor hover:text-white"
-                  }`}
-                >
-                  {item.icon} {item.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* Mobile overlay */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"></div>
       )}
-    </nav>
+    </>
   );
 };
 

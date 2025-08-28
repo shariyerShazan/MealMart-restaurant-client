@@ -44,7 +44,7 @@ useGetRestaurant({dependency:addOne})
   }
 
   return (
-    <div className="p-6 mt-22 w-[90%] mx-auto">
+    <div className="p-6 mt-4 w-[90%] mx-auto min-h-[70vh]">
      
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Available Menus</h2>

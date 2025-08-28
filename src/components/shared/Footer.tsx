@@ -12,23 +12,25 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-gray-900 text-gray-300 pt-12">
-      <div className="container mx-auto px-6 md:px-12 lg:px-24">
+    <footer className=" w-[90%] mx-auto  pt-6">
+      <div className=" border-t-1 pt-6 border-t-gray-900 mx-auto ">
         <div className="flex flex-col md:flex-row justify-between gap-10">
           
           {/* Logo & Description */}
           <div className="flex-1">
-            <h2 className="text-3xl font-bold text-orange-500 mb-4">MealMart</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
+             <span className=" text-shadow-[-2px_2px_2px_#000]">Meal<span className="text-orange-500">Mart</span></span>
+          </h2>
             <p className="text-gray-400 max-w-sm">
               Discover and enjoy delicious meals from your favorite restaurants. We bring the best dishes to your doorstep.
             </p>
 
             {/* Social Icons */}
             <div className="flex gap-4 mt-6">
-              <a href="#" className="hover:text-orange-500 transition"><FaFacebookF /></a>
-              <a href="#" className="hover:text-orange-500 transition"><FaTwitter /></a>
-              <a href="#" className="hover:text-orange-500 transition"><FaInstagram /></a>
-              <a href="#" className="hover:text-orange-500 transition"><FaLinkedinIn /></a>
+              <a href="#" className="hover:text-orange-500 transition"><FaFacebookF size={25}/></a>
+              <a href="#" className="hover:text-orange-500 transition"><FaTwitter size={25}/></a>
+              <a href="#" className="hover:text-orange-500 transition"><FaInstagram size={25}/></a>
+              <a href="#" className="hover:text-orange-500 transition"><FaLinkedinIn size={25}/></a>
             </div>
           </div>
 
@@ -50,17 +52,17 @@ const Footer: React.FC = () => {
             <p className="text-gray-400 mb-4">
               Get latest updates about new restaurants, offers, and promotions.
             </p>
-            <div className="flex gap-2">
+            <div className="flex">
               <input 
                 type="email" 
                 placeholder="Your email" 
                 value={email} 
                 onChange={(e) => setEmail(e.target.value)} 
-                className="flex-1 px-4 py-2 rounded-l-full outline-none text-gray-800"
+                className="flex-1 px-4 py-2 rounded-l-full border  border-myColor text-gray-800"
               />
               <button 
                 onClick={handleSubscribe}
-                className="bg-orange-500 px-6 py-2 rounded-r-full text-white font-semibold hover:bg-orange-600 transition"
+                className="bg-myColor px-3 py-2 rounded-r-full text-white font-semibold hover:bg-orange-600 transition"
               >
                 Subscribe
               </button>
@@ -70,7 +72,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-700 mt-12 pt-6 text-center text-gray-500 text-sm">
+        <div className="border-t border-gray-700 mt-12 py-3 text-center text-gray-500 text-sm">
           &copy; {new Date().getFullYear()} MealMart. All rights reserved.
         </div>
       </div>

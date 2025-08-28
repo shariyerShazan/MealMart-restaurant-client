@@ -10,7 +10,7 @@ const RestaurantDetails = () => {
   const {restaurant} = useAppSelector((state)=>state.restaurant)
   useGetSingleRestaurant({restaurantId})
   return (
-    <div className='mt-12 mb-6'>
+    <div className='mt-12 mb-6 min-h-[70vh]'>
          <div>
               <div>
                   <img className='w-full h-42 md:h-64 object-cover rounded-xl ' src={restaurant?.coverImage} alt="" />

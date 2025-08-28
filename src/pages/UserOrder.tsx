@@ -34,7 +34,7 @@ const UserOrder = () => {
   }
 
   return (
-    <div>
+    <div className='min-h-[70vh]'>
       <h2 className='text-5xl text-myColor font-bold text-center opacity-50 pb-6 border-b-2 border-b-myColor rounded-xl'>Your Orders</h2>
 
       <div className='flex flex-wrap gap-5 mt-8 justify-center'>

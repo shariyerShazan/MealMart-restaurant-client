@@ -111,7 +111,7 @@ const Restaurant = () => {
   };
 
   return (
-    <div className="p-6 mt-22  max-w-3xl mx-auto bg-white  shadow-xl border-t-6 rounded-xl border-myColor">
+    <div className="p-6 mt-4  max-w-3xl mx-auto bg-white  shadow-xl border-t-6 rounded-xl border-myColor min-h-[70vh]">
       <h2 className="text-2xl font-bold mb-6 text-center">
         {restaurant ? "Update Restaurant" : "Add Restaurant"}
       </h2>

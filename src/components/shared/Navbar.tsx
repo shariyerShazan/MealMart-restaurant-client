@@ -162,7 +162,7 @@ export default Navbar;
 // ================== MOBILE NAVBAR ==================
 const NavbarForMobile = ({user , logoutLoading , handleLogout , navigate , foods}) => {
   return (
-   <div className=" flex items-center justify-between">
+   <div className=" flex items-center justify-between ">
           <h2 className="text-3xl font-bold">
               Meal<span className="text-myColor">Mart</span>
             </h2>

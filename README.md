@@ -82,4 +82,30 @@
 ### 1️⃣ Clone Repo
 ```bash
 git clone https://github.com/shariyerShazan/MealMart-restaurant-client
-cd meakmart
+cd mealmart
+
+
+
+
+## backend
+# Event Explorer Backend
+
+This is the **backend server** for the Event Explorer application.  
+It is built with **Node.js**, **Express.js**, and **MongoDB**.  
+The backend provides REST APIs to manage events, categories, cuisines, and user interactions.
+
+---
+
+## 🚀 Features
+- Event management (CRUD operations)
+- Category management
+- Cuisine management
+- User authentication (JWT based)
+- MongoDB database integration with Mongoose
+- Clean and modular project structure
+
+---
+### 1️ Clone Repo
+git clone https://github.com/shariyerShazan/MealMart-restaurant-server
+cd server
+

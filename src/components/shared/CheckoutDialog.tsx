@@ -36,6 +36,7 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) 
       toast("Login first!")
       navigate("/login") 
     }
+   
     try {
       const payload = {
         cartItems: foods.map((item) => ({
@@ -53,7 +54,7 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) 
           city,
           country,
         },
-        restaurantId: foods[0].restaurantId.restaurantId,
+        restaurantId: foods[0].restaurantId,
 
         totalAmount:total
       };
@@ -65,16 +66,14 @@ const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) 
       );
 
       if (res.data.success) {
-        // toast.success(res.data.message);
+        toast.success(res.data.message);
         if (res.data.session?.url) {
           window.location.href = res.data.session.url; 
         }
-      } else {
-        toast.error(res.data.message || "Something went wrong");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      // toast.error("Checkout failed");
+      toast.error(error?.response?.data?.message || "error");
     }
   };
 

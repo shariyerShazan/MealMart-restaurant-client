@@ -1,11 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const PopularDishes: React.FC = () => {
   const dishes = [
-    { name: "Biryani Special", price: 15, img: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" },
-    { name: "Smash Burger", price: 12, img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80" },
-    { name: "Vegan Salad", price: 10, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL1-WBv2e8SFSBMSyX69QRtMDchFQNTdsRNA&s" },
+    { name: "Biryani Special", price: 15, img: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" , path: "/search/sultan%20dine" } ,
+    { name: "Smash Burger", price: 12, img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80" , path: "/search/Pizzaburg"  },
+    { name: "Vegan Salad", price: 10, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL1-WBv2e8SFSBMSyX69QRtMDchFQNTdsRNA&s" , path: "/search/Captain"  },
   ];
 
   return (
@@ -14,8 +15,9 @@ const PopularDishes: React.FC = () => {
         <h2 className="text-4xl font-bold mb-12 text-gray-900 tracking-wide">Our Bestsellings</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {dishes.map((dish, idx) => (
-            <motion.div
-              key={idx}
+            <Link to={dish.path}  key={idx}>
+                   <motion.div
+             
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: idx * 0.3, type: "spring", stiffness: 80 }}
@@ -35,6 +37,7 @@ const PopularDishes: React.FC = () => {
                 <p className="text-orange-500 font-bold text-xl">${dish.price}</p>
               </div>
             </motion.div>
+            </Link>
           ))}
         </div>
       </div>

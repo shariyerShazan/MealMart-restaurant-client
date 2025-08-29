@@ -58,6 +58,9 @@ const HeroSection: React.FC = () => {
           />
         </div>
       </div>
+      <button onClick={()=>navigate("/search/bangladesh")} className="text-5xl w-full bg-myColor/20 mt-12 py-3 rounded-lg text-center cursor-pointer">
+           Bangladeshi Restaurant on <span className=" text-shadow-[-2px_2px_2px_#000]">Meal<span className="text-orange-500">Mart</span></span>
+      </button>
     </section>
   );
 };

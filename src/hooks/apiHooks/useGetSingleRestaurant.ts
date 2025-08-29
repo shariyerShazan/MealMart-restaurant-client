@@ -14,6 +14,7 @@ const useGetSingleRestaurant = ({restaurantId = "", dependency = null}) => {
     const fetchRestaurant = async () => {
       try {
         setLoading(true);
+        dispatch(setRestaurant(null))
         const res = await axios.get(
           `${RESTAURANT_API_END_POINT}/${restaurantId}`,
           { withCredentials: true }
@@ -30,7 +31,7 @@ const useGetSingleRestaurant = ({restaurantId = "", dependency = null}) => {
     };
 
     fetchRestaurant();
-  }, [dispatch , dependency]);
+  }, [dispatch , dependency ,restaurantId]);
 
   return { loading, error };
 };

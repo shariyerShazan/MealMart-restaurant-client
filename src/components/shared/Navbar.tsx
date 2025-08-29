@@ -28,6 +28,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
 import { clearCart } from "../../redux/cartSlice";
+import { setMenu, setOrders, setRestaurant } from "../../redux/restaurantSlice";
 
 
 // ================== DESKTOP NAVBAR ==================
@@ -49,6 +50,9 @@ const Navbar = () => {
              if(res.data.success){
                   dispatch(setUser(null))
                   dispatch(clearCart())
+                  // dispatch(setRestaurant(null))
+                  // dispatch(setMenu(null))
+                  // dispatch(setOrders(null))
                   toast.success(res.data.message)
                   setLogoutLoading(false)
              }else{

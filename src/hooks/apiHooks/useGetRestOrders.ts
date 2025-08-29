@@ -11,6 +11,7 @@ const useGetRestOrders = ({ dependency = null }) => {
 
   useEffect(() => {
     const fetchOrder = async () => {
+      dispatch(setOrders(null))
       setLoading(true);
       setError(null);
 

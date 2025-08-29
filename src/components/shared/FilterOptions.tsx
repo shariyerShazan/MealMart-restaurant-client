@@ -6,7 +6,7 @@ interface FilterOptionsProps {
   setSelectedFilters: (filters: string[]) => void;
 }
 
-const cuisines = ["Pizza", "Cakes" , "Noodles" , "Burgers" , "Cafe" , "Pasta" , "Tehari" , "Kebaba" , "Biryani" ,"Chicken"];
+const cuisines = ["Pizza", "Cakes" , "Noodles" , "Burgers" , "Cafe" , "Pasta" , "Tehari" , "Kebaba" , "Biryani" ,"Chicken" , "Pulao" , "Kacchi"];
 
 const FilterOptions: React.FC<FilterOptionsProps> = ({ selectedFilters, setSelectedFilters }) => {
 

@@ -4,6 +4,7 @@ const restaurantSlice = createSlice({
     name: "restaurant" ,
     initialState: {
         restaurant: null ,
+        singleRestaurant: null ,
         menu : [] ,
         allRestaurant : [] ,
         pagination: {
@@ -32,11 +33,14 @@ const restaurantSlice = createSlice({
         setOrders: (state , action)=>{
             state.orders = action.payload
         } ,
+        setSingleRestaurant:(state , action)=>{
+            state.orders = action.payload
+        } ,
         
     }
 })
 
 export const {setRestaurant , setMenu ,setAllRestaurant , setPagination ,
-    setOrders 
+    setOrders , setSingleRestaurant
     } = restaurantSlice.actions
 export default restaurantSlice.reducer

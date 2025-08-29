@@ -12,6 +12,7 @@ const useGetRestaurant = ({dependency = null}) => {
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {
+        dispatch(setRestaurant(null))
         setLoading(true);
         const res = await axios.get(
           `${RESTAURANT_API_END_POINT}/own`,

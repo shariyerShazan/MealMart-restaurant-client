@@ -59,12 +59,12 @@ useGetRestaurant({dependency:addOne})
         </Button>
       </div>
 
-      <div className={`${menus.length === 0 ? " ": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
-        {menus.length === 0 ?    
+      <div className={`${menus?.length === 0 ? " ": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"}`}>
+        { menus?.length === 0 ?    
          <div className="flex justify-center items-center">
               <p className="text-center text-xl font-bold text-myColor">No Menu Found, Please Add First</p>
          </div>    
-        :  menus.map((menu : MenuItem, index:number) => (
+        :  menus?.map((menu : MenuItem, index:number) => (
           <div key={index} className="shadow-xl rounded-lg overflow-hidden">
             <img
               src={menu?.foodImage}

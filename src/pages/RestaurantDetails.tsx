@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FiClock } from 'react-icons/fi'
 import AvailableMenu from '../components/shared/AvailableMenu'
 import { useParams } from 'react-router'
@@ -6,9 +6,11 @@ import useGetSingleRestaurant from '../hooks/apiHooks/useGetSingleRestaurant'
 import { useAppSelector } from '../hooks/useReduxTypeHooks'
 
 const RestaurantDetails = () => {
-  const restaurantId = useParams()
+  const {restaurantId} = useParams()
   const {restaurant} = useAppSelector((state)=>state.restaurant)
-  useGetSingleRestaurant({restaurantId})
+  const [dependency , setDependency] = useState<boolean>(false)
+ 
+  useGetSingleRestaurant({restaurantId })
   return (
     <div className='pt-22 mb-6 min-h-[70vh]'>
          <div>

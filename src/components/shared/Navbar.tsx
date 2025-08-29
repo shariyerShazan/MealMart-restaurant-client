@@ -69,7 +69,7 @@ const Navbar = () => {
     <div className="w-[90%] mx-auto  ">
       {/* Mobile */}
       <div className="block sm:hidden">
-        <NavbarForMobile  user={user}   logoutLoading={logoutLoading}  handleLogout={handleLogout}  navigate={navigate}/>
+        <NavbarForMobile foods={foods}  user={user}   logoutLoading={logoutLoading}  handleLogout={handleLogout}  navigate={navigate}/>
       </div>
 
       {/* Desktop */}
@@ -83,7 +83,7 @@ const Navbar = () => {
           {/* Links + Icons */}
           <div className="flex items-center gap-8">
             <CustomNavLink to="/">Home</CustomNavLink>
-            <CustomNavLink to="/order">Order</CustomNavLink>
+            {user && <CustomNavLink to="/order">Order</CustomNavLink>}
 
             {/* Cart */}
             <NavLink
@@ -160,7 +160,7 @@ export default Navbar;
 
 
 // ================== MOBILE NAVBAR ==================
-const NavbarForMobile = ({user , logoutLoading , handleLogout , navigate}) => {
+const NavbarForMobile = ({user , logoutLoading , handleLogout , navigate , foods}) => {
   return (
    <div className=" flex items-center justify-between">
           <h2 className="text-3xl font-bold">
@@ -184,10 +184,10 @@ const NavbarForMobile = ({user , logoutLoading , handleLogout , navigate}) => {
           <SheetDescription className="flex-1">
             <div className="flex  flex-col gap-4 mt-4">
             <CustomNavLink to="/">Home</CustomNavLink>
-            <CustomNavLink to="/order">Order</CustomNavLink>
-            <CustomNavLink to="/cart">Cart <span className="text-myColor">(1)</span></CustomNavLink>
-            <CustomNavLink to="/profile">Profile</CustomNavLink>
-            <CustomNavLink to="/dashboard/restaurant">Dashboard</CustomNavLink>
+            {user && <CustomNavLink to="/order">Order</CustomNavLink>}
+            <CustomNavLink to="/cart">Cart <span className="text-myColor">({foods?.length || 0})</span></CustomNavLink>
+            {user && <CustomNavLink to="/profile">Profile</CustomNavLink>}
+            {user?.admin && <CustomNavLink to="/dashboard/restaurant">Dashboard</CustomNavLink>}
             </div>
           </SheetDescription>
         </SheetHeader>

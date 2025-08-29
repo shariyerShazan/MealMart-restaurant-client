@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FiPlus } from "react-icons/fi";
 import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
 import { restaurantFormSchema, type RestaurantFormSchema,  } from "../../schemaZOD/restaurantSchema";
@@ -15,19 +15,38 @@ import { useAppSelector } from "../../hooks/useReduxTypeHooks";
 
 
 const Restaurant = () => {
-  const {restaurant} = useAppSelector((state)=>state.restaurant)
+  
   const [reFetch , setReFetch] = useState<boolean>(false)
 
+  useEffect(()=>{
+    setReFetch(true)
+  } , [])
 
-  // console.log(restaurant)
   useGetRestaurant({dependency: reFetch})
-  const [input , setInput] = useState<RestaurantFormSchema>({
-    restaurantName: restaurant?.restaurantName || "" ,
-    city : restaurant?.city || "" ,
-    country: restaurant?.country || "" ,
-    deliveryTime: restaurant?.deliveryTime || 0 ,
-    cuisines: restaurant?.cuisines || [] ,
-  })
+
+  const {restaurant} = useAppSelector((state)=>state.restaurant)
+
+const [input , setInput] = useState<RestaurantFormSchema>({
+  restaurantName: "" ,
+  city : "" ,
+  country: "" ,
+  deliveryTime: 0 ,
+  cuisines: [] ,
+});
+
+useEffect(() => {
+  if (restaurant) {
+    setInput({
+      restaurantName: restaurant.restaurantName || "",
+      city: restaurant.city || "",
+      country: restaurant.country || "",
+      deliveryTime: restaurant.deliveryTime || 0,
+      cuisines: restaurant.cuisines || [],
+    });
+    setPreview(restaurant.coverImage || preview);
+  }
+}, [restaurant]);
+
   const [error, setError] = useState<Partial<RestaurantFormSchema>>({});
   const [loading , setIsLoading] = useState<boolean>(false)
    

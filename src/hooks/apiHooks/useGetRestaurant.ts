@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { RESTAURANT_API_END_POINT } from "../../utils/apiEndPoint";
-import { useAppDispatch } from "../useReduxTypeHooks";
+import { useAppDispatch, useAppSelector } from "../useReduxTypeHooks";
 import { setRestaurant } from "../../redux/restaurantSlice";
 
 const useGetRestaurant = ({dependency = null}) => {
+  const {user} = useAppSelector((state)=>state.user)
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
     const fetchRestaurant = async () => {
+      
       try {
         dispatch(setRestaurant(null))
         setLoading(true);
@@ -30,7 +32,7 @@ const useGetRestaurant = ({dependency = null}) => {
     };
 
     fetchRestaurant();
-  }, [dispatch , dependency]);
+  }, [dispatch , dependency , user]);
 
   return { loading, error };
 };

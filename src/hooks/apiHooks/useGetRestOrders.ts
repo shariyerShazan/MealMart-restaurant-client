@@ -11,7 +11,6 @@ const useGetRestOrders = ({ dependency = null }) => {
 
   useEffect(() => {
     const fetchOrder = async () => {
-      dispatch(setOrders(null))
       setLoading(true);
       setError(null);
 
@@ -21,8 +20,9 @@ const useGetRestOrders = ({ dependency = null }) => {
         });
 
         if (res.data.success) {
-          dispatch(setOrders(res.data.orders));
+          dispatch(setOrders(res.data.orders || []));
         } else {
+          dispatch(setOrders([]))
           setError(res.data.message || "Something went wrong");
         }
       } catch (err: any) {

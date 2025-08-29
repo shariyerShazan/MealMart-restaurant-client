@@ -50,8 +50,8 @@ const Navbar = () => {
              if(res.data.success){
                   dispatch(setUser(null))
                   dispatch(clearCart())
-                  // dispatch(setRestaurant(null))
-                  // dispatch(setMenu(null))
+                  dispatch(setRestaurant(null))
+                  dispatch(setMenu(null))
                   // dispatch(setOrders(null))
                   toast.success(res.data.message)
                   setLogoutLoading(false)
@@ -123,7 +123,7 @@ const Navbar = () => {
                   </DropdownMenuRadioItem>
                     {
                       user?.admin &&  <DropdownMenuRadioItem value="dashboard">
-                      <Link className="text-lg font-bold" to="/dashboard">
+                      <Link className="text-lg font-bold" to="/dashboard/restaurant">
                         Dashboard
                       </Link>
                     </DropdownMenuRadioItem>
@@ -187,7 +187,7 @@ const NavbarForMobile = ({user , logoutLoading , handleLogout , navigate}) => {
             <CustomNavLink to="/order">Order</CustomNavLink>
             <CustomNavLink to="/cart">Cart <span className="text-myColor">(1)</span></CustomNavLink>
             <CustomNavLink to="/profile">Profile</CustomNavLink>
-            <CustomNavLink to="/dashboard">Dashboard</CustomNavLink>
+            <CustomNavLink to="/dashboard/restaurant">Dashboard</CustomNavLink>
             </div>
           </SheetDescription>
         </SheetHeader>

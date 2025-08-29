@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { RESTAURANT_API_END_POINT } from "../../utils/apiEndPoint";
-import { useAppDispatch } from "../useReduxTypeHooks";
-import { setRestaurant } from "../../redux/restaurantSlice";
+import { useAppDispatch} from "../useReduxTypeHooks";
+import { setSingleRestaurant } from "../../redux/restaurantSlice";
 
 const useGetSingleRestaurant = ({restaurantId = "", dependency = null}) => {
+  
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
@@ -14,14 +15,14 @@ const useGetSingleRestaurant = ({restaurantId = "", dependency = null}) => {
     const fetchRestaurant = async () => {
       try {
         setLoading(true);
-        dispatch(setRestaurant(null))
+        dispatch(setSingleRestaurant(null))
         const res = await axios.get(
           `${RESTAURANT_API_END_POINT}/${restaurantId}`,
           { withCredentials: true }
         );
 
         if (res.data.success) {
-          dispatch(setRestaurant(res.data.restaurant));
+          dispatch(setSingleRestaurant(res.data.restaurant));
         }
       } catch (err: any) {
         setError(err.response?.data?.message || "Something went wrong");
@@ -31,7 +32,7 @@ const useGetSingleRestaurant = ({restaurantId = "", dependency = null}) => {
     };
 
     fetchRestaurant();
-  }, [dispatch , dependency ,restaurantId]);
+  }, [dispatch , dependency ,restaurantId ]);
 
   return { loading, error };
 };

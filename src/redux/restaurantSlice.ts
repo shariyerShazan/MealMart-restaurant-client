@@ -34,7 +34,7 @@ const restaurantSlice = createSlice({
             state.orders = action.payload
         } ,
         setSingleRestaurant:(state , action)=>{
-            state.orders = action.payload
+            state.singleRestaurant = action.payload
         } ,
         
     }

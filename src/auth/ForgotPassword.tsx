@@ -10,6 +10,9 @@ function ForgotPassword() {
     const [email , setEmail] = useState<string>("")
     const [isLoading , setIsLoading] = useState<boolean>(false)
 
+    const handleSub = ()=>{
+      setIsLoading(false)
+    }
   return (
     <div className='w-[90%] mx-auto  min-h-[70vh] flex items-center '>
       <form action="" className='w-96 mx-auto border-1 border-myColor p-5 rounded-md'>
@@ -34,7 +37,7 @@ function ForgotPassword() {
            {
             isLoading ? <Button disabled className='bg-myColor/90 hover:bg-myColor w-full cursor-pointer my-2'>
              <Loader2 className='animate-spin' /> Please Wait
-           </Button> : <Button type='submit' className='bg-myColor/90 hover:bg-myColor w-full cursor-pointer my-2'>
+           </Button> : <Button onClick={handleSub} type='submit' className='bg-myColor/90 hover:bg-myColor w-full cursor-pointer my-2'>
             Send Reset Link
            </Button>
            }

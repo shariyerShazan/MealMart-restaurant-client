@@ -38,7 +38,7 @@ function AvailableMenu({ menus, restaurantId }: AvailableMenuProps) {
               </p>
 
               <Button
-                onClick={() => dispatch(addToCart({ ...menu, restaurantId }))}
+                onClick={() => dispatch(addToCart({ ...menu, restaurantId  }))}
                 className='bg-myColor hover:bg-myColor cursor-pointer hover:scale-101 my-1'
               >
                 Add to Cart

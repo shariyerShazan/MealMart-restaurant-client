@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxTypeHooks';
 import useGetRestOrders from '../../hooks/apiHooks/useGetRestOrders';
 import axios from 'axios';

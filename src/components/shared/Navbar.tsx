@@ -28,7 +28,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
 import { clearCart } from "../../redux/cartSlice";
-import { setMenu, setOrders, setRestaurant } from "../../redux/restaurantSlice";
+import { setMenu, setRestaurant } from "../../redux/restaurantSlice";
 
 
 // ================== DESKTOP NAVBAR ==================

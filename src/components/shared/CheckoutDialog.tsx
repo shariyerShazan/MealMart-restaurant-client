@@ -15,12 +15,16 @@ import { toast } from "react-toastify";
 import { useAppSelector } from "../../hooks/useReduxTypeHooks";
 import { useNavigate } from "react-router";
 
+
+
+
 interface CheckoutDialogProps {
   total: number;
   restaurantId: string;
 }
 
-const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total, restaurantId }) => {
+
+const CheckoutDialog: React.FC<CheckoutDialogProps> = ({ total }) => {
   const navigate = useNavigate()
   const { user } = useAppSelector((state) => state.user);
   const { foods } = useAppSelector((state) => state.cart);

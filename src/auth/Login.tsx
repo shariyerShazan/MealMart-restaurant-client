@@ -49,7 +49,7 @@ function Login() {
               setIsLoading(false)
               navigate("/")
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
            setIsLoading(false)
             console.log(error)
             toast.error(error?.response?.data?.message)

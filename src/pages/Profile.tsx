@@ -58,7 +58,7 @@ const Profile = () => {
       setBtnLoading(true)
         const formData = new FormData();
         formData.append("fullName", profileData.fullName);
-        formData.append("email", profileData.email);
+        // formData.append("email", profileData.email);
         formData.append("contact", profileData.contact);
         formData.append("address", profileData.address);
         formData.append("city", profileData.city);
@@ -146,7 +146,7 @@ const Profile = () => {
           name="email"
           type="email"
           value={profileData.email}
-          onChange={changeHandler}
+          // onChange={changeHandler}
           className="mt-1 w-full focus-visible:ring-0"
         />
       </div>

@@ -15,6 +15,12 @@ import { useAppSelector } from "../../hooks/useReduxTypeHooks";
 
 
 const Restaurant = () => {
+
+
+    useEffect(() => {
+      document.title = `Dashboard | MealMart`;
+    }, []);
+  
   
   const [reFetch , setReFetch] = useState<boolean>(false)
 

@@ -1,5 +1,5 @@
 // SearchPage.tsx
-import React, { useState, type ChangeEvent } from "react";
+import React, { useEffect, useState, type ChangeEvent } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 import RestaurantCard from "../components/shared/RestaurantCard";
 import FilterOptions from "../components/shared/FilterOptions";
@@ -8,6 +8,12 @@ import useGetAllRestaurant from "../hooks/apiHooks/useGetAllRestaurant";
 import { useNavigate, useParams } from "react-router";
 
 const SearchPage: React.FC = () => {
+
+    useEffect(() => {
+      document.title = `Reastaurant | MealMart`;
+    }, []);
+  
+
   const navigate = useNavigate()
   const { searchText } = useParams();
   const [searchCusines, setSearchCuisines] = useState<string>("");

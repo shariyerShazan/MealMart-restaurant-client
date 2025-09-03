@@ -9,6 +9,10 @@ const UserOrder = () => {
   // const {user} = useAppSelector((state)=>state.user)
 
   useEffect(() => {
+    document.title = `Order | MealMart`;
+  }, []);
+
+  useEffect(() => {
     const fetchOrders = async () => {
       try {
         const res = await axios.get(`${ORDER_API_END_POINT}`, { withCredentials: true })

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../hooks/useReduxTypeHooks";
 import {
@@ -11,6 +11,12 @@ import CheckoutDialog from "../components/shared/CheckoutDialog";
 
 
 const Cart = () => {
+
+    useEffect(() => {
+      document.title = `Cart | MealMart`;
+    }, []);
+  
+
   const { foods } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 

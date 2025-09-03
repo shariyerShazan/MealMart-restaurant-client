@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
 import { FiFlag, FiGlobe, FiMail, FiMapPin, FiPhone, FiPlus, FiUser } from 'react-icons/fi';
 import { Input } from '../components/ui/input';
@@ -21,6 +21,12 @@ type ProfileDataState = {
 };
 
 const Profile = () => {
+
+    useEffect(() => {
+      document.title = `Profile | MealMart`;
+    }, []);
+  
+
   const {user} = useAppSelector((state)=>state.user)
   const dispatch = useAppDispatch()
 

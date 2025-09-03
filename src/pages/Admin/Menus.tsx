@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../../components/ui/button";
 import MenuDialog from "../../components/shared/Admin/MenuDialog";
 import { useAppSelector } from "../../hooks/useReduxTypeHooks";
@@ -17,6 +17,11 @@ interface MenuItem {
 }
 
 const Menus = () => {
+
+      useEffect(() => {
+        document.title = `Dashboard | MealMart`;
+      }, []);
+
   const [addOne, setAddOne]= useState<boolean>(false)
   const[deleteLoading , setDeleteLoading] = useState<boolean>(false)
 

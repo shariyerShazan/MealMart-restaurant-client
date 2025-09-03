@@ -6,6 +6,11 @@ import { RESTAURANT_API_END_POINT } from '../../utils/apiEndPoint';
 import { setOrders } from '../../redux/restaurantSlice';
 
 const Dashboard = () => {
+
+      useEffect(() => {
+        document.title = `Dashboard | MealMart`;
+      }, []);
+      
   const { orders } = useAppSelector((state) => state.restaurant);
   const [dependency, setDependency] = useState<boolean>(false);
   const dispatch = useAppDispatch();

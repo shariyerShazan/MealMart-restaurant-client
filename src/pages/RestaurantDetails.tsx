@@ -6,6 +6,11 @@ import useGetSingleRestaurant from '../hooks/apiHooks/useGetSingleRestaurant'
 import { useAppSelector } from '../hooks/useReduxTypeHooks'
 
 const RestaurantDetails = () => {
+
+    useEffect(() => {
+      document.title = `Restaurant | MealMart`;
+    }, []);
+  
   const {restaurantId} = useParams()
   const {singleRestaurant} = useAppSelector((state)=>state.restaurant)
   // const [dependency , setDependency] = useState<boolean>(false)

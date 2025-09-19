@@ -10,6 +10,7 @@ import { Loader2 } from "lucide-react";
 
 
 interface MenuItem {
+  _id: string ;
   foodName: string;
   description: string;
   price: number;
@@ -56,7 +57,7 @@ useGetRestaurant({dependency:addOne})
         <Button
           className="bg-myColor hover:bg-myColor/90 cursor-pointer"
           onClick={ () => {
-            setEditMenu({ foodName: "", description: "", price: "" , foodImage: "" })
+            setEditMenu({ _id:"" , foodName: "", description: "", price: 0 , foodImage: "" })
             setOpenDialog(true);
           }}
         >

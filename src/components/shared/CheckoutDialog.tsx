@@ -20,7 +20,7 @@ import { useNavigate } from "react-router";
 
 interface CheckoutDialogProps {
   total: number;
-  restaurantId: string;
+  // restaurantId: string;
 }
 
 

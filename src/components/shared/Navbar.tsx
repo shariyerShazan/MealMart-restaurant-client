@@ -51,7 +51,7 @@ const Navbar = () => {
                   dispatch(setUser(null))
                   dispatch(clearCart())
                   dispatch(setRestaurant(null))
-                  dispatch(setMenu(null))
+                  dispatch(setMenu([]))
                   // dispatch(setOrders(null))
                   toast.success(res.data.message)
                   setLogoutLoading(false)
@@ -160,76 +160,120 @@ export default Navbar;
 
 
 // ================== MOBILE NAVBAR ==================
-const NavbarForMobile = ({user , logoutLoading , handleLogout , navigate , foods}) => {
+
+
+type NavbarForMobileProps = {
+  user: any | null;
+  logoutLoading: boolean;
+  handleLogout: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  navigate: any;
+  foods: any[];
+};
+
+const NavbarForMobile: React.FC<NavbarForMobileProps> = ({
+  user,
+  logoutLoading,
+  handleLogout,
+  navigate,
+  foods,
+}) => {
   return (
-   <div className=" flex items-center justify-between ">
-          <h2 className="text-3xl font-bold">
-              Meal<span className="text-myColor">Mart</span>
-            </h2>
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button className="mt-2 cursor-pointer" variant="outline" size="icon">
-          <FiMenu size={20} />
-        </Button>
-      </SheetTrigger>
+    <div className="flex items-center justify-between ">
+      <h2 className="text-3xl font-bold">
+        Meal<span className="text-myColor">Mart</span>
+      </h2>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button className="mt-2 cursor-pointer" variant="outline" size="icon">
+            <FiMenu size={20} />
+          </Button>
+        </SheetTrigger>
 
-      <SheetContent className="flex justify-between ">
-        <SheetHeader>
-          <SheetTitle>
-            <h2 className="text-3xl font-bold">
-              Meal<span className="text-myColor">Mart</span>
-            </h2>
-          </SheetTitle>
+        <SheetContent className="flex justify-between ">
+          <SheetHeader>
+            <SheetTitle>
+              <h2 className="text-3xl font-bold">
+                Meal<span className="text-myColor">Mart</span>
+              </h2>
+            </SheetTitle>
 
-          <SheetDescription className="flex-1">
-            <div className="flex  flex-col gap-4 mt-4">
-            <CustomNavLink to="/">Home</CustomNavLink>
-            {user && <CustomNavLink to="/order">Order</CustomNavLink>}
-            <CustomNavLink to="/cart">Cart <span className="text-myColor">({foods?.length || 0})</span></CustomNavLink>
-            {user && <CustomNavLink to="/profile">Profile</CustomNavLink>}
-            {user?.admin && <CustomNavLink to="/dashboard/restaurant">Dashboard</CustomNavLink>}
-            </div>
-          </SheetDescription>
-        </SheetHeader>
+            <SheetDescription className="flex-1">
+              <div className="flex flex-col gap-4 mt-4">
+                <CustomNavLink to="/">Home</CustomNavLink>
+                {user && <CustomNavLink to="/order">Order</CustomNavLink>}
+                <CustomNavLink to="/cart">
+                  Cart{" "}
+                  <span className="text-myColor">
+                    ({foods?.length || 0})
+                  </span>
+                </CustomNavLink>
+                {user && <CustomNavLink to="/profile">Profile</CustomNavLink>}
+                {user?.admin && (
+                  <CustomNavLink to="/dashboard/restaurant">
+                    Dashboard
+                  </CustomNavLink>
+                )}
+              </div>
+            </SheetDescription>
+          </SheetHeader>
 
-        <SheetFooter className="flex  flex-col items-start gap-4 mt-6">
-          {user? <div className="flex  flex-col gap-2 w-full">
-            <div className="flex gap-3 items-center">
-            <Avatar>
-            <AvatarImage className="object-cover" src={`${user?.profilePicture || "https://github.com/shadcn.png"} `} />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <h2 className="text-lg font-bold">{user?.fullName}</h2>
-          </div>
-          {
-                    logoutLoading? <Button className="bg-myColor hover:bg-myColor cursor-pointer">
-                           <Loader2 className="animate-spin"/> please wait
-                      </Button>: <Button onClick={handleLogout} className="w-full cursor-pointer bg-myColor hover:bg-myColor/90">
-                      Logout
-                    </Button>
-                    }
-                    
-          </div> :
+          <SheetFooter className="flex flex-col items-start gap-4 mt-6">
+            {user ? (
+              <div className="flex flex-col gap-2 w-full">
+                <div className="flex gap-3 items-center">
+                  <Avatar>
+                    <AvatarImage
+                      className="object-cover"
+                      src={`${
+                        user?.profilePicture || "https://github.com/shadcn.png"
+                      } `}
+                    />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <h2 className="text-lg font-bold">{user?.fullName}</h2>
+                </div>
+                {logoutLoading ? (
+                  <Button className="bg-myColor hover:bg-myColor cursor-pointer">
+                    <Loader2 className="animate-spin" /> please wait
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleLogout}
+                    className="w-full cursor-pointer bg-myColor hover:bg-myColor/90"
+                  >
+                    Logout
+                  </Button>
+                )}
+              </div>
+            ) : (
               <div className="flex w-full">
-                   <Button onClick={()=>navigate("/login")} className="w-full bg-myColor hover:bg-myColor cursor-pointer">
+                <Button
+                  onClick={() => navigate("/login")}
+                  className="w-full bg-myColor hover:bg-myColor cursor-pointer"
+                >
                   Login
+                </Button>
+              </div>
+            )}
+            <SheetClose asChild>
+              <Button variant="outline" className="w-full cursor-pointer">
+                Close
               </Button>
-            </div>}
-          <SheetClose asChild>
-            <Button variant="outline" className="w-full cursor-pointer">
-              Close
-            </Button>
-          </SheetClose>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-   </div>
+            </SheetClose>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
+    </div>
   );
 };
 
 
 // ================== REUSABLE NAVLINK ==================
-const CustomNavLink = ({ to, children }) => (
+interface CustomNavLinkProps {
+  to: string;
+  children: React.ReactNode;
+}
+const CustomNavLink: React.FC<CustomNavLinkProps> = ({ to, children }) => (
   <NavLink
     to={to}
     className={({ isActive }) =>

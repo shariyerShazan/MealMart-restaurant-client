@@ -5,9 +5,10 @@ export interface CartItem {
   _id: string;
   foodName: string;
   price: number;
-  image: string;
+  image?: string;
   foodImage?: string;
   quantity: number;
+  restaurantId: string;
 }
 
 // Slice Initial State
@@ -24,8 +25,10 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     // Add to Cart
-    addToCart: (state, action: PayloadAction<Omit<CartItem, "quantity">>) => {
-      // safety check
+    addToCart: (
+      state,
+      action: PayloadAction<Omit<CartItem, "quantity"> & { restaurantId: string }>
+    ) => {
       if (!state.foods) state.foods = [];
 
       const existingItem = state.foods.find((item) => item._id === action.payload._id);

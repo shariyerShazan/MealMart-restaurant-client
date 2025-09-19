@@ -4,7 +4,7 @@ import { RESTAURANT_API_END_POINT } from "../../utils/apiEndPoint";
 import { useAppDispatch, useAppSelector } from "../useReduxTypeHooks";
 import { setRestaurant } from "../../redux/restaurantSlice";
 
-const useGetRestaurant = ({dependency = null}) => {
+const useGetRestaurant = ({ dependency }: { dependency?: unknown }) => {
   const {user} = useAppSelector((state)=>state.user)
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);

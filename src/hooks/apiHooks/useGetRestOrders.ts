@@ -4,7 +4,7 @@ import { RESTAURANT_API_END_POINT } from "../../utils/apiEndPoint";
 import { useAppDispatch } from "../useReduxTypeHooks";
 import { setOrders } from "../../redux/restaurantSlice";
 
-const useGetRestOrders = ({ dependency = null }) => {
+const useGetRestOrders = ({ dependency }: { dependency?: unknown }) => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

@@ -1,6 +1,6 @@
 // PrivateRoute.tsx
 import React,{ type ReactNode }  from "react";
-import { Navigate } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import { useAppSelector } from "../hooks/useReduxTypeHooks";
 import { toast } from "react-toastify";
 

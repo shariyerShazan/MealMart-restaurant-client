@@ -12,6 +12,7 @@ export interface IFrontendRestaurant {
   cuisines: string[];
   menus?: any[]; 
   coverImage: string;
+ 
 }
 
 interface Pagination {
